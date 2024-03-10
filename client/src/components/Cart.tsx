@@ -6,12 +6,9 @@ import { createPortal } from 'react-dom'
 import { useCartStore } from '@/context/zustand/cart.store'
 import { type Product } from '@/interfaces'
 import { getAllItems } from '@/services/cart/get-items.service'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
 import Image from 'next/image'
-
-const status = 'unauthenticated'
 
 const Cart: FunctionComponent = () => {
   const router = useRouter()

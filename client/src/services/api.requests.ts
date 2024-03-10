@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import axios, { type AxiosResponse } from 'axios'
 import { type HttpMethod, type Response, type GetRequestParams } from '@/interfaces'
 import { serverUrl } from '@/utils/constants/env.const'

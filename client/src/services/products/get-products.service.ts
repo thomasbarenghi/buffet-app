@@ -5,7 +5,7 @@ import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 
 export const getProducts = async (): Promise<Response<Product[]>> => {
   const response = await getRequest<Product[]>({
-    url: Endpoints.FIND_PRODUCTS(supabaseAnonApiKey!),
+    url: Endpoints.FIND_PRODUCTS(supabaseAnonApiKey),
     cache: 'no-store'
   })
 
