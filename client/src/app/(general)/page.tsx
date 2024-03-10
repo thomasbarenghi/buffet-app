@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+// import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+// import { cookies } from 'next/headers'
 import Image from 'next/image'
 
 export default async function Home() {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  // const cookieStore = cookies()
+  // const supabase = createServerComponentClient({ cookies: () => cookieStore })
   // const user = await supabase.auth.getUser()
 
   return (
