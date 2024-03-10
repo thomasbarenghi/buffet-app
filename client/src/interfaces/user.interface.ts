@@ -1,5 +1,14 @@
 import { type Shop } from '.'
 
+export interface Profile {
+  id: string
+  created_at: Date
+  first_name: string
+  last_name: string
+  role: Type
+  dni: number
+  profile_image: string
+}
 export interface User {
   id: string
   firstName: string

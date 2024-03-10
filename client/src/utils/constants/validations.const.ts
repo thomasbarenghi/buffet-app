@@ -1,6 +1,6 @@
 import { type RegisterOptions, type ValidationRule } from 'react-hook-form'
 
-const required: ValidationRule<boolean> = { value: true, message: 'Este campo es requerido' }
+export const required: ValidationRule<boolean> = { value: true, message: 'Este campo es requerido' }
 
 export const emailValidations: RegisterOptions = {
   required,

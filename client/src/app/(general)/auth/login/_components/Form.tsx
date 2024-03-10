@@ -7,7 +7,6 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { routes } from '@/utils/constants/routes.const'
 
 const Form: FunctionComponent = () => {
   const router = useRouter()
@@ -21,23 +20,14 @@ const Form: FunctionComponent = () => {
     mode: 'onChange'
   })
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (formData) => {
+  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
-      const { error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          emailRedirectTo: 'http://localhost:3000/auth/callback'
-        }
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: 'thomas-test@test.com',
+        password: 'Test1234'
       })
-
-      if (error) {
-        toast.error('Algo salió mal')
-        return
-      }
-
-      router.push(routes.auth.LOGIN)
-      toast.info('Te enviamos un email para que confirmes tu cuenta')
+      console.log(data, error)
+      router.refresh()
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)
@@ -45,7 +35,7 @@ const Form: FunctionComponent = () => {
   }
 
   return (
-    <form className='flex w-full flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
+    <form className='flex w-full flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
       <Input
         type='text'
         label='Email'
@@ -68,7 +58,7 @@ const Form: FunctionComponent = () => {
         }}
         errorMessage={errors?.password?.message}
       />
-      <Button type='submit' isLoading={isSubmitting} size='lg' color='primary' radius='lg' title='Registrarme' />
+      <Button type='submit' isLoading={isSubmitting} size='lg' color='primary' radius='lg' title='Ingresar' />
     </form>
   )
 }

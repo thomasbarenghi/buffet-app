@@ -1,9 +1,11 @@
-import { type User } from '.'
+import { type Profile, type User } from '.'
 
 export interface LoginFormData {
   email: string
   password: string
 }
+
+export type ProfileFormData = Omit<Profile, 'id' | 'created_at' | 'role' | 'profile_image'>
 
 export type RegisterFormData = Omit<User, 'id'>
 

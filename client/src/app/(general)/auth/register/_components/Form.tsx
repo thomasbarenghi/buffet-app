@@ -21,15 +21,23 @@ const Form: FunctionComponent = () => {
     mode: 'onChange'
   })
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormData> = async (formData) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: 'thomas-test@test.com',
-        password: 'Test1234'
+      const { error } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          emailRedirectTo: 'http://localhost:3000/auth/callback'
+        }
       })
-      console.log(data, error)
-      router.push(routes.customer.HOME)
-      router.refresh()
+
+      if (error) {
+        toast.error('Algo salió mal')
+        return
+      }
+
+      router.push(routes.auth.LOGIN)
+      toast.info('Te enviamos un email para que confirmes tu cuenta')
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)
@@ -60,7 +68,7 @@ const Form: FunctionComponent = () => {
         }}
         errorMessage={errors?.password?.message}
       />
-      <Button type='submit' isLoading={isSubmitting} size='lg' color='primary' radius='lg' title='Ingresar' />
+      <Button type='submit' isLoading={isSubmitting} size='lg' color='primary' radius='lg' title='Registrarme' />
     </form>
   )
 }
