@@ -8,8 +8,8 @@ interface Props {
 
 const ProductCartGrid: FunctionComponent<Props> = ({ products }) => (
   <div className='grid w-full'>
-    {products.map((product) => (
-      <ProductCartItem key={product.id} product={product} />
+    {products.map((product, index) => (
+      <ProductCartItem key={product.id} product={product} isLast={products.length - 1 === index} />
     ))}
   </div>
 )

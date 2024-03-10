@@ -47,9 +47,12 @@ const Cart: FunctionComponent = () => {
         createPortal(
           <div className='fixed left-0 top-0 z-50 flex h-screen w-screen flex-row items-end justify-start '>
             <div className='h-full w-auto bg-[#00000079] sm:w-full ' onClick={handleClose}></div>
-            <div className='flex h-full w-full flex-col items-end justify-start gap-2 bg-white px-5 pb-10  pt-5 sm:w-[350px] sm:min-w-[350px]'>
-              <div className='absolute right-2 top-2 cursor-pointer p-2' onClick={handleClose}>
-                <Image src='/icons/cross.svg' alt='cross' width={18} height={18} />
+            <div className='flex h-full w-full flex-col items-end justify-start gap-2 bg-white px-5 pb-24 pt-8  sm:w-[350px] sm:min-w-[350px] lg:pb-10'>
+              <div className='flex w-full items-center justify-between'>
+                <h2 className='text-xl font-semibold'>Carrito</h2>
+                <div className='cursor-pointer p-2' onClick={handleClose}>
+                  <Image src='/icons/cross.svg' alt='cross' width={18} height={18} />
+                </div>
               </div>
               {products.length === 0 ? (
                 <div className='flex h-full w-full items-center justify-center '>
@@ -58,13 +61,12 @@ const Cart: FunctionComponent = () => {
               ) : (
                 <>
                   <div className='flex w-full flex-grow flex-col overflow-hidden'>
-                    <h2 className='text-xl font-semibold'>Carrito</h2>
                     <div className='max-h-auto overflow-y-scroll'>
                       <ProductCartGrid products={products} />
                     </div>
                   </div>
                   <div className='w-full'>
-                    <Button title='Ir a pagar' fullWidth onClick={handleCheckout} />
+                    <Button title='Ir a pagar' size='lg' radius='lg' fullWidth onClick={handleCheckout} />
                   </div>
                 </>
               )}

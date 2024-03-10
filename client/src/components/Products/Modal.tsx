@@ -33,27 +33,22 @@ const ModalProduct: FunctionComponent<Props> = ({ product, onClose, isOpen }) =>
                   />
                 </div>
                 <div className='flex w-auto flex-col gap-4'>
-                  <div className='flex w-auto flex-col gap-4'>
-                    <div className='flex flex-col gap-1'>
-                      <div>
+                  <div className='flex w-auto flex-col gap-6'>
+                    <div className='flex flex-col gap-3'>
+                      <div className='flex flex-col gap-1'>
                         <p className='text-2xl font-semibold '>{product.title}</p>
+                        <p className='text-xl font-semibold text-primary'>${product.price}</p>
                       </div>
-                      <p className='text-xl font-semibold text-primary '>${product.price}</p>
+                      <p className='font-light'>{product.description}</p>
                     </div>
-                    <p className='text-base'>{product.description}</p>
-                    <div>
-                      {/* {(session?.user?.type === 'customer' || status === 'unauthenticated') && ( */}
-                      {
-                        <Button
-                          title='Agregar al carrito'
-                          variant='solid'
-                          color='primary'
-                          onClick={() => {
-                            addItem(product)
-                          }}
-                        />
-                      }
-                    </div>
+                    <Button
+                      title='Agregar al carrito'
+                      size='lg'
+                      radius='lg'
+                      onClick={() => {
+                        addItem(product)
+                      }}
+                    />
                   </div>
                 </div>
               </div>

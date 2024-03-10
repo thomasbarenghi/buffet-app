@@ -3,7 +3,7 @@ import { type FunctionComponent, useEffect, useState } from 'react'
 import { useCartStore } from '@/context/zustand/cart.store'
 import { type ShippingFormProps, type Product } from '@/interfaces'
 import { getAllItems } from '@/services/cart/get-items.service'
-import { Button, ProductsTable, Textarea } from '@/components'
+import { Button, ProductCartGrid, ProductsTable, Textarea } from '@/components'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
@@ -58,7 +58,7 @@ const Content: FunctionComponent<Props> = ({ userId }) => {
             <Button
               title='Ir a comprar'
               onClick={() => {
-                router.push(routes.customer.ALL_PRODUCTS)
+                router.push(routes.customer.HOME)
               }}
             />
           </div>
@@ -67,17 +67,19 @@ const Content: FunctionComponent<Props> = ({ userId }) => {
       {items?.length > 0 && (
         <>
           <section className='flex w-full flex-col justify-between gap-5 2xl:container'>
-            <h1 className='text-2xl font-semibold'>Ya casi es tuyo</h1>
-            <ProductsTable products={products} />
-            <form className='flex flex-col  gap-3' onSubmit={handleSubmit(onSubmit)}>
+            <div className='flex flex-col gap-1'>
+              <h1 className='text-2xl font-semibold'>Ya casi es tuyo</h1>
+              <ProductCartGrid products={products} />
+            </div>
+            <form className='flex flex-col  gap-6' onSubmit={handleSubmit(onSubmit)}>
               <Textarea
                 name='instructions'
                 label='Instrucciones adicionales'
                 placeholder='¿No queres que tenga sal o algo así? decíselo al cocinero'
                 errorMessage={errors.instructions?.message}
               />
-              <div className='flex w-full justify-start'>
-                <Button type='submit' title='Finalizar compra' isLoading={isSubmitting} />
+              <div className='flex w-full justify-end'>
+                <Button type='submit' title='Finalizar compra' size='lg' radius='lg' isLoading={isSubmitting} />
               </div>
             </form>
           </section>

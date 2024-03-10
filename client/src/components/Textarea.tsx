@@ -26,7 +26,7 @@ const Textarea: FunctionComponent<ExtendedProps> = (props) => {
     <TextareaUI
       {...HookForm}
       label={props.label}
-      labelPlacement='outside'
+      labelPlacement='inside'
       name={props.name}
       defaultValue={props.defaultValue}
       minRows={props.rows}

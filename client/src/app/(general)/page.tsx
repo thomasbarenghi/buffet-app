@@ -1,19 +1,13 @@
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-// import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-// import { cookies } from 'next/headers'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 
 export default async function Home() {
-  // const cookieStore = cookies()
-  // const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  //   const user = await supabase.auth.getUser()
-
-  //   // Pedir datos relacionados
-  //   const { data } = await supabase.from('orders').select(`
-  //     *,
-  //     products: orders_products ( products (*) )
-  // `)
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  // const user = await supabase.auth.getUser()
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between p-24'>
