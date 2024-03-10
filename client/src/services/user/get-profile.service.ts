@@ -16,10 +16,9 @@ const arrayToObject = (array: Profile[]): Profile => {
 export const getProfile = async (id: string): Promise<Response<Profile>> => {
   const response = await getRequest<Profile[]>({
     url: Endpoints.FIND_PROFILE(id, supabaseAnonApiKey),
-    cache: 'no-store'
+    cache: 'no-store',
+    tags: ['profile']
   })
-
-  console.log(response)
 
   if (response?.error) {
     console.error(response?.error)

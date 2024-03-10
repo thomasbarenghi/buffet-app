@@ -1,6 +1,7 @@
 const common = {
   SHOPS: '/shops',
   ACCOUNT: '/account',
+  EDIT_ACCOUNT: '/account/edit',
   ORDER_HISTORY: '/account/order-history',
   ALL_PRODUCTS: '/shops/products'
 }

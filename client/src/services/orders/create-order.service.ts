@@ -2,13 +2,13 @@ import { type Product } from '@/interfaces'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { toast } from 'sonner'
 
-export const createOrder = async (products: Product[]) => {
-  const supabase = createClientComponentClient()
+export const createOrder = async (products: Product[], instructions: string) => {
+  const supabase = createClientComponentClient<Database>()
   const user = await supabase.auth.getUser()
   const totalPrice = products.reduce((sum, item) => sum + item.price, 0)
   const { data, error } = await supabase
     .from('orders')
-    .insert([{ total_price: totalPrice, customer_id: user.data.user?.id ?? '' }])
+    .insert([{ total_price: totalPrice, customer_id: user.data.user?.id ?? '', instructions }])
     .select()
 
   if (error || data === null) {
@@ -29,5 +29,5 @@ export const createOrder = async (products: Product[]) => {
     }
   }
 
-  return order.id as string
+  return order.id
 }

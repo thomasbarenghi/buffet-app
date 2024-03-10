@@ -26,6 +26,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.51.0",
     "sonner": "^1.4.3",
+    "supabase": "^1.148.6",
     "swr": "^2.2.5",
     "zustand": "^4.5.2"
   },

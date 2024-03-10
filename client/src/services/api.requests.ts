@@ -11,7 +11,7 @@ export const getRequest = async <T>(params: GetRequestParams): Promise<Response<
   try {
     const response = await fetch(`${axiosInstance.defaults.baseURL}${params.url}`, {
       cache: params.cache || 'force-cache',
-      next: { revalidate: params.validate || undefined }
+      next: { revalidate: params.validate || undefined, tags: params.tags }
     })
 
     const responseData = await response.json()
