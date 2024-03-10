@@ -4,7 +4,7 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["prefer-arrow"],
-  "ignorePatterns": ["prettier.config.js"],
+  "ignorePatterns": ["prettier.config.js", "/src/types"],
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-misused-promises": "off",
