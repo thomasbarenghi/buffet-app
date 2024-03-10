@@ -23,12 +23,7 @@ const ProductCartItem: FunctionComponent<Props> = ({ product, isLast }) => {
       >
         <div className='flex items-start gap-2'>
           <div className='relative aspect-square h-[80px] w-[80px] '>
-            <Image
-              src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1398&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-              alt={product.title}
-              fill
-              className='aspect-square rounded-lg object-cover'
-            />
+            <Image src={product.thumbnail} alt={product.title} fill className='aspect-square rounded-lg object-cover' />
           </div>
           <div className='flex flex-col gap-2'>
             <div className='flex flex-col gap-1'>

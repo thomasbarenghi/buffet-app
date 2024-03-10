@@ -3,9 +3,9 @@ import Form from './_components/Form'
 
 const OnboardingPage = async () => (
   <main className='flex min-h-screen w-full flex-col items-center gap-9 px-6 py-16'>
-    <section className='flex flex-col gap-2 2xl:container'>
+    <section className='flex max-w-md flex-col gap-2 2xl:container'>
       <Image src='/icons/mini-logo.svg' height={40} width={40} alt='logo' />
-      <h1 className='text-[32px] font-light leading-tight'>
+      <h1 className='mt-1 text-[32px] font-light leading-tight'>
         Ya casi terminamos, ya casi podes <span className='font-semibold'>usar Buffet.</span>
       </h1>
       <p className='font-light text-zinc-700'>
@@ -13,7 +13,9 @@ const OnboardingPage = async () => (
         alumnos de la UNAHUR, para alumnos de la UNAHUR.
       </p>
     </section>
-    <Form />
+    <section className='w-full max-w-md'>
+      <Form />
+    </section>
   </main>
 )
 

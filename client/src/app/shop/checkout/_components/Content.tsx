@@ -10,14 +10,11 @@ import { routes } from '@/utils/constants/routes.const'
 import axios from 'axios'
 import { createOrder } from '@/services/orders/create-order.service'
 
-interface Props {
-  userId: string
-}
-
-const Content: FunctionComponent<Props> = ({ userId }) => {
+const Content: FunctionComponent = () => {
   const router = useRouter()
   const [products, setProducts] = useState<Product[]>([])
   const items = useCartStore((state) => state.items)
+  const cleanCart = useCartStore((state) => state.cleanCart)
   const {
     formState: { errors, isSubmitting },
     handleSubmit
@@ -40,6 +37,7 @@ const Content: FunctionComponent<Props> = ({ userId }) => {
         products,
         orderId
       })
+      cleanCart()
       router.push(preference?.url as string)
     } catch (error) {
       console.error(error)
@@ -66,12 +64,21 @@ const Content: FunctionComponent<Props> = ({ userId }) => {
       )}
       {items?.length > 0 && (
         <>
-          <section className='flex w-full flex-col justify-between gap-5 2xl:container'>
+          <section className='flex w-full grid-cols-2 flex-col justify-between gap-5 2xl:container lg:grid lg:gap-10'>
             <div className='flex flex-col gap-1'>
               <h1 className='text-2xl font-semibold'>Ya casi es tuyo</h1>
               <ProductCartGrid products={products} />
             </div>
             <form className='flex flex-col  gap-6' onSubmit={handleSubmit(onSubmit)}>
+              <div className='flex w-full flex-col gap-2'>
+                <h1 className='text-2xl font-semibold'>Resumen</h1>
+                <p className='text-sm'>
+                  Total: <span className='font-semibold'>${products.reduce((sum, item) => sum + item.price, 0)}</span>
+                </p>
+                <p className='text-sm'>
+                  Vas a pagar con: <span className='font-semibold'>Mercado Pago</span>
+                </p>
+              </div>
               <Textarea
                 name='instructions'
                 label='Instrucciones adicionales'

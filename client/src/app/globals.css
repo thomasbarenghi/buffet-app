@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .resp-pad-x {
+    @apply px-6 lg:px-20;
+  }
+}

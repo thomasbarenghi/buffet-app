@@ -21,12 +21,7 @@ const ProductOrderItem = ({ order }: Props) => (
       </div>
       <div className='flex w-full flex-row gap-3'>
         <div className='relative aspect-square h-auto w-full max-w-[90px]'>
-          <Image
-            src='https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1398&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            alt='picture'
-            fill
-            className='rounded-2xl object-cover'
-          />
+          <Image src={order.products[0].thumbnail} alt='picture' fill className='rounded-2xl object-cover' />
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex flex-col gap-1'>

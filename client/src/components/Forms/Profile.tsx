@@ -24,7 +24,7 @@ const ProfileDynamicForm = ({ mode, handleSubmitForm, profile }: Props) => {
   }
 
   return (
-    <section className='flex w-full flex-col gap-2 2xl:container'>
+    <div className='flex w-full flex-col gap-2 2xl:container'>
       <form className='flex w-full flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
         <Input
           type='text'
@@ -71,7 +71,7 @@ const ProfileDynamicForm = ({ mode, handleSubmitForm, profile }: Props) => {
           title={mode === 'create' ? 'Finalizar registro' : 'Editar perfil'}
         />
       </form>
-    </section>
+    </div>
   )
 }
 

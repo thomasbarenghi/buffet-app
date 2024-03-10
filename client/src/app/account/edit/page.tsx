@@ -1,4 +1,4 @@
-import { Header } from '@/components'
+import { Footer, Header } from '@/components'
 import Form from './_components/Form'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
@@ -13,12 +13,13 @@ const EditAccountPage = async () => {
   return (
     <>
       <Header />
-      <main className=' flex min-h-screen  flex-col gap-4 px-6  py-4'>
+      <main className='resp-pad-x flex  flex-col gap-4 pb-[80px] pt-4'>
         <h1 className='text-[24px] font-light leading-tight'>
           Editar <span className='font-semibold'>perfil.</span>
         </h1>
         <Form user={user} profile={profile.data} />
       </main>
+      <Footer />
     </>
   )
 }
