@@ -9,7 +9,7 @@ import type { NextRequest } from 'next/server'
 export const POST = async (request: NextRequest) => {
   // const body = await request.json().then((data) => data as { data: { id: string } })
   const body = await request.json()
-  console.log(body)
+  console.log('body notification')
   console.log(request.url)
   // const payment = await new Payment(mercadopago).get({ id: body.data.id })
 
@@ -21,5 +21,5 @@ export const POST = async (request: NextRequest) => {
 
   // await supabase.from('orders').insert(donation)
 
-  return Response.json({ success: true })
+  return Response.json({ success: true, order: body.orderId })
 }

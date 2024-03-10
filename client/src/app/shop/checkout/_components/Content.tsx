@@ -8,6 +8,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
 import axios from 'axios'
+import { createOrder } from '@/services/orders/create-order.service'
 
 interface Props {
   userId: string
@@ -34,10 +35,11 @@ const Content: FunctionComponent<Props> = ({ userId }) => {
 
   const onSubmit: SubmitHandler<ShippingFormProps> = async (data) => {
     try {
+      const orderId = await createOrder(products)
       const { data: preference } = await axios.post('/api/checkout', {
-        products
+        products,
+        orderId
       })
-
       router.push(preference?.url as string)
     } catch (error) {
       console.error(error)

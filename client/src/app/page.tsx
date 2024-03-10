@@ -1,12 +1,20 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+/* eslint-disable @typescript-eslint/quotes */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+// import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+// import { cookies } from 'next/headers'
 import Image from 'next/image'
 
 export default async function Home() {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  const user = await supabase.auth.getUser()
-  console.log(user)
+  // const cookieStore = cookies()
+  // const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  //   const user = await supabase.auth.getUser()
+
+  //   // Pedir datos relacionados
+  //   const { data } = await supabase.from('orders').select(`
+  //     *,
+  //     products: orders_products ( products (*) )
+  // `)
+
   return (
     <main className='flex min-h-screen flex-col items-center justify-between p-24'>
       <div className='z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex'>

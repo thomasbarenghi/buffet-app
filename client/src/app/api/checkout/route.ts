@@ -23,8 +23,8 @@ export const POST = async (req: NextRequest) => {
               id: 'ticket'
             }
           ]
-        }
-        // notification_url: clientUrl + '/api/notification'
+        },
+        notification_url: clientUrl + '/api/notification?orderId=' + reqJson.orderId
       }
     })
 
