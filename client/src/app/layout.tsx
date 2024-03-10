@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 import './globals.css'
 import { type FunctionComponent } from 'react'
@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   title: 'Buffet UNAHUR'
 }
 
+export const viewport: Viewport = {
+  themeColor: 'white'
+}
+
 interface Props {
   children: React.ReactNode
 }
@@ -26,12 +30,12 @@ interface Props {
 const RootLayout: FunctionComponent<Props> = ({ children }: { children: React.ReactNode }) => (
   <html lang='en'>
     <body className={outfit.className}>
-        <NextUiProvider>
-          <SWRProvider>
-            <Toaster richColors />
-            {children}
-          </SWRProvider>
-        </NextUiProvider>
+      <NextUiProvider>
+        <SWRProvider>
+          <Toaster richColors />
+          {children}
+        </SWRProvider>
+      </NextUiProvider>
     </body>
   </html>
 )

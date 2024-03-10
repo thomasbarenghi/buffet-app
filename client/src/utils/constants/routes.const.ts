@@ -12,17 +12,9 @@ export const routes = {
   },
   customer: {
     ...common,
-    HOME: '/',
-    CHECKOUT: '/checkout',
-    ORDER_TRACKING: (id: string) => `/order-tracking/${id}`,
-    SHOP: (id: string) => `/shops/${id}`
-  },
-  dealer: {
-    ...common,
-    HOME: '/dealer',
-    AVAILABILITY: '/dealer/availability',
-    WAITING_ORDER: '/dealer/waiting-order',
-    ORDER: (id: string) => `/dealer/order/${id}`
+    HOME: '/shop',
+    CHECKOUT: '/shop/checkout',
+    ORDER_TRACKING: (id: string) => `/order-tracking/${id}`
   },
   shop: {
     ...common,
