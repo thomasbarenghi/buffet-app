@@ -16,8 +16,6 @@ import { routes } from '@/utils/constants/routes.const'
 import { usePathname } from 'next/navigation'
 import { generalMenu } from '@/lib/menu.lib'
 
-const menuItems = ['Perfil', 'Tienda', 'Pedidos', 'Cerrar sesión']
-
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
@@ -52,16 +50,16 @@ const Header = () => {
         <Cart />
         <NavbarMenuToggle className='sm:hidden' aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
       </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+      <NavbarMenu className='pt-14'>
+        {generalMenu.map((element, index) => (
+          <NavbarMenuItem isActive={pathname === element.href} key={index}>
             <Link
-              className='w-full'
-              color={index === 2 ? 'warning' : index === menuItems.length - 1 ? 'danger' : 'foreground'}
-              href='#'
+              className={pathname === element.href ? 'font-semibold' : 'font-light'}
+              color={pathname === element.href ? 'primary' : 'foreground'}
+              href={element.href}
               size='lg'
             >
-              {item}
+              {element.title}
             </Link>
           </NavbarMenuItem>
         ))}
