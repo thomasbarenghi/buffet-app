@@ -17,7 +17,8 @@ const Content: FunctionComponent = () => {
   const cleanCart = useCartStore((state) => state.cleanCart)
   const {
     formState: { errors, isSubmitting },
-    handleSubmit
+    handleSubmit,
+    register
   } = useForm<ShippingFormProps>({
     mode: 'onChange'
   })
@@ -32,6 +33,7 @@ const Content: FunctionComponent = () => {
 
   const onSubmit: SubmitHandler<ShippingFormProps> = async (data) => {
     try {
+      console.log(data)
       const orderId = await createOrder(products, data.instructions)
       const { data: preference } = await axios.post('/api/checkout', {
         products,
@@ -84,6 +86,9 @@ const Content: FunctionComponent = () => {
                 label='Instrucciones adicionales'
                 placeholder='¿No queres que tenga sal o algo así? decíselo al cocinero'
                 errorMessage={errors.instructions?.message}
+                hookForm={{
+                  register
+                }}
               />
               <div className='flex w-full justify-end'>
                 <Button type='submit' title='Finalizar compra' size='lg' radius='lg' isLoading={isSubmitting} />

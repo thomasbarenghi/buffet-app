@@ -7,6 +7,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { routes } from '@/utils/constants/routes.const'
 
 const Form: FunctionComponent = () => {
   const router = useRouter()
@@ -23,10 +24,11 @@ const Form: FunctionComponent = () => {
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       await supabase.auth.signInWithPassword({
-        email: 'thomas-test@test.com',
-        password: 'Test1234'
+        email: data.email,
+        password: data.password
       })
       router.refresh()
+      router.push(routes.customer.HOME)
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)

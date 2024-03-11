@@ -30,7 +30,6 @@ export const createOrder = async (products: Product[], instructions: string) => 
       .from('orders_products')
       .insert([{ order_id: order.id, product_id: iterator.id }])
       .select()
-    console.log(errorI)
     if (errorI) {
       toast.error('Algo salió mal')
       return

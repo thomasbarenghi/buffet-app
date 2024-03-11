@@ -4,6 +4,9 @@ import { type OrderInterface } from '@/interfaces'
 import { Endpoints } from '@/utils/constants/endpoints.const'
 import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 import { Tab, Tabs } from '@nextui-org/react'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 import useSWR from 'swr'
 
 interface FilteredOrders {
@@ -44,10 +47,24 @@ const orderFiltering = (orders: OrderInterface[]): FilteredOrders => {
 }
 
 const Content = () => {
-  const { data: ordersPrev } = useSWR<OrderInterface[]>(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey), {
+  const supabase = createClientComponentClient<Database>()
+  const { data: ordersPrev, mutate } = useSWR<OrderInterface[]>(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey), {
     refreshInterval: 30000
   })
   const orders = orderFiltering(ordersPrev ?? [])
+
+  useEffect(() => {
+    supabase
+      .channel('custom-insert-channel')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, (payload) => {
+        console.log('Change received!', payload)
+        toast.info('Nuevo pedido')
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        mutate()
+      })
+      .subscribe()
+  }, [])
+
   return (
     <section className='flex min-h-[500px] w-full flex-col items-start gap-2 2xl:container'>
       <Tabs
