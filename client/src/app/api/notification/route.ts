@@ -45,7 +45,6 @@ export const POST = async (request: NextRequest) => {
       })
     }
   } catch (error) {
-    await supabase.from('orders').update({ payment_status: PaymentStatusApiEnum.Failure }).eq('id', orderId).select()
     console.error(error)
     return new Response(JSON.stringify({ message: 'Internal Server Error', error }), {
       status: 500,
