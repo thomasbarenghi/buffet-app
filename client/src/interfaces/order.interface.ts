@@ -1,6 +1,7 @@
 // import { type User, type Chat, type Coordinates, type Product, type Shop } from '.'
 
 import { type Product } from './product.interface'
+import { type Profile } from './user.interface'
 
 export type PaymentStatus = 'Pending' | 'Completed' | 'Failure'
 
@@ -9,9 +10,49 @@ export interface OrderInterface {
   created_at: Date
   payment_status: PaymentStatus
   total_price: number
-  status: OrderStatus
+  status: OrderStatusType
   customer_id: string
   products: Product[]
+  customer?: Profile
+  instructions: string
 }
 
-export type OrderStatus = 'Pending' | 'In Progress' | 'Delivered' | 'Canceled'
+export type OrderStatusType =
+  | 'PendingApproval'
+  | 'PendingPreparation'
+  | 'InProgress'
+  | 'PendingDelivery'
+  | 'Delivered'
+  | 'Canceled'
+
+export enum OrderStatusApiEnum {
+  PendingApproval = 'PendingApproval',
+  PendingPreparation = 'PendingPreparation',
+  InProgress = 'InProgress',
+  PendingDelivery = 'PendingDelivery',
+  Delivered = 'Delivered',
+  Canceled = 'Canceled'
+}
+
+export enum OrderStatusClientEnum {
+  PendingApproval = 'Pendiente de aprobación',
+  PendingPreparation = 'Pendiente de preparación',
+  InProgress = 'En preparación',
+  PendingDelivery = 'Pendiente de entrega',
+  Delivered = 'Entregado',
+  Canceled = 'Cancelado'
+}
+
+export type PaymentStatusType = 'Pending' | 'Completed' | 'Failure'
+
+export enum PaymentStatusApiEnum {
+  Pending = 'Pending',
+  Completed = 'Completed',
+  Failure = 'Failure'
+}
+
+export enum PaymentStatusClientEnum {
+  Pending = 'Pago Pendiente',
+  Completed = 'Pago realizado',
+  Failure = 'No se realizó el pago'
+}

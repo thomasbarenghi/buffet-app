@@ -1,5 +1,4 @@
-import { Footer, Header } from '@/components'
-import MyOrdersGrid from '@/components/Products/MyOrdersGrid'
+import { Footer, Header, OrdersGrid } from '@/components'
 import { getUserOrders } from '@/services/orders/get-user-orders'
 import { getProfile } from '@/services/user/get-profile.service'
 import { routes } from '@/utils/constants/routes.const'
@@ -14,7 +13,7 @@ const AccountPage = async () => {
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
   const user = await supabase.auth.getUser()
   const profile = await getProfile(user.data.user?.id ?? '')
-  const orders = await getUserOrders(supabase)
+  const orders = await getUserOrders(supabase, 'finished')
   return (
     <>
       <Header />
@@ -42,7 +41,10 @@ const AccountPage = async () => {
             <Image src={'/icons/configuration.svg'} alt='configuration' height={30} width={30} />
           </Link>
         </section>
-        <MyOrdersGrid orders={orders} />
+        <section className='flex w-full flex-grow flex-col gap-4 2xl:container'>
+          <h1 className='text-[24px] font-medium leading-tight'>Ordenes realizadas</h1>
+          <OrdersGrid orders={orders} mode='customer' />
+        </section>
       </main>
       <Footer />
     </>
