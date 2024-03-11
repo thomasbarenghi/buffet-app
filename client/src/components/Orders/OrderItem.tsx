@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 'use client'
 import {
   OrderStatusClientEnum,
@@ -76,6 +77,22 @@ const DropManager = ({ order, client }: PropsDrop) => {
     toast.success('Realizado')
   }
 
+  const handleFinish = async () => {
+    if (order.status !== 'PendingDelivery') {
+      return toast.warning('No puedes finalizar un pedido en curso')
+    }
+
+    const givenCode = prompt('Ingresa el codigo del cliente')
+
+    if (givenCode !== order.code.toString()) {
+      return toast.error('Codigo incorrecto')
+    }
+
+    await changeStatus(OrderStatusApiEnum.Delivered, order.id)
+    await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
+    toast.success('Finalizado')
+  }
+
   return (
     <Dropdown>
       <DropdownTrigger>
@@ -87,12 +104,19 @@ const DropManager = ({ order, client }: PropsDrop) => {
         <DropdownItem key='cli' onClick={handleViewClient}>
           Ver cliente
         </DropdownItem>
+
+        <DropdownItem key='finish' onClick={handleFinish}>
+          Finalizar
+        </DropdownItem>
+
         <DropdownItem key='next' onClick={handleNextStep}>
           Etapa siguiente
         </DropdownItem>
+
         <DropdownItem key='prev' onClick={handlePrevStep}>
           Etapa anterior
         </DropdownItem>
+
         <DropdownItem key='delete' className='text-danger' color='danger'>
           Cancelar
         </DropdownItem>
@@ -140,11 +164,23 @@ const ProductOrderItem = ({ order, mode }: Props) => (
             </div>
           ))}
       </div>
-      {order.instructions && (
-        <p className='text-xs font-light'>
-          <span className='font-semibold'>Instrucciones:</span> {order.instructions}{' '}
-        </p>
-      )}
+      <div className='flex flex-row gap-[4px] '>
+        {order.status !== OrderStatusApiEnum.Canceled &&
+          order.status !== OrderStatusApiEnum.Delivered &&
+          order.instructions &&
+          mode === 'shop' && (
+            <p className='text-xs font-light'>
+              <span className='font-semibold'>Instrucciones:</span> {order.instructions}{' '}
+            </p>
+          )}
+        {order.status !== OrderStatusApiEnum.Canceled &&
+          order.status !== OrderStatusApiEnum.Delivered &&
+          mode === 'customer' && (
+            <p className='text-xs font-light'>
+              <span className='font-semibold'>Codigo de entrega:</span> {order.code}
+            </p>
+          )}
+      </div>
     </div>
   </>
 )

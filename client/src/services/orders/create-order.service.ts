@@ -2,6 +2,11 @@ import { OrderStatusApiEnum, PaymentStatusApiEnum, type Product } from '@/interf
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { toast } from 'sonner'
 
+const generateRandomNumber = () => {
+  const randomNumber = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000
+  return randomNumber
+}
+
 export const createOrder = async (products: Product[], instructions: string) => {
   const supabase = createClientComponentClient<Database>()
   const user = await supabase.auth.getUser()
@@ -14,7 +19,8 @@ export const createOrder = async (products: Product[], instructions: string) => 
         customer_id: user.data.user?.id ?? '',
         instructions,
         status: OrderStatusApiEnum.PendingApproval,
-        payment_status: PaymentStatusApiEnum.Pending
+        payment_status: PaymentStatusApiEnum.Pending,
+        code: generateRandomNumber()
       }
     ])
     .select()

@@ -14,6 +14,7 @@ export interface OrderInterface {
   customer_id: string
   products: Product[]
   customer?: Profile
+  code: number
   instructions: string
 }
 

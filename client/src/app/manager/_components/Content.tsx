@@ -66,27 +66,30 @@ const Content = () => {
   }, [])
 
   return (
-    <section className='flex min-h-[500px] w-full flex-col items-start gap-2 2xl:container'>
-      <Tabs
-        variant='solid'
-        classNames={{
-          base: 'grid',
-          panel: 'w-full'
-        }}
-      >
-        <Tab key='1' title='Por aprobarse'>
-          <OrdersGrid orders={orders.PendingApproval} mode='shop' />
-        </Tab>
-        <Tab key='2' title='Pendientes de preparacion'>
-          <OrdersGrid orders={orders.PendingPreparation} mode='shop' />
-        </Tab>
-        <Tab key='3' title='En preparacion'>
-          <OrdersGrid orders={orders.InProgress} mode='shop' />
-        </Tab>
-        <Tab key='4' title='Por ser entregados'>
-          <OrdersGrid orders={orders.PendingDelivery} mode='shop' />
-        </Tab>
-      </Tabs>
+    <section className='flex w-full flex-col gap-4'>
+      <h1 className='text-[24px] font-medium leading-tight'>Pedidos activos ({ordersPrev?.length})</h1>
+      <div className='flex min-h-[500px] w-full flex-col items-start gap-2 2xl:container'>
+        <Tabs
+          variant='solid'
+          classNames={{
+            base: 'grid',
+            panel: 'w-full'
+          }}
+        >
+          <Tab key='1' title='Por aprobarse'>
+            <OrdersGrid orders={orders.PendingApproval} mode='shop' />
+          </Tab>
+          <Tab key='2' title='Pendientes de preparacion'>
+            <OrdersGrid orders={orders.PendingPreparation} mode='shop' />
+          </Tab>
+          <Tab key='3' title='En preparacion'>
+            <OrdersGrid orders={orders.InProgress} mode='shop' />
+          </Tab>
+          <Tab key='4' title='Por ser entregados'>
+            <OrdersGrid orders={orders.PendingDelivery} mode='shop' />
+          </Tab>
+        </Tabs>
+      </div>
     </section>
   )
 }
