@@ -63,7 +63,7 @@ const DropManager = ({ order, client }: PropsDrop) => {
 
   const handleNextStep = async () => {
     const next = getNextOrderStatus(order.status as OrderStatusApiEnum)
-    if (next === order.status) return toast.warning('No disponible')
+    if (next === OrderStatusApiEnum.Delivered) return toast.warning('No disponible')
     await changeStatus(next ?? OrderStatusApiEnum.Canceled, order.id)
     await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
     toast.success('Realizado')
