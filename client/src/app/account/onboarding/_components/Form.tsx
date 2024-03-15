@@ -15,7 +15,8 @@ const Form: FunctionComponent = () => {
   const handleSubmitForm = async (formData: ProfileFormData) => {
     try {
       const user = await supabase.auth.getUser()
-      await createProfile(formData, user.data.user?.id ?? '')
+      const { profile } = await createProfile(formData, user.data.user?.id ?? '')
+      console.log(profile)
       router.refresh()
       router.push(routes.customer.HOME)
     } catch (error) {

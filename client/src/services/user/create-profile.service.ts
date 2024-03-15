@@ -19,5 +19,5 @@ export const createProfile = async (data: ProfileFormData, id: string) => {
     throw new Error()
   }
 
-  return profile
+  return { profile, error }
 }

@@ -8,11 +8,19 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 import useSWR from 'swr'
 
-const Content = () => {
+interface Props {
+  userId: string
+}
+
+const Content = ({ userId }: Props) => {
   const supabase = createClientComponentClient<Database>()
-  const { data: orders, mutate } = useSWR<OrderInterface[]>(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey), {
-    refreshInterval: 30000
-  })
+
+  const { data: orders, mutate } = useSWR<OrderInterface[]>(
+    Endpoints.FIND_USER_ACTIVE_ORDERS(userId, supabaseAnonApiKey),
+    {
+      refreshInterval: 30000
+    }
+  )
 
   useEffect(() => {
     supabase
