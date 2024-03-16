@@ -21,7 +21,7 @@ interface Props {
   withBorder?: boolean
 }
 
-const Header = ({ mode = 'customer', withBorder = false }: Props) => {
+const Header = ({ mode = 'customer', withBorder = true }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   return (
@@ -29,7 +29,7 @@ const Header = ({ mode = 'customer', withBorder = false }: Props) => {
       shouldHideOnScroll
       onMenuOpenChange={setIsMenuOpen}
       classNames={{
-        base: `py-4 resp-pad-x ${withBorder ? 'border-b' : ''}`,
+        base: `py-3 resp-pad-x ${withBorder ? 'border-b' : ''}`,
         wrapper: 'px-0 w-full max-w-none 2xl:container'
       }}
     >

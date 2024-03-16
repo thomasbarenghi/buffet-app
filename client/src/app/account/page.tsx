@@ -8,42 +8,52 @@ import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
+// TODO: ACTUALIZAR EN CADA SOFTROUTING LAS ORDENES FINALIZADAS
+// TODO: ORDENAR SEGUN ULTIMA ORDEN
+
 const AccountPage = async () => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
   const user = await supabase.auth.getUser()
   const profile = await getProfile(user.data.user?.id ?? '')
   const orders = await getUserOrders(supabase, 'finished')
+
   return (
     <>
       <Header />
-      <main className=' resp-pad-x flex  min-h-screen flex-col items-center gap-9 pb-[80px]  pt-4'>
-        <section className='flex w-full items-center justify-between gap-6  2xl:container sm:flex-row'>
-          <User
-            name={profile.data?.first_name + ' ' + profile.data?.last_name}
-            description='Cliente'
-            classNames={{
-              name: 'text-[18px] font-semibold',
-              description: 'text-[14px] font-light',
-              base: 'flex gap-3'
-            }}
-            avatarProps={{
-              src: `${profile.data?.profile_image}`,
-              size: 'lg',
-              radius: 'lg',
-              classNames: {
-                img: 'h-[80px] w-auto aspect-square',
-                base: 'w-auto h-auto'
-              }
-            }}
-          />
-          <Link href={routes.customer.EDIT_ACCOUNT}>
-            <Image src={'/icons/configuration.svg'} alt='configuration' height={30} width={30} />
-          </Link>
+      <main className=' flex flex-col items-center pb-14 '>
+        <section className='resp-pad-x flex w-full justify-center gap-6 bg-neutral-50  pb-9 pt-8  '>
+          <div className='flex w-full items-center justify-between gap-4 2xl:container sm:flex-row'>
+            <User
+              name={profile.data?.first_name + ' ' + profile.data?.last_name}
+              description={'DNI ' + profile.data?.dni}
+              classNames={{
+                name: 'text-medium sm:text-lg font-semibold',
+                description: 'text-xs sm:text-sm text-neutral-600 font-light',
+                base: 'flex gap-3'
+              }}
+              avatarProps={{
+                src: `${profile.data?.profile_image}`,
+                size: 'lg',
+                radius: 'lg',
+                classNames: {
+                  img: 'sm:h-[80px] sm:min-w-[80px] h-[60px] min-w-[60px]',
+                  base: 'sm:h-[80px] sm:min-w-[80px] h-[60px] min-w-[60px]'
+                }
+              }}
+            />
+            <Link href={routes.customer.EDIT_ACCOUNT}>
+              <Image src={'/icons/configuration.svg'} alt='configuration' height={30} width={30} />
+            </Link>
+          </div>
         </section>
-        <section className='flex w-full flex-grow flex-col gap-4 2xl:container'>
-          <h1 className='text-[24px] font-medium leading-tight'>Ordenes realizadas</h1>
-          <OrdersGrid orders={orders} mode='customer' />
+        <section className='resp-pad-x flex w-full justify-center border-t bg-white pt-8 '>
+          <div className='flex w-full flex-col items-start justify-start gap-8 2xl:container'>
+            <h1 className='text-[24px] font-medium leading-tight'>Ordenes realizadas</h1>
+            <OrdersGrid orders={orders} mode='customer' />
+          </div>
         </section>
       </main>
       <Footer />

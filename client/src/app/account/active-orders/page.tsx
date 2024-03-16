@@ -3,6 +3,8 @@ import Content from './_components/Content'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
+// TODO: ORDENAR SEGUN ULTIMA ORDEN
+
 const ActiveOrders = async () => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
@@ -10,9 +12,9 @@ const ActiveOrders = async () => {
   return (
     <>
       <Header />
-      <main className=' resp-pad-x flex  min-h-screen flex-col items-center gap-9 pb-[80px]  pt-4'>
+      <main className='resp-pad-x flex flex-col items-center gap-9 pb-14 pt-8'>
         <div className='flex w-full flex-col gap-4'>
-          <h1 className='text-[24px] font-medium leading-tight'>Pedidos activos</h1>
+          <h1 className='text-2xl font-medium leading-tight'>Pedidos activos</h1>
           <Content userId={user.data.user?.id ?? ''} />
         </div>
       </main>

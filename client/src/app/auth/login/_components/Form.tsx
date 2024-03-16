@@ -7,6 +7,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { routes } from '@/utils/constants/routes.const'
 
 const Form: FunctionComponent = () => {
   const router = useRouter()
@@ -27,6 +28,7 @@ const Form: FunctionComponent = () => {
         password: data.password
       })
       router.refresh()
+      router.push(routes.customer.ACCOUNT)
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)

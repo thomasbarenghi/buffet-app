@@ -12,10 +12,10 @@ const ShopPage = async () => {
   const products = await getProducts()
   return (
     <>
-      <Header />
-      <main className='resp-pad-x flex min-h-screen  flex-col items-center gap-9 py-4'>
+      <Header withBorder />
+      <main className='resp-pad-x flex flex-col items-center gap-9 pb-14 pt-8'>
         <section className='flex w-full flex-col gap-2 2xl:container'>
-          <h1 className='text-[32px] font-light leading-tight'>
+          <h1 className='text-3xl font-light leading-tight'>
             Simplificamos tu manera de <span className='font-semibold'>comer en la uni.</span>
           </h1>
           <p className='font-light text-zinc-700'>

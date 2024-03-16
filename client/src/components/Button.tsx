@@ -23,9 +23,9 @@ const Button: FunctionComponent<ExtendedProps> = ({ ...props }) => (
     href={props?.href ?? ''}
     color={props.color ?? 'primary'}
     variant={props.variant ?? 'solid'}
-    size={props.size}
+    size={props.size ?? 'lg'}
     type={props.type}
-    radius={props.radius ?? 'full'}
+    radius={props.radius ?? 'lg'}
     fullWidth={props.fullWidth}
     isDisabled={props.isDisabled}
     isLoading={props.isLoading}

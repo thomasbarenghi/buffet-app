@@ -10,23 +10,24 @@ import { truncateText } from '@/utils/functions/truncateText'
 interface Props {
   product: Product
   isLast: boolean
+  withBg?: boolean
 }
 
-const ProductCartItem: FunctionComponent<Props> = ({ product, isLast }) => {
+const ProductCartItem: FunctionComponent<Props> = ({ product, isLast, withBg = false }) => {
   const removeItem = useCartStore((state) => state.removeItem)
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
       <div
-        className={`flex cursor-pointer items-center justify-between gap-5   py-5 ${!isLast && 'border-b'} `}
+        className={`flex cursor-pointer items-center justify-between gap-5 ${withBg && 'rounded-xl border bg-white !py-3 px-3'}  py-5 ${!isLast && !withBg && 'border-b'} `}
         onClick={onOpen}
       >
-        <div className='flex items-start gap-2'>
+        <div className='flex items-center gap-3'>
           <div className='relative aspect-square h-[80px] w-[80px] '>
             <Image src={product.thumbnail} alt={product.title} fill className='aspect-square rounded-lg object-cover' />
           </div>
           <div className='flex flex-col gap-2'>
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col'>
               <h1 className='font-normal'>{product.title}</h1>
               <p className='text-xs font-light text-zinc-700'>{truncateText(product.description, 40)}</p>
             </div>
@@ -39,7 +40,8 @@ const ProductCartItem: FunctionComponent<Props> = ({ product, isLast }) => {
           height={25}
           width={25}
           className='cursor-pointer'
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation()
             removeItem(product.id)
           }}
         />

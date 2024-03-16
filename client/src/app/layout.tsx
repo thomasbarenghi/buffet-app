@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: 'white'
+  themeColor: '#FB5607'
 }
 
 interface Props {
@@ -32,7 +32,7 @@ const RootLayout: FunctionComponent<Props> = ({ children }: { children: React.Re
     <body className={outfit.className}>
       <NextUiProvider>
         <SWRProvider>
-          <Toaster richColors />
+          <Toaster richColors closeButton={true} position='bottom-left' />
           {children}
         </SWRProvider>
       </NextUiProvider>

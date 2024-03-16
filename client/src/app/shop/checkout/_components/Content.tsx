@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
 import axios from 'axios'
 import { createOrder } from '@/services/orders/create-order.service'
+import Tips from './Tips'
 
 const Content: FunctionComponent = () => {
   const router = useRouter()
@@ -48,12 +49,12 @@ const Content: FunctionComponent = () => {
 
   return (
     <>
-      {items?.length <= 0 && (
-        <section className='flex min-h-[400px] w-full flex-col items-center justify-center 2xl:container'>
-          <div className='flex flex-col items-center justify-center gap-3'>
-            <div>
+      {items?.length <= 0 ? (
+        <section className='resp-pad-x flex min-h-[400px] w-full flex-col items-center justify-center pt-8 2xl:container'>
+          <div className='flex flex-col items-center justify-center gap-4'>
+            <div className='flex flex-col gap-1'>
               <h1 className='text-center text-2xl font-semibold'>No hay productos en tu carrito</h1>
-              <p className='text-center'>¿Que esperas para agregar productos a tu carrito?</p>
+              <p className='text-center font-light text-zinc-700'>¿Que esperas para agregar productos a tu carrito?</p>
             </div>
             <Button
               title='Ir a comprar'
@@ -63,37 +64,54 @@ const Content: FunctionComponent = () => {
             />
           </div>
         </section>
-      )}
-      {items?.length > 0 && (
+      ) : (
         <>
-          <section className='flex w-full grid-cols-2 flex-col justify-between gap-5 2xl:container lg:grid lg:gap-10'>
-            <div className='flex flex-col gap-1'>
-              <h1 className='text-2xl font-semibold'>Ya casi es tuyo</h1>
-              <ProductCartGrid products={products} />
+          <section className='resp-pad-x flex w-full justify-center  bg-neutral-50 py-9 pt-8  '>
+            <div className='flex w-full grid-cols-2 flex-col gap-5 2xl:container lg:grid lg:gap-10'>
+              <div className='flex w-full flex-col gap-4'>
+                <h1 className='text-2xl font-light'>
+                  Ya casi <span className='font-semibold'>terminamos</span>
+                </h1>
+                <ProductCartGrid products={products} withBg />
+              </div>
+              <form className='flex w-full flex-col  gap-6' onSubmit={handleSubmit(onSubmit)}>
+                <div className='flex w-full flex-col gap-4'>
+                  <h1 className='text-2xl font-semibold'>Resumen</h1>
+                  <div className='flex flex-col gap-1 rounded-xl border bg-white px-3 py-4'>
+                    <p className='text-sm'>
+                      Total:{' '}
+                      <span className='font-semibold'>${products.reduce((sum, item) => sum + item.price, 0)}</span>
+                    </p>
+                    <p className='text-sm'>
+                      Vas a pagar con: <span className='font-semibold'>Mercado Pago</span>
+                    </p>
+                  </div>
+                  <Textarea
+                    name='instructions'
+                    label='Instrucciones adicionales'
+                    placeholder='¿No queres que tenga sal o algo así? decíselo al cocinero'
+                    errorMessage={errors.instructions?.message}
+                    hookForm={{
+                      register
+                    }}
+                  />
+                </div>
+                <div className='flex w-full justify-end'>
+                  <Button type='submit' title='Finalizar compra' isLoading={isSubmitting} />
+                </div>
+              </form>
             </div>
-            <form className='flex flex-col  gap-6' onSubmit={handleSubmit(onSubmit)}>
-              <div className='flex w-full flex-col gap-2'>
-                <h1 className='text-2xl font-semibold'>Resumen</h1>
-                <p className='text-sm'>
-                  Total: <span className='font-semibold'>${products.reduce((sum, item) => sum + item.price, 0)}</span>
-                </p>
-                <p className='text-sm'>
-                  Vas a pagar con: <span className='font-semibold'>Mercado Pago</span>
-                </p>
+          </section>
+          <section className='resp-pad-x flex w-full justify-center border-t bg-white pt-8 '>
+            <div className='flex w-full flex-col items-start justify-start gap-8 2xl:container'>
+              <div className='flex flex-col gap-1'>
+                <h1 className='text-2xl font-light'>
+                  Antes de <span className='font-semibold'>realizar tu compra</span>
+                </h1>
+                <p className='font-light text-zinc-700'>Tenes que tener en cuenta estos datos</p>
               </div>
-              <Textarea
-                name='instructions'
-                label='Instrucciones adicionales'
-                placeholder='¿No queres que tenga sal o algo así? decíselo al cocinero'
-                errorMessage={errors.instructions?.message}
-                hookForm={{
-                  register
-                }}
-              />
-              <div className='flex w-full justify-end'>
-                <Button type='submit' title='Finalizar compra' size='lg' radius='lg' isLoading={isSubmitting} />
-              </div>
-            </form>
+              <Tips />
+            </div>
           </section>
         </>
       )}

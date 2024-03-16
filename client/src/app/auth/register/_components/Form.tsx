@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { routes } from '@/utils/constants/routes.const'
+import { clientUrl } from '@/utils/constants/env.const'
 
 const Form: FunctionComponent = () => {
   const router = useRouter()
@@ -27,7 +28,7 @@ const Form: FunctionComponent = () => {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: 'http://localhost:3000/auth/callback'
+          emailRedirectTo: clientUrl + '/auth/callback'
         }
       })
 

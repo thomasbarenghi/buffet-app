@@ -10,7 +10,7 @@ export interface GetRequestParams {
   url: string
   cache?: 'default' | 'no-store' | 'reload' | 'force-cache' | 'only-if-cached'
   tags?: string[]
-  validate?: number
+  revalidate?: number
 }
 
 export type HttpMethod = 'post' | 'put' | 'delete'

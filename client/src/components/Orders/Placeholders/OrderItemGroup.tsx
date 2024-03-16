@@ -5,7 +5,7 @@ interface Props {
 }
 
 const Default = () => (
-  <h1 className='text-[18px] font-light '>
+  <h1 className='text-center text-[18px] font-light'>
     Parece que todavia no hiciste <span className='font-semibold'>ninguna orden 🥸</span>
   </h1>
 )

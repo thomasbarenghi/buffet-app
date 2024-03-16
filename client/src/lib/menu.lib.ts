@@ -11,11 +11,7 @@ export const generalMenu: GeneralMenu[] = [
     href: routes.customer.HOME
   },
   {
-    title: 'Carrito',
-    href: routes.customer.CHECKOUT
-  },
-  {
-    title: 'Cuenta',
+    title: 'Mi Cuenta',
     href: routes.customer.ACCOUNT
   },
   {

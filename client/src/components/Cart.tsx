@@ -9,6 +9,7 @@ import { getAllItems } from '@/services/cart/get-items.service'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
 import Image from 'next/image'
+import { ScrollShadow } from '@nextui-org/react'
 
 const Cart: FunctionComponent = () => {
   const router = useRouter()
@@ -27,14 +28,17 @@ const Cart: FunctionComponent = () => {
 
   const handleOpen = async (): Promise<void> => {
     await handleUpdateCart()
+    document.body.style.overflow = 'hidden'
     setIsOpen(true)
   }
 
   const handleClose = (): void => {
+    document.body.style.overflow = ''
     setIsOpen(false)
   }
 
   const handleCheckout = (): void => {
+    handleClose()
     router.push(routes.customer.CHECKOUT)
   }
 
@@ -45,9 +49,9 @@ const Cart: FunctionComponent = () => {
       </div>
       {isOpen &&
         createPortal(
-          <div className='fixed left-0 top-0 z-50 flex h-screen w-screen flex-row items-end justify-start '>
-            <div className='h-full w-auto bg-[#00000079] sm:w-full ' onClick={handleClose}></div>
-            <div className='flex h-full w-full flex-col items-end justify-start gap-2 bg-white px-5 pb-24 pt-8  sm:w-[350px] sm:min-w-[350px] lg:pb-10'>
+          <div className='fixed bottom-0 left-0 top-0 z-50 grid h-screen w-screen lg:grid-cols-[auto,_max(25%,_400px)]'>
+            <div className='hidden h-auto w-auto bg-[#00000079] sm:w-full lg:flex ' onClick={handleClose}></div>
+            <div className='flex h-screen w-full flex-col items-end justify-start gap-2 bg-white px-5 pb-24 pt-8 lg:pb-10'>
               <div className='flex w-full items-center justify-between'>
                 <h2 className='text-xl font-semibold'>Carrito</h2>
                 <div className='cursor-pointer p-2' onClick={handleClose}>
@@ -60,11 +64,9 @@ const Cart: FunctionComponent = () => {
                 </div>
               ) : (
                 <>
-                  <div className='flex w-full flex-grow flex-col overflow-hidden'>
-                    <div className='max-h-auto overflow-y-scroll'>
-                      <ProductCartGrid products={products} />
-                    </div>
-                  </div>
+                  <ScrollShadow hideScrollBar className='flex w-full flex-grow flex-col '>
+                    <ProductCartGrid products={products} />
+                  </ScrollShadow>
                   <div className='w-full'>
                     <Button title='Ir a pagar' size='lg' radius='lg' fullWidth onClick={handleCheckout} />
                   </div>

@@ -1,4 +1,4 @@
-import { PaymentStatusApiEnum } from '@/interfaces'
+import { OrderStatusApiEnum, PaymentStatusApiEnum } from '@/interfaces'
 import { mpAccessToken } from '@/utils/constants/env.const'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 // import MercadoPagoConfig, { Payment } from 'mercadopago'
@@ -45,7 +45,7 @@ export const POST = async (request: NextRequest) => {
       } else {
         await supabase
           .from('orders')
-          .update({ payment_status: PaymentStatusApiEnum.Failure })
+          .update({ payment_status: PaymentStatusApiEnum.Failure, status: OrderStatusApiEnum.Canceled })
           .eq('id', orderId)
           .select()
       }
@@ -74,18 +74,3 @@ export const POST = async (request: NextRequest) => {
     })
   }
 }
-
-// const body = await request.json().then((data) => data as { data: { id: string } })
-//   const body = await request.json()
-//   // const payment = await new Payment(mercadopago).get({ id: body.data.id })
-
-//   // const order: = {
-//   //   id: payment.id,
-//   //   amount: payment.transaction_amount,
-//   //   message: payment.description
-//   // }
-
-//   // await supabase.from('orders').insert(donation)
-
-//   return Response.json({ success: true, order: body.orderId })
-// }

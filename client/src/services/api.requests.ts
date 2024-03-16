@@ -10,8 +10,8 @@ const axiosInstance = axios.create({
 export const getRequest = async <T>(params: GetRequestParams): Promise<Response<T>> => {
   try {
     const response = await fetch(`${axiosInstance.defaults.baseURL}${params.url}`, {
-      cache: params.cache || 'force-cache',
-      next: { revalidate: params.validate || undefined, tags: params.tags }
+      cache: params.cache,
+      next: { revalidate: params.revalidate || undefined, tags: params.tags }
     })
 
     const responseData = await response.json()

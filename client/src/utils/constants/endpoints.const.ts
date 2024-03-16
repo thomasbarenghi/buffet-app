@@ -7,5 +7,7 @@ export const Endpoints = {
   FIND_SHOP_ACTIVE_ORDERS: (apikey: string) =>
     `/rest/v1/orders?status=in.("PendingApproval","PendingPreparation","InProgress","PendingDelivery")&select=*,customer:profiles(*),products:orders_products(...products(*))&apikey=${apikey}`,
   FIND_USER_ACTIVE_ORDERS: (id: string, apikey: string) =>
-    `/rest/v1/orders?customer_id=eq.${id}&status=in.("PendingApproval","PendingPreparation","InProgress","PendingDelivery")&select=*,customer:profiles(*),products:orders_products(...products(*))&apikey=${apikey}`
+    `/rest/v1/orders?customer_id=eq.${id}&status=in.("PendingApproval","PendingPreparation","InProgress","PendingDelivery")&select=*,customer:profiles(*),products:orders_products(...products(*))&apikey=${apikey}`,
+  FIND_USER_FINISHED_ORDERS: (id: string, apikey: string) =>
+    `/rest/v1/orders?customer_id=eq.${id}&status=in.("Delivered","Canceled")&select=*,customer:profiles(*),products:orders_products(...products(*))&apikey=${apikey}`
 }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const Checkout: FunctionComponent = async () => (
   <>
     <Header />
-    <main className='resp-pad-x flex min-h-[70vh] flex-col items-center gap-9 pb-[40px] pt-4'>
+    <main className=' flex flex-col items-center pb-9'>
       <Content />
     </main>
     <Footer />

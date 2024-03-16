@@ -15,7 +15,7 @@ const OrdersGrid: FunctionComponent<Props> = ({ orders, mode }) => (
     ) : (
       <OrderItemGroupPlaceholder
         title={
-          <h1 className='text-[18px] font-light '>
+          <h1 className='text-center text-[18px] font-light'>
             Parece que aun <span className='font-semibold'>no hay nada por aquí</span>
           </h1>
         }
