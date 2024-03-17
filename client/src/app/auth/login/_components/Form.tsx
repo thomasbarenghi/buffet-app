@@ -28,7 +28,7 @@ const Form: FunctionComponent = () => {
         password: data.password
       })
       router.refresh()
-      router.push(routes.customer.ACCOUNT)
+      router.push(routes.common.ACCOUNT)
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)

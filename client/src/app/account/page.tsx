@@ -1,4 +1,6 @@
 import { Footer, Header, OrdersGrid } from '@/components'
+import { RoleEnum } from '@/interfaces'
+import { getShopOrders } from '@/services/orders/get-shop-orders'
 import { getUserOrders } from '@/services/orders/get-user-orders'
 import { getProfile } from '@/services/user/get-profile.service'
 import { routes } from '@/utils/constants/routes.const'
@@ -18,8 +20,11 @@ const AccountPage = async () => {
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
   const user = await supabase.auth.getUser()
   const profile = await getProfile(user.data.user?.id ?? '')
-  const orders = await getUserOrders(supabase, 'finished')
-
+  const orders =
+    profile.data?.role === RoleEnum.Customer
+      ? await getUserOrders(supabase, 'finished')
+      : await getShopOrders(supabase, 'finished')
+  const ordersTitle = profile.data?.role === RoleEnum.Customer ? 'Ordenes realizadas' : 'Ordenes finalizadas'
   return (
     <>
       <Header />
@@ -44,15 +49,15 @@ const AccountPage = async () => {
                 }
               }}
             />
-            <Link href={routes.customer.EDIT_ACCOUNT}>
+            <Link href={routes.common.EDIT_ACCOUNT}>
               <Image src={'/icons/configuration.svg'} alt='configuration' height={30} width={30} />
             </Link>
           </div>
         </section>
         <section className='resp-pad-x flex w-full justify-center border-t bg-white pt-8 '>
-          <div className='flex w-full flex-col items-start justify-start gap-8 2xl:container'>
-            <h1 className='text-[24px] font-medium leading-tight'>Ordenes realizadas</h1>
-            <OrdersGrid orders={orders} mode='customer' />
+          <div className='flex w-full flex-col items-start justify-start gap-6 2xl:container'>
+            <h1 className='text-[24px] font-medium leading-tight'>{ordersTitle}</h1>
+            <OrdersGrid orders={orders} mode={profile.data?.role ?? 'customer'} />
           </div>
         </section>
       </main>

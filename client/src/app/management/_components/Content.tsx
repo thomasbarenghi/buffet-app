@@ -1,11 +1,11 @@
 'use client'
 import { OrdersGrid } from '@/components'
-import { type OrderInterface } from '@/interfaces'
+import { RoleEnum, type OrderInterface } from '@/interfaces'
 import { Endpoints } from '@/utils/constants/endpoints.const'
 import { supabaseAnonApiKey } from '@/utils/constants/env.const'
-import { Tab, Tabs } from '@nextui-org/react'
+import { Switch, Tab, Tabs } from '@nextui-org/react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import useSWR from 'swr'
 
@@ -51,6 +51,7 @@ const Content = () => {
   const { data: ordersPrev, mutate } = useSWR<OrderInterface[]>(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey), {
     refreshInterval: 30000
   })
+  const [isSelected, setIsSelected] = useState(true)
   const orders = orderFiltering(ordersPrev ?? [])
 
   useEffect(() => {
@@ -67,26 +68,33 @@ const Content = () => {
 
   return (
     <section className='flex w-full flex-col gap-4'>
-      <h1 className='text-[24px] font-medium leading-tight'>Pedidos activos ({ordersPrev?.length})</h1>
+      <div className='flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between'>
+        <h1 className='text-[24px] font-medium leading-tight'>Pedidos activos ({ordersPrev?.length})</h1>
+        <Switch defaultSelected classNames={{ label: 'font-light' }} onValueChange={setIsSelected}>
+          {isSelected ? 'Recibiendo pedidos' : 'No recibiendo pedidos'}
+        </Switch>
+      </div>
       <div className='flex min-h-[500px] w-full flex-col items-start gap-2 2xl:container'>
         <Tabs
           variant='solid'
+          color='primary'
           classNames={{
             base: 'grid',
-            panel: 'w-full'
+            panel: 'w-full',
+            tabList: 'bg-white border'
           }}
         >
           <Tab key='1' title='Por aprobarse'>
-            <OrdersGrid orders={orders.PendingApproval} mode='shop' />
+            <OrdersGrid orders={orders.PendingApproval} mode={RoleEnum.Attendant} />
           </Tab>
           <Tab key='2' title='Pendientes de preparacion'>
-            <OrdersGrid orders={orders.PendingPreparation} mode='shop' />
+            <OrdersGrid orders={orders.PendingPreparation} mode={RoleEnum.Attendant} />
           </Tab>
           <Tab key='3' title='En preparacion'>
-            <OrdersGrid orders={orders.InProgress} mode='shop' />
+            <OrdersGrid orders={orders.InProgress} mode={RoleEnum.Attendant} />
           </Tab>
           <Tab key='4' title='Por ser entregados'>
-            <OrdersGrid orders={orders.PendingDelivery} mode='shop' />
+            <OrdersGrid orders={orders.PendingDelivery} mode={RoleEnum.Attendant} />
           </Tab>
         </Tabs>
       </div>

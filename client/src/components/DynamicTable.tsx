@@ -26,7 +26,15 @@ const DynamicTable: FunctionComponent<ExtendedProps> = ({ data, rowsPerPage = 4,
 
   return (
     <div className='flex flex-col gap-4'>
-      <Table className='w-full' classNames={props.classNames}>
+      <Table
+        className={props.className}
+        classNames={props.classNames}
+        shadow={props.shadow}
+        radius={props.radius}
+        onRowAction={props.onRowAction}
+        selectionBehavior={props.selectionBehavior}
+        selectionMode={props.selectionMode}
+      >
         <TableHeader>
           {columns.map((column, index) => (
             <TableColumn key={index}>{column}</TableColumn>

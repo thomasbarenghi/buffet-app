@@ -11,7 +11,7 @@ const Home = async () => {
   if (!session.data.session?.access_token) {
     redirect(routes.auth.LOGIN)
   } else {
-    redirect(routes.customer.ACCOUNT)
+    redirect(routes.common.ACCOUNT)
   }
 
   return <></>

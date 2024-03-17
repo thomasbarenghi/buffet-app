@@ -1,4 +1,4 @@
-export { default as Header } from './Header'
+export { default as Header } from './Header/Header'
 export { default as ProductCardGrid } from './Products/CardGrid'
 export { default as ProductCardVert } from './Products/CardVert'
 export { default as ProductCartGrid } from './Products/CartGrid'

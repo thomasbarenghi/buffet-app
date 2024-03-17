@@ -11,17 +11,19 @@ import {
   NavbarMenuToggle
 } from '@nextui-org/react'
 import Image from 'next/image'
-import Cart from './Cart'
+import Cart from '../Cart'
 import { routes } from '@/utils/constants/routes.const'
 import { usePathname } from 'next/navigation'
-import { generalMenu } from '@/lib/menu.lib'
+import { menu } from '@/lib/menu.lib'
+import { type Role, type Profile } from '@/interfaces'
 
 interface Props {
-  mode?: 'customer' | 'shop'
+  mode?: Role
   withBorder?: boolean
+  profile: Profile
 }
 
-const Header = ({ mode = 'customer', withBorder = true }: Props) => {
+const Content = ({ mode = 'customer', withBorder = true, profile }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
   return (
@@ -40,7 +42,7 @@ const Header = ({ mode = 'customer', withBorder = true }: Props) => {
       </NavbarBrand>
       <NavbarContent justify='end' className='sm:gap-10'>
         <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-          {generalMenu.map((element, index) => (
+          {menu[profile.role].map((element, index) => (
             <NavbarItem isActive={pathname === element.href} key={index}>
               <Link
                 className={pathname === element.href ? 'font-semibold' : 'font-light'}
@@ -52,11 +54,11 @@ const Header = ({ mode = 'customer', withBorder = true }: Props) => {
             </NavbarItem>
           ))}
         </NavbarContent>
-        <Cart />
+        {profile.role === 'customer' && <Cart />}
         <NavbarMenuToggle className='sm:hidden' aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
       </NavbarContent>
       <NavbarMenu className='pt-14'>
-        {generalMenu.map((element, index) => (
+        {menu[profile.role].map((element, index) => (
           <NavbarMenuItem isActive={pathname === element.href} key={index}>
             <Link
               className={pathname === element.href ? 'font-semibold' : 'font-light'}
@@ -73,4 +75,4 @@ const Header = ({ mode = 'customer', withBorder = true }: Props) => {
   )
 }
 
-export default Header
+export default Content

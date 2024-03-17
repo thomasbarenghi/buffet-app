@@ -5,5 +5,5 @@ import { redirect } from 'next/navigation'
 
 export const updateRedirect = async () => {
   revalidateTag('profile')
-  redirect(routes.customer.ACCOUNT)
+  redirect(routes.common.ACCOUNT)
 }

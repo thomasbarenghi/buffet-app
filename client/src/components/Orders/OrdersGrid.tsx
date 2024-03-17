@@ -1,11 +1,11 @@
 import { type FunctionComponent } from 'react'
-import { type OrderInterface } from '@/interfaces'
+import { type Role, type OrderInterface } from '@/interfaces'
 import { OrderItemGroupPlaceholder, ProductOrderItem } from '..'
 
 interface Props {
   orders: OrderInterface[]
   withTitle?: boolean
-  mode: 'customer' | 'shop'
+  mode: Role
 }
 
 const OrdersGrid: FunctionComponent<Props> = ({ orders, mode }) => (
