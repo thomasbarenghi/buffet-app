@@ -6,7 +6,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 
 interface Props {
   mode: 'create' | 'edit'
-  handleSubmitForm: (data: ProfileFormData) => Promise<void>
+  handleSubmitForm: (data: ProfileFormData) => Promise<any>
   profile?: Profile
 }
 

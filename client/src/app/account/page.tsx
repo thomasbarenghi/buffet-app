@@ -74,7 +74,7 @@ const AccountPage = async () => {
                 />
               </div>
             </div>
-            <OrdersGrid orders={orders.slice(0, 4)} mode={profile.data?.role ?? 'customer'} />
+            <OrdersGrid orders={orders?.data?.slice(0, 4) ?? []} mode={profile.data?.role ?? 'customer'} />
           </div>
         </section>
       </main>

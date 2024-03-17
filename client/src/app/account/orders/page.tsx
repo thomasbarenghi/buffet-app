@@ -22,7 +22,7 @@ const Products = async () => {
       <main className='resp-pad-x flex flex-col items-center gap-4 bg-neutral-50 pb-9 pt-8'>
         <section className='flex w-full flex-col gap-4'>
           <h1 className='text-2xl font-medium leading-tight'>Ordenes realizadas</h1>
-          <OrdersTable orders={orders} />
+          <OrdersTable orders={orders?.data ?? []} />
         </section>
       </main>
       <Footer />

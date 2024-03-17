@@ -3,16 +3,10 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export const deleteProduct = async (id: string): Promise<Response<Product>> => {
   const supabase = createClientComponentClient<Database>()
-
-  const { error, data } = await supabase.from('products').delete().eq('id', id)
-
-  if (error) {
-    console.log(error)
-    throw new Error()
-  }
+  const { error } = await supabase.from('products').delete().eq('id', id)
 
   return {
-    data,
+    data: null,
     error
   }
 }

@@ -15,7 +15,8 @@ interface Props {
 const Form: FunctionComponent<Props> = ({ user, profile }) => {
   const handleSubmitForm = async (formData: ProfileFormData) => {
     try {
-      await editProfile(formData, user.data.user?.id ?? '')
+      const { error } = await editProfile(formData, user.data.user?.id ?? '')
+      if (error) return toast.error('Algo salió mal')
       await updateRedirect()
     } catch (error) {
       toast.error('Ocurrió un error')

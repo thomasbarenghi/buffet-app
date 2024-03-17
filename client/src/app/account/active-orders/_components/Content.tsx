@@ -27,7 +27,7 @@ const Content = ({ userId }: Props) => {
       .channel('custom-insert-channel')
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, (payload) => {
         console.log('Change received!', payload)
-        toast.info('Ocurrió un cambio en tu pedido')
+        toast.info('Ocurrió un cambio en tu pedido #' + payload.new.id.slice(0, 4))
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         mutate()
       })

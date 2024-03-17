@@ -1,6 +1,6 @@
 'use client'
 import { OrdersGrid } from '@/components'
-import { RoleEnum, type OrderInterface } from '@/interfaces'
+import { PaymentStatusApiEnum, RoleEnum, type OrderInterface } from '@/interfaces'
 import { Endpoints } from '@/utils/constants/endpoints.const'
 import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 import { Switch, Tab, Tabs } from '@nextui-org/react'
@@ -14,6 +14,7 @@ interface FilteredOrders {
   PendingPreparation: OrderInterface[]
   InProgress: OrderInterface[]
   PendingDelivery: OrderInterface[]
+  PendingPayment: OrderInterface[]
 }
 
 const orderFiltering = (orders: OrderInterface[]): FilteredOrders => {
@@ -21,11 +22,15 @@ const orderFiltering = (orders: OrderInterface[]): FilteredOrders => {
     PendingApproval: [],
     PendingPreparation: [],
     InProgress: [],
-    PendingDelivery: []
+    PendingDelivery: [],
+    PendingPayment: []
   }
 
   for (const order of orders) {
     switch (order.status) {
+      case 'PendingPayment':
+        filteredOrders.PendingPayment.push(order)
+        break
       case 'PendingApproval':
         filteredOrders.PendingApproval.push(order)
         break
@@ -59,10 +64,29 @@ const Content = () => {
       .channel('custom-insert-channel')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, (payload) => {
         console.log('Change received!', payload)
-        toast.info('Nuevo pedido')
+        // toast.info('Nuevo pedido')
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
         mutate()
       })
+      .subscribe()
+
+    supabase
+      .channel('custom-insert-channel')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'orders',
+          filter: `payment_status=eq.${PaymentStatusApiEnum.Completed} `
+        },
+        (payload) => {
+          console.log('Change received!', payload)
+          toast.info('Nuevo pedido')
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
+          mutate()
+        }
+      )
       .subscribe()
   }, [])
 

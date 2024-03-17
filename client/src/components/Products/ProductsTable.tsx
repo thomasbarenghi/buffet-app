@@ -59,13 +59,10 @@ const ProductsTable: FunctionComponent<Props> = ({ products }) => {
   const handleDelete = async (product: Product) => {
     try {
       const result = confirm(`¿Seguro que quieres eliminar ${product.title}?`)
-      if (!result) {
-        return toast.warning('Operación cancelada')
-      }
+      if (!result) return toast.warning('Operación cancelada')
       const { error } = await deleteProduct(product.id)
-      if (!error) {
-        toast.success('Eliminado correctamente')
-      }
+      if (error) return toast.error('Algo salió mal')
+      toast.success('Eliminado correctamente')
       router.refresh()
     } catch (error) {
       console.log(error)

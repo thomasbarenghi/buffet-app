@@ -39,7 +39,7 @@ export const POST = async (request: NextRequest) => {
       if (data.status === 'approved') {
         await supabase
           .from('orders')
-          .update({ payment_status: PaymentStatusApiEnum.Completed })
+          .update({ payment_status: PaymentStatusApiEnum.Completed, status: OrderStatusApiEnum.PendingApproval })
           .eq('id', orderId)
           .select()
       } else {

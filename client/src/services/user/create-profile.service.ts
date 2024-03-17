@@ -1,23 +1,17 @@
-import { type ProfileFormData } from '@/interfaces'
+import { type Profile, type Response, type ProfileFormData } from '@/interfaces'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { toast } from 'sonner'
 
-export const createProfile = async (data: ProfileFormData, id: string) => {
+export const createProfile = async (formData: ProfileFormData, id: string): Promise<Response<Profile>> => {
   const supabase = createClientComponentClient<Database>()
-  const { error, data: profile } = await supabase
+  const { error } = await supabase
     .from('profiles')
     .insert({
-      first_name: data.first_name,
-      last_name: data.last_name,
-      dni: data.dni,
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      dni: formData.dni,
       id: id ?? ''
     })
     .select()
 
-  if (error || data === null) {
-    toast.error('Algo salió mal')
-    throw new Error()
-  }
-
-  return { profile, error }
+  return { data: null, error }
 }

@@ -4,7 +4,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 export const editProduct = async (product: ProductFormData, id: string): Promise<Response<Product>> => {
   const supabase = createClientComponentClient<Database>()
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('products')
     .update({
       ...(product.title && { title: product.title }),
@@ -14,14 +14,8 @@ export const editProduct = async (product: ProductFormData, id: string): Promise
     .eq('id', id)
     .select()
 
-  console.log(error, data)
-
-  if (data === null) {
-    throw new Error()
-  }
-
   return {
-    data: data[0],
+    data: null,
     error
   }
 }

@@ -4,7 +4,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 export const createProduct = async (product: ProductFormData): Promise<Response<Product>> => {
   const supabase = createClientComponentClient<Database>()
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('products')
     .insert([
       {
@@ -15,12 +15,8 @@ export const createProduct = async (product: ProductFormData): Promise<Response<
     ])
     .select()
 
-  if (data === null) {
-    throw new Error()
-  }
-
   return {
-    data: data[0],
+    data: null,
     error
   }
 }

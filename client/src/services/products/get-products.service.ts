@@ -4,14 +4,15 @@ import { Endpoints } from '@/utils/constants/endpoints.const'
 import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 
 export const getProducts = async (): Promise<Response<Product[]>> => {
-  const response = await getRequest<Product[]>({
+  const { error, data } = await getRequest<Product[]>({
     url: Endpoints.FIND_PRODUCTS(supabaseAnonApiKey),
     cache: 'no-store'
   })
 
-  if (response?.error) {
-    console.error(response?.error)
-  }
+  if (error) console.error(error)
 
-  return response
+  return {
+    error,
+    data
+  }
 }

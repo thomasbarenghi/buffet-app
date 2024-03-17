@@ -19,35 +19,50 @@ const DropManager = ({ order, client }: Props) => {
   }
 
   const handleNextStep = async () => {
-    const next = getNextOrderStatus(order.status as OrderStatusApiEnum)
-    if (next === OrderStatusApiEnum.Delivered) return toast.warning('No disponible')
-    await changeStatus(next ?? OrderStatusApiEnum.Canceled, order.id)
-    await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
-    toast.success('Realizado')
+    try {
+      const next = getNextOrderStatus(order.status as OrderStatusApiEnum)
+      if (next === OrderStatusApiEnum.Delivered) return toast.warning('No disponible')
+      await changeStatus(next ?? OrderStatusApiEnum.Canceled, order.id)
+      await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
+      toast.success('Realizado')
+    } catch (error) {
+      console.error(error)
+      toast.error('Algo salió mal')
+    }
   }
 
   const handlePrevStep = async () => {
-    const prev = getPreviousOrderStatus(order.status as OrderStatusApiEnum)
-    if (prev === order.status) return toast.warning('No disponible')
-    await changeStatus(prev ?? OrderStatusApiEnum.Canceled, order.id)
-    await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
-    toast.success('Realizado')
+    try {
+      const prev = getPreviousOrderStatus(order.status as OrderStatusApiEnum)
+      if (prev === order.status) return toast.warning('No disponible')
+      await changeStatus(prev ?? OrderStatusApiEnum.Canceled, order.id)
+      await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
+      toast.success('Realizado')
+    } catch (error) {
+      console.error(error)
+      toast.error('Algo salió mal')
+    }
   }
 
   const handleFinish = async () => {
-    if (order.status !== 'PendingDelivery') {
-      return toast.warning('No puedes finalizar un pedido en curso')
+    try {
+      if (order.status !== 'PendingDelivery') {
+        return toast.warning('No puedes finalizar un pedido en curso')
+      }
+
+      const givenCode = prompt('Ingresa el codigo del cliente')
+
+      if (givenCode !== order.code.toString()) {
+        return toast.error('Codigo incorrecto')
+      }
+
+      await changeStatus(OrderStatusApiEnum.Delivered, order.id)
+      await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
+      toast.success('Finalizado')
+    } catch (error) {
+      console.error(error)
+      toast.error('Algo salió mal')
     }
-
-    const givenCode = prompt('Ingresa el codigo del cliente')
-
-    if (givenCode !== order.code.toString()) {
-      return toast.error('Codigo incorrecto')
-    }
-
-    await changeStatus(OrderStatusApiEnum.Delivered, order.id)
-    await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
-    toast.success('Finalizado')
   }
 
   return (

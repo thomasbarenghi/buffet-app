@@ -11,7 +11,5 @@ export const getAllItems = async (items: Product[]): Promise<Product[]> => {
     })
   )
 
-  console.log(res)
-
   return res.filter((product): product is Product => product !== null)
 }

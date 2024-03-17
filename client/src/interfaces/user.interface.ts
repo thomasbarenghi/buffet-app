@@ -9,16 +9,7 @@ export interface Profile {
 }
 export interface User {
   id: string
-  firstName: string
-  lastName: string
-  type: Role
-  shopId?: string | null
   email: string
-  birthdate: Date | string
-  password: string
-  profileImage?: string
-  createdAt: Date
-  updatedAt: Date
 }
 
 export enum RoleEnum {

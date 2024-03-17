@@ -4,8 +4,3 @@ export interface Message {
   createdAt: Date
   updatedAt: Date
 }
-
-export interface Chat {
-  id: string
-  messages: Message[]
-}

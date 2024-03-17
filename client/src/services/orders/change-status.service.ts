@@ -1,15 +1,8 @@
-import { type OrderStatusApiEnum } from '@/interfaces'
+import { type OrderInterface, type Response, type OrderStatusApiEnum } from '@/interfaces'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { toast } from 'sonner'
 
-export const changeStatus = async (status: OrderStatusApiEnum, id: string) => {
+export const changeStatus = async (status: OrderStatusApiEnum, id: string): Promise<Response<OrderInterface>> => {
   const supabase = createClientComponentClient<Database>()
-  const { error, data: res } = await supabase.from('orders').update({ status }).eq('id', id).select()
-
-  if (error || res === null) {
-    toast.error('Algo salió mal')
-    throw new Error()
-  }
-
-  return res
+  const { error } = await supabase.from('orders').update({ status }).eq('id', id).select()
+  return { data: null, error }
 }

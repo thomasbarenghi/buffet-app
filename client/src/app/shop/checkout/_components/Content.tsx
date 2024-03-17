@@ -10,6 +10,7 @@ import { routes } from '@/utils/constants/routes.const'
 import axios from 'axios'
 import { createOrder } from '@/services/orders/create-order.service'
 import Tips from './Tips'
+import { toast } from 'sonner'
 
 const Content: FunctionComponent = () => {
   const router = useRouter()
@@ -44,6 +45,7 @@ const Content: FunctionComponent = () => {
       router.push(preference?.url as string)
     } catch (error) {
       console.error(error)
+      toast.error('Algo salió mal')
     }
   }
 

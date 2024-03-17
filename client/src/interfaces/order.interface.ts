@@ -19,6 +19,7 @@ export interface OrderInterface {
 }
 
 export type OrderStatusType =
+  | 'PendingPayment'
   | 'PendingApproval'
   | 'PendingPreparation'
   | 'InProgress'
@@ -27,6 +28,7 @@ export type OrderStatusType =
   | 'Canceled'
 
 export enum OrderStatusApiEnum {
+  PendingPayment = 'PendingPayment',
   PendingApproval = 'PendingApproval',
   PendingPreparation = 'PendingPreparation',
   InProgress = 'InProgress',
@@ -36,6 +38,7 @@ export enum OrderStatusApiEnum {
 }
 
 export enum OrderStatusClientEnum {
+  PendingPayment = 'Pendiente de pago',
   PendingApproval = 'Pendiente de aprobación',
   PendingPreparation = 'Pendiente de preparación',
   InProgress = 'En preparación',

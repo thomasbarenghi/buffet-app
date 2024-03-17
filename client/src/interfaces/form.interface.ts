@@ -33,11 +33,3 @@ export interface ProductFormData {
   thumbnail?: File | FileList
   description: string
 }
-
-export interface ShopFormProps {
-  name: string
-  description: string
-  address: string
-  phone: string
-  thumbnail: FileList | File
-}

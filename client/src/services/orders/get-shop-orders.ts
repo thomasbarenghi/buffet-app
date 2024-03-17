@@ -1,67 +1,34 @@
-import { OrderStatusApiEnum, type OrderInterface } from '@/interfaces'
+import { type Response, type OrderInterface } from '@/interfaces'
 import { type SupabaseClient } from '@supabase/supabase-js'
+import { productsCustomerTemplate, statusActive, statusFinished } from './local-utils'
 
 const getAll = async (supabase: SupabaseClient) => {
-  const { data, error } = await supabase.from('orders').select(
-    `
-        *,
-        customer: profiles ( * ),
-        products: orders_products ( ...products (*) )
-    `
-  )
-
+  const { data, error } = await supabase.from('orders').select(productsCustomerTemplate)
   return { data, error }
 }
 
 const getFinished = async (supabase: SupabaseClient) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(
-      `
-      *,
-      customer: profiles ( * ),
-      products: orders_products ( ...products (*) )
-  `
-    )
-    .in('status', [OrderStatusApiEnum.Delivered, OrderStatusApiEnum.Canceled])
+  const { data, error } = await supabase.from('orders').select(productsCustomerTemplate).in('status', statusFinished)
   return { data, error }
 }
 
 const getActive = async (supabase: SupabaseClient) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(
-      `
-        *,
-        customer: profiles ( * ),
-        products: orders_products ( ...products (*) )
-    `
-    )
-    .in('status', [
-      OrderStatusApiEnum.InProgress,
-      OrderStatusApiEnum.PendingApproval,
-      OrderStatusApiEnum.PendingDelivery,
-      OrderStatusApiEnum.PendingPreparation
-    ])
-
+  const { data, error } = await supabase.from('orders').select(productsCustomerTemplate).in('status', statusActive)
   return { data, error }
 }
 
 export const getShopOrders = async (
   supabase: SupabaseClient,
   type: 'active' | 'finished' | 'all'
-): Promise<OrderInterface[]> => {
+): Promise<Response<OrderInterface[]>> => {
   let response
 
   if (type === 'all') response = await getAll(supabase)
   else if (type === 'active') response = await getActive(supabase)
   else if (type === 'finished') response = await getFinished(supabase)
 
-  const orders = response?.data as unknown as OrderInterface[]
-
-  if (response?.error) {
-    console.error(response.error)
+  return {
+    data: response?.data as unknown as OrderInterface[],
+    error: response?.error ?? null
   }
-
-  return orders
 }
