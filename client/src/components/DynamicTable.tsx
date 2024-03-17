@@ -25,8 +25,9 @@ const DynamicTable: FunctionComponent<ExtendedProps> = ({ data, rowsPerPage = 4,
   }, [page, rowsPerPage, data])
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex w-full flex-col gap-4'>
       <Table
+        isStriped={props.isStriped}
         className={props.className}
         classNames={props.classNames}
         shadow={props.shadow}

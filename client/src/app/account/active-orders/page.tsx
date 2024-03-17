@@ -12,7 +12,7 @@ const ActiveOrders = async () => {
   return (
     <>
       <Header />
-      <main className='resp-pad-x flex flex-col items-center gap-9 pb-14 pt-8'>
+      <main className='resp-pad-x flex flex-col items-center gap-9 bg-neutral-50 pb-14 pt-8'>
         <div className='flex w-full flex-col gap-4'>
           <h1 className='text-2xl font-medium leading-tight'>Pedidos activos</h1>
           <Content userId={user.data.user?.id ?? ''} />

@@ -1,5 +1,5 @@
 'use client'
-import { type Product } from '@/interfaces'
+import { type Role, type Product } from '@/interfaces'
 import Image from 'next/image'
 import { type FunctionComponent } from 'react'
 import { ModalProduct } from '..'
@@ -11,9 +11,10 @@ interface Props {
   product: Product
   isLast: boolean
   withBg?: boolean
+  mode: Role
 }
 
-const ProductCartItem: FunctionComponent<Props> = ({ product, isLast, withBg = false }) => {
+const ProductCartItem: FunctionComponent<Props> = ({ product, isLast, withBg = false, mode }) => {
   const removeItem = useCartStore((state) => state.removeItem)
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
@@ -46,7 +47,7 @@ const ProductCartItem: FunctionComponent<Props> = ({ product, isLast, withBg = f
           }}
         />
       </div>
-      <ModalProduct product={product} isOpen={isOpen} onClose={onClose} />
+      <ModalProduct product={product} isOpen={isOpen} mode={mode} onClose={onClose} />
     </>
   )
 }

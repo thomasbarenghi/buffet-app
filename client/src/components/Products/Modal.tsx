@@ -1,7 +1,7 @@
 'use client'
 import React, { type FunctionComponent } from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/react'
-import { type Product } from '@/interfaces'
+import { type Role, RoleEnum, type Product } from '@/interfaces'
 import Image from 'next/image'
 import { Button } from '..'
 import { useCartStore } from '@/context/zustand/cart.store'
@@ -10,9 +10,10 @@ interface Props {
   product: Product
   onClose: () => void
   isOpen: boolean
+  mode: Role
 }
 
-const ModalProduct: FunctionComponent<Props> = ({ product, onClose, isOpen }) => {
+const ModalProduct: FunctionComponent<Props> = ({ product, onClose, isOpen, mode }) => {
   const addItem = useCartStore((state) => state.addItem)
   return (
     <Modal
@@ -47,16 +48,18 @@ const ModalProduct: FunctionComponent<Props> = ({ product, onClose, isOpen }) =>
                 </div>
               </div>
             </ModalBody>
-            <ModalFooter className=' border border-t '>
-              <Button
-                title='Agregar al carrito'
-                size='lg'
-                radius='lg'
-                onClick={() => {
-                  addItem(product)
-                }}
-              />
-            </ModalFooter>
+            {mode === RoleEnum.Customer && (
+              <ModalFooter className=' border border-t '>
+                <Button
+                  title='Agregar al carrito'
+                  size='lg'
+                  radius='lg'
+                  onClick={() => {
+                    addItem(product)
+                  }}
+                />
+              </ModalFooter>
+            )}
           </>
         )}
       </ModalContent>

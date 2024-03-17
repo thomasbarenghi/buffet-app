@@ -13,10 +13,6 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.customer.HOME
     },
     {
-      title: 'Mi cuenta',
-      href: routes.common.ACCOUNT
-    },
-    {
       title: 'Pedidos en curso',
       href: routes.customer.ACTIVE_ORDERS
     }
@@ -29,10 +25,6 @@ export const menu: Record<Role, Menu[]> = {
     {
       title: 'Productos',
       href: routes.attendant.PRODUCTS
-    },
-    {
-      title: 'Cuenta',
-      href: routes.common.ACCOUNT
     }
   ],
   manager: [],

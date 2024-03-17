@@ -1,5 +1,5 @@
 'use client'
-import { type Product } from '@/interfaces'
+import { type Role, type Product } from '@/interfaces'
 import Image from 'next/image'
 import ModalProduct from './Modal'
 import { useDisclosure } from '@nextui-org/react'
@@ -7,9 +7,10 @@ import { truncateText } from '@/utils/functions/truncateText'
 
 interface Props {
   product: Product
+  mode: Role
 }
 
-const ProductCardVert = ({ product }: Props) => {
+const ProductCardVert = ({ product, mode }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
@@ -25,7 +26,7 @@ const ProductCardVert = ({ product }: Props) => {
           <p className='text-small font-semibold'>${product.price}</p>
         </div>
       </div>
-      <ModalProduct product={product} isOpen={isOpen} onClose={onClose} />
+      <ModalProduct product={product} isOpen={isOpen} mode={mode} onClose={onClose} />
     </>
   )
 }

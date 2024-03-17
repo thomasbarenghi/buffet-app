@@ -69,7 +69,7 @@ const Content = () => {
   return (
     <section className='flex w-full flex-col gap-4'>
       <div className='flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between'>
-        <h1 className='text-[24px] font-medium leading-tight'>Pedidos activos ({ordersPrev?.length})</h1>
+        <h1 className='text-2xl font-medium leading-tight'>Pedidos activos ({ordersPrev?.length})</h1>
         <Switch defaultSelected classNames={{ label: 'font-light' }} onValueChange={setIsSelected}>
           {isSelected ? 'Recibiendo pedidos' : 'No recibiendo pedidos'}
         </Switch>

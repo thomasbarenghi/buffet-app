@@ -1,4 +1,4 @@
-import { Footer, Header, OrdersGrid } from '@/components'
+import { Button, Footer, Header, OrdersGrid } from '@/components'
 import { RoleEnum } from '@/interfaces'
 import { getShopOrders } from '@/services/orders/get-shop-orders'
 import { getUserOrders } from '@/services/orders/get-user-orders'
@@ -24,7 +24,7 @@ const AccountPage = async () => {
     profile.data?.role === RoleEnum.Customer
       ? await getUserOrders(supabase, 'finished')
       : await getShopOrders(supabase, 'finished')
-  const ordersTitle = profile.data?.role === RoleEnum.Customer ? 'Ordenes realizadas' : 'Ordenes finalizadas'
+
   return (
     <>
       <Header />
@@ -55,9 +55,26 @@ const AccountPage = async () => {
           </div>
         </section>
         <section className='resp-pad-x flex w-full justify-center border-t bg-white pt-8 '>
-          <div className='flex w-full flex-col items-start justify-start gap-6 2xl:container'>
-            <h1 className='text-[24px] font-medium leading-tight'>{ordersTitle}</h1>
-            <OrdersGrid orders={orders} mode={profile.data?.role ?? 'customer'} />
+          <div className='flex w-full flex-col items-start justify-start gap-4 2xl:container'>
+            <div className='flex w-full items-center justify-between gap-3'>
+              <h1 className='text-xl font-medium leading-tight sm:text-2xl'>Ultimas ordenes</h1>
+              <div className='flex gap-2'>
+                {profile.data?.role === RoleEnum.Customer && (
+                  <Button title='Ver activas' size='md' href={routes.customer.ACTIVE_ORDERS} />
+                )}
+                {profile.data?.role !== RoleEnum.Customer && (
+                  <Button title='Ver en curso' size='md' href={routes.attendant.HOME} />
+                )}
+                <Button
+                  title='Ver finalizadas'
+                  variant='flat'
+                  className='hidden sm:flex'
+                  size='md'
+                  href={routes.common.ORDERS}
+                />
+              </div>
+            </div>
+            <OrdersGrid orders={orders.slice(0, 4)} mode={profile.data?.role ?? 'customer'} />
           </div>
         </section>
       </main>

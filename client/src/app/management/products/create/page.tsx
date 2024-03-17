@@ -1,14 +1,12 @@
-import { Button } from '@/components'
+import Form from './_components/Form'
 
 const Create = () => (
-  <>
-    <section className='flex w-full flex-col gap-4'>
-      <div className='flex w-full items-center justify-between'>
-        <h1 className='text-[24px] font-medium leading-tight'>Nuevo Producto</h1>
-        <Button title='Guardar' />
-      </div>
-    </section>
-  </>
+  <section className='flex w-full max-w-md flex-col gap-4'>
+    <h1 className='w-full text-2xl font-light leading-tight'>
+      Crear nuevo <span className='font-semibold'>producto.</span>
+    </h1>
+    <Form />
+  </section>
 )
 
 export default Create

@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/indent */
+import { type PostgrestError } from '@supabase/supabase-js'
+
 export interface Response<T> {
   data: T | null
-  error: {
-    message: string
-    code: number
-  } | null
+  error:
+    | {
+        message: string
+        code: number
+      }
+    | null
+    | PostgrestError
 }
 
 export interface GetRequestParams {

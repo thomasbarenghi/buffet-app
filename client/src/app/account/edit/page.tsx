@@ -13,9 +13,9 @@ const EditAccountPage = async () => {
   return (
     <>
       <Header />
-      <main className='resp-pad-x flex flex-col items-center gap-4 pb-9 pt-8'>
+      <main className='resp-pad-x flex flex-col items-center gap-4 bg-neutral-50 pb-9 pt-8'>
         <section className='flex w-full max-w-md flex-col gap-4'>
-          <h1 className='w-full text-[24px] font-light leading-tight'>
+          <h1 className='w-full text-2xl font-light leading-tight'>
             Editar <span className='font-semibold'>perfil.</span>
           </h1>
           <Form user={user} profile={profile.data} />

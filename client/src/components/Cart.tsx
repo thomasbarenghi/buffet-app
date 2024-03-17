@@ -45,7 +45,7 @@ const Cart: FunctionComponent = () => {
   return (
     <>
       <div className='cursor-pointer rounded-full bg-orange-100 p-3' onClick={handleOpen}>
-        <Image src='/icons/cart-orange.svg' alt='cart' width={20} height={20} />
+        <Image src='/icons/cart-orange.svg' alt='cart' className='min-w-[20px]' width={20} height={20} />
       </div>
       {isOpen &&
         createPortal(

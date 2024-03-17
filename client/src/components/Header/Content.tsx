@@ -1,21 +1,13 @@
 'use client'
 import React, { useState } from 'react'
-import {
-  Link,
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenu,
-  NavbarMenuItem,
-  NavbarMenuToggle
-} from '@nextui-org/react'
+import { Link, Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react'
 import Image from 'next/image'
 import Cart from '../Cart'
 import { routes } from '@/utils/constants/routes.const'
-import { usePathname } from 'next/navigation'
-import { menu } from '@/lib/menu.lib'
 import { type Role, type Profile } from '@/interfaces'
+import AvatarMenu from './AvatarMenu'
+import MobileMenu from './MobileMenu'
+import Menu from './Menu'
 
 interface Props {
   mode?: Role
@@ -23,9 +15,16 @@ interface Props {
   profile: Profile
 }
 
+const Brand = () => (
+  <NavbarBrand>
+    <Link href={routes.customer.HOME}>
+      <Image src='/icons/logo.svg' width={103} height={30} alt='logo' />
+    </Link>
+  </NavbarBrand>
+)
+
 const Content = ({ mode = 'customer', withBorder = true, profile }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const pathname = usePathname()
   return (
     <Navbar
       shouldHideOnScroll
@@ -35,42 +34,19 @@ const Content = ({ mode = 'customer', withBorder = true, profile }: Props) => {
         wrapper: 'px-0 w-full max-w-none 2xl:container'
       }}
     >
-      <NavbarBrand>
-        <Link href={routes.customer.HOME}>
-          <Image src='/icons/logo.svg' width={103} height={30} alt='logo' />
-        </Link>
-      </NavbarBrand>
-      <NavbarContent justify='end' className='sm:gap-10'>
-        <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-          {menu[profile.role].map((element, index) => (
-            <NavbarItem isActive={pathname === element.href} key={index}>
-              <Link
-                className={pathname === element.href ? 'font-semibold' : 'font-light'}
-                color={pathname === element.href ? 'primary' : 'foreground'}
-                href={element.href}
-              >
-                {element.title}
-              </Link>
-            </NavbarItem>
-          ))}
-        </NavbarContent>
-        {profile.role === 'customer' && <Cart />}
-        <NavbarMenuToggle className='sm:hidden' aria-label={isMenuOpen ? 'Close menu' : 'Open menu'} />
+      <NavbarContent>
+        <MobileMenu profile={profile} isMenuOpen={isMenuOpen} />
+        <Brand />
       </NavbarContent>
-      <NavbarMenu className='pt-14'>
-        {menu[profile.role].map((element, index) => (
-          <NavbarMenuItem isActive={pathname === element.href} key={index}>
-            <Link
-              className={pathname === element.href ? 'font-semibold' : 'font-light'}
-              color={pathname === element.href ? 'primary' : 'foreground'}
-              href={element.href}
-              size='lg'
-            >
-              {element.title}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
+      <NavbarContent justify='end' className='sm:gap-10'>
+        <Menu profile={profile} />
+        <div className='flex items-center justify-between gap-4'>
+          {profile.role === 'customer' && <Cart />}
+          <div>
+            <AvatarMenu profile={profile} />
+          </div>
+        </div>
+      </NavbarContent>
     </Navbar>
   )
 }

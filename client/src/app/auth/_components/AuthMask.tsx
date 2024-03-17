@@ -50,7 +50,7 @@ const AuthMask = ({ children, title, description, mode }: Props) => (
         </div>
       </div>
       <div className='hidden flex-col items-start justify-center gap-1 px-6 py-12 lg:flex'>
-        {/* <h1 className='text-[32px] font-light text-[#cb4c08] '>
+        {/* <h1 className='text-3xl font-light text-[#cb4c08] '>
           Estamos hablando de comida, <span className='font-semibold'>¿verdad?</span>
         </h1>
         <p className='w-[550px] font-light leading-[165%] text-[#f44708] '>
@@ -84,7 +84,7 @@ export default AuthMask
 //   <main className='flex flex-col items-center lg:bg-[#fcde9c]'>
 //     <section className='flex min-h-screen w-full grid-cols-[auto,_400px] flex-col items-center gap-9 2xl:container lg:grid lg:items-end  2xl:grid-cols-[auto,_500px] '>
 //       <div className=' hidden flex-col items-start justify-center gap-1 px-6 py-12 lg:flex'>
-//         <h1 className='text-[32px] font-light text-[#f44708] '>
+//         <h1 className='text-3xl font-light text-[#f44708] '>
 //           Estamos hablando de comida, <span className='font-semibold'>¿verdad?</span>
 //         </h1>
 //         <p className='w-[550px] font-light leading-[165%] text-[#f44708] '>

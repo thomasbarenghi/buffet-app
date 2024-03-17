@@ -23,10 +23,18 @@ const Form: FunctionComponent = () => {
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
-      await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password
       })
+
+      if (error) {
+        if (error.message === 'Invalid login credentials') {
+          return toast.error('Contraseña incorrecta')
+        }
+        return toast.error('Algo salió mal')
+      }
+
       router.refresh()
       router.push(routes.common.ACCOUNT)
     } catch (error) {

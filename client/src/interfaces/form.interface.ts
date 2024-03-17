@@ -27,10 +27,10 @@ export interface OrderFormProps {
   products: string[]
 }
 
-export interface CreateProductProps {
-  name: string
+export interface ProductFormData {
+  title: string
   price: number
-  thumbnail: File | FileList
+  thumbnail?: File | FileList
   description: string
 }
 

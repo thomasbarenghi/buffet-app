@@ -7,7 +7,7 @@ export type PaymentStatus = 'Pending' | 'Completed' | 'Failure'
 
 export interface OrderInterface {
   id: string
-  created_at: Date
+  created_at: string
   payment_status: PaymentStatus
   total_price: number
   status: OrderStatusType

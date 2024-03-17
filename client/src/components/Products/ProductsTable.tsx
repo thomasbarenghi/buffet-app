@@ -1,5 +1,5 @@
 'use client'
-import { type Product } from '@/interfaces'
+import { RoleEnum, type Product } from '@/interfaces'
 import {
   Button,
   Dropdown,
@@ -16,6 +16,9 @@ import { truncateText } from '@/utils/functions/truncateText'
 import { routes } from '@/utils/constants/routes.const'
 import Link from 'next/link'
 import Image from 'next/image'
+import { deleteProduct } from '@/services/products/delete-product.service'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   products: Product[]
@@ -46,29 +49,47 @@ const VerticalDotsIcon = ({ size = 24, width, height, ...props }: IconSvgProps) 
 const ProductsTable: FunctionComponent<Props> = ({ products }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [product, setProduct] = useState<Product>()
+  const router = useRouter()
 
   const handleView = (item: Product) => {
     setProduct(item)
     onOpen()
   }
 
+  const handleDelete = async (product: Product) => {
+    try {
+      const result = confirm(`¿Seguro que quieres eliminar ${product.title}?`)
+      if (!result) {
+        return toast.warning('Operación cancelada')
+      }
+      const { error } = await deleteProduct(product.id)
+      if (!error) {
+        toast.success('Eliminado correctamente')
+      }
+      router.refresh()
+    } catch (error) {
+      console.log(error)
+      toast.error('Ocurrió un error')
+    }
+  }
+
   return (
     <>
-      <ModalProduct product={product!} isOpen={isOpen} onClose={onClose} />
+      <ModalProduct product={product!} isOpen={isOpen} mode={RoleEnum.Attendant} onClose={onClose} />
       <DynamicTable
         shadow='none'
+        classNames={{
+          wrapper: 'overflow-x-scroll'
+        }}
         radius='md'
         className='w-full rounded-xl border'
         data={products}
-        rowsPerPage={5}
+        rowsPerPage={8}
         columns={['Producto', 'Descripcion', 'Acciones']}
         selectionBehavior='toggle'
-        // onRowAction={(key) => {
-        //   alert(`Opening item ${key}...`)
-        // }}
         renderRow={(product: Product) => (
           <TableRow key={product.id}>
-            <TableCell className='flex items-center gap-2'>
+            <TableCell className='flex min-w-[250px] items-center gap-2 '>
               <Image
                 alt='img'
                 width={100}
@@ -81,10 +102,14 @@ const ProductsTable: FunctionComponent<Props> = ({ products }) => {
                 <span className='text-xs font-light'>(${product.price})</span>
               </div>
             </TableCell>
-            <TableCell className='text-sm font-light'>{truncateText(product.description, 70)}</TableCell>
+            <TableCell className='min-w-[250px] text-sm font-light'>{truncateText(product.description, 70)}</TableCell>
             <TableCell className='flex justify-end gap-1'>
               <div className='relative flex items-center justify-end gap-2'>
-                <Dropdown>
+                <Dropdown
+                  classNames={{
+                    content: '!min-w-[150px] '
+                  }}
+                >
                   <DropdownTrigger>
                     <Button isIconOnly size='sm' variant='flat'>
                       <VerticalDotsIcon className='text-neutral-600' />
@@ -101,7 +126,14 @@ const ProductsTable: FunctionComponent<Props> = ({ products }) => {
                     <DropdownItem as={Link} href={routes.attendant.EDIT_PRODUCT(product.id)}>
                       Editar
                     </DropdownItem>
-                    <DropdownItem color='danger' className='text-danger' variant='flat'>
+                    <DropdownItem
+                      color='danger'
+                      className='text-danger'
+                      variant='flat'
+                      onClick={async () => {
+                        await handleDelete(product)
+                      }}
+                    >
                       Eliminar
                     </DropdownItem>
                   </DropdownMenu>

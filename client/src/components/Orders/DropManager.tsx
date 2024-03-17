@@ -51,7 +51,11 @@ const DropManager = ({ order, client }: Props) => {
   }
 
   return (
-    <Dropdown>
+    <Dropdown
+      classNames={{
+        content: '!min-w-[150px] '
+      }}
+    >
       <DropdownTrigger>
         <Button variant='flat' size='sm' className='!text-xs font-semibold' color='primary' radius='md'>
           Gestionar
@@ -61,20 +65,16 @@ const DropManager = ({ order, client }: Props) => {
         <DropdownItem key='cli' onClick={handleViewClient}>
           Ver cliente
         </DropdownItem>
-
         <DropdownItem key='finish' onClick={handleFinish}>
           Finalizar
         </DropdownItem>
-
         <DropdownItem key='next' onClick={handleNextStep}>
           Etapa siguiente
         </DropdownItem>
-
         <DropdownItem key='prev' onClick={handlePrevStep}>
           Etapa anterior
         </DropdownItem>
-
-        <DropdownItem key='delete' className='text-danger' color='danger'>
+        <DropdownItem key='delete' className='text-danger' variant='flat' color='danger'>
           Cancelar
         </DropdownItem>
       </DropdownMenu>
