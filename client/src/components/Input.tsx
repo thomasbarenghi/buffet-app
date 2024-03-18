@@ -37,6 +37,7 @@ const Input: FunctionComponent<ExtendedProps> = ({ ...props }) => {
       autoComplete='off'
       min={props.min}
       max={props.max}
+      radius={props.radius ?? 'lg'}
       classNames={{
         inputWrapper:
           '!bg-white !text-black border px-3 py-2 text-start rounded-2xl hover:!bg-gray-100 focus:!bg-white',

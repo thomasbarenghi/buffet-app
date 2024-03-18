@@ -49,15 +49,16 @@ const Cart: FunctionComponent = () => {
       </div>
       {isOpen &&
         createPortal(
-          <div className='fixed bottom-0 left-0 top-0 z-50 grid h-screen w-screen lg:grid-cols-[auto,_max(25%,_400px)]'>
+          <div className='fixed bottom-0 left-0 top-0 z-50 grid w-screen lg:grid-cols-[auto,_max(25%,_400px)]'>
             <div className='hidden h-auto w-auto bg-[#00000079] sm:w-full lg:flex ' onClick={handleClose}></div>
-            <div className='flex h-screen w-full flex-col items-end justify-start gap-2 bg-white px-5 pb-24 pt-8 lg:pb-10'>
+            <div className='flex h-full w-full flex-col items-end justify-start gap-2 overflow-hidden bg-white px-5 py-8 lg:pb-10'>
               <div className='flex w-full items-center justify-between'>
                 <h2 className='text-xl font-semibold'>Carrito</h2>
                 <div className='cursor-pointer p-2' onClick={handleClose}>
                   <Image src='/icons/cross.svg' alt='cross' width={18} height={18} />
                 </div>
               </div>
+
               {products.length === 0 ? (
                 <div className='flex h-full w-full items-center justify-center '>
                   <p className='text-center font-semibold'>Tu carrito está vacío</p>

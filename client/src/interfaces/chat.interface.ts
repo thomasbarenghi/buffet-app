@@ -1,6 +1,10 @@
+import { type Profile } from './user.interface'
+
 export interface Message {
-  sender: string
-  body: string
+  user_id: string
+  order_id: string
+  message: string
   createdAt: Date
-  updatedAt: Date
+  id: string
+  user: Profile
 }
