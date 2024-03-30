@@ -5,6 +5,11 @@ import { getUserOrders } from '@/services/orders/get-user-orders'
 import { getProfile } from '@/services/user/get-profile.service'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Ordenes | Buffet UNAHUR'
+}
 
 const Products = async () => {
   const cookieStore = cookies()
@@ -18,7 +23,7 @@ const Products = async () => {
 
   return (
     <main className='resp-pad-x flex flex-col items-center gap-4 bg-neutral-50 pb-9 pt-8'>
-      <section className='flex w-full flex-col gap-4'>
+      <section className='flex w-full flex-col gap-4 2xl:container'>
         <h1 className='text-2xl font-medium leading-tight'>Ordenes realizadas</h1>
         <OrdersTable orders={orders?.data ?? []} />
       </section>

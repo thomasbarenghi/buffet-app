@@ -50,7 +50,7 @@ const Summary = ({ productsP }: { productsP: Product[] }) => {
 
   return (
     <>
-      <section className='resp-pad-x flex w-full justify-center   py-9 pt-8  '>
+      <section className='resp-pad-x flex w-full justify-center bg-neutral-50   py-9 pt-8  '>
         <div className='flex w-full grid-cols-2 flex-col gap-5 2xl:container lg:grid lg:gap-10'>
           <div className='flex w-full flex-col gap-4'>
             <h1 className='text-2xl font-light'>

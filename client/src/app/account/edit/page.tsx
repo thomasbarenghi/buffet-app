@@ -2,6 +2,11 @@ import Form from './_components/Form'
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { getProfile } from '@/services/user/get-profile.service'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Editar cuenta | Buffet UNAHUR'
+}
 
 const EditAccountPage = async () => {
   const cookieStore = cookies()

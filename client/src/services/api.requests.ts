@@ -3,12 +3,12 @@ import axios, { type AxiosResponse } from 'axios'
 import { type HttpMethod, type Response, type GetRequestParams } from '@/interfaces'
 import { serverUrl } from '@/utils/constants/env.const'
 
-const axiosInstance = axios.create({
-  baseURL: serverUrl
-})
-
 export const getRequest = async <T>(params: GetRequestParams): Promise<Response<T>> => {
   try {
+    const axiosInstance = axios.create({
+      baseURL: serverUrl
+    })
+
     const response = await fetch(`${axiosInstance.defaults.baseURL}${params.url}`, {
       cache: params.cache,
       next: { revalidate: params.revalidate || undefined, tags: params.tags }
@@ -31,12 +31,19 @@ export const getRequest = async <T>(params: GetRequestParams): Promise<Response<
 
 export const mutationRequest = async <T>(
   method: HttpMethod,
-  url: string,
+  path: string,
   body?: any,
-  headers?: any
+  headers?: any,
+  customUrl?: string
 ): Promise<Response<T>> => {
   try {
-    const axiosResponse: AxiosResponse<T> = await axiosInstance[method](url, body, headers)
+    console.log(customUrl, path)
+
+    const axiosInstance = axios.create({
+      baseURL: customUrl && customUrl?.length > 1 ? customUrl : serverUrl
+    })
+
+    const axiosResponse: AxiosResponse<T> = await axiosInstance[method](path, body, headers)
     return { data: axiosResponse.data, error: null }
   } catch (error: any) {
     console.error(error)

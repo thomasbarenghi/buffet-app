@@ -1,4 +1,9 @@
 import { ProductCardGrid } from '@/components'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Tienda | Buffet UNAHUR'
+}
 
 const ShopPage = async () => (
   <main className='resp-pad-x  flex flex-col items-center gap-9 pb-14 pt-8'>

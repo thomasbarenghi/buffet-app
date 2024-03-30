@@ -8,7 +8,7 @@ const CartEmpty = dynamic(async () => await import('./_components/CartEmpty'))
 const Summary = dynamic(async () => await import('./_components/Summary'))
 
 export const metadata: Metadata = {
-  title: 'Checkout | Buffet UNAHUR'
+  title: 'Carrito | Buffet UNAHUR'
 }
 
 const Checkout = async () => {
@@ -21,7 +21,7 @@ const Checkout = async () => {
   const products = await getAllItems(items)
 
   return (
-    <main className='flex flex-col items-center bg-neutral-50 pb-9'>
+    <main className='flex flex-col items-center  pb-9'>
       {!isOpen ? (
         <ShopClose />
       ) : isOpen && items.length <= 0 ? (

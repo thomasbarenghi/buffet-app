@@ -50,6 +50,27 @@ const ProductDynamicForm = ({ mode, handleSubmitForm, product }: Props) => {
           errorMessage={errors?.price?.message}
           defaultValue={mode === 'create' ? '' : product?.price?.toString()}
         />
+        {/* {product?.thumbnail && mode === 'edit' && (
+          <Image
+            src={product?.thumbnail}
+            width={80}
+            height={80}
+            className='rounded-md border-2 object-cover'
+            alt='img'
+          />
+        )} */}
+        <Input
+          type='file'
+          label='Imagen de portada'
+          placeholder={
+            mode === 'create' ? 'Ingresa una imagen' : 'Solo ingresa una imagen si quieres cambiar la actual'
+          }
+          name='thumbnail'
+          hookForm={{
+            register
+          }}
+          errorMessage={errors?.thumbnail?.message}
+        />
         <Textarea
           name='description'
           label='Descripcion'

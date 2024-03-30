@@ -1,6 +1,10 @@
 import Form from './_components/Form'
 import { getProduct } from '@/services/products/get-product.service'
+import { type Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'Editar producto | Administracion | Buffet UNAHUR'
+}
 interface Props {
   params: {
     productId: string

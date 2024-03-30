@@ -25,6 +25,7 @@ const Form = ({ orderId, product }: Props) => {
 
       router.push(routes.attendant.PRODUCTS)
       router.refresh()
+      toast.success('Editado con exito')
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)

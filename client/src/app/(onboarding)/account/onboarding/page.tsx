@@ -1,5 +1,10 @@
 import Image from 'next/image'
 import Form from './_components/Form'
+import { type Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Onboarding | Buffet UNAHUR'
+}
 
 const OnboardingPage = async () => (
   <main className='flex min-h-screen w-full flex-col items-center gap-9 px-6 py-16'>

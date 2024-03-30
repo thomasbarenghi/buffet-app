@@ -4,7 +4,7 @@ import { type Metadata } from 'next'
 import AuthMask from '../_components/AuthMask'
 
 export const metadata: Metadata = {
-  title: 'Ingresar | LleGo!'
+  title: 'Ingresar | Buffet UNAHUR'
 }
 
 const LoginPage: FunctionComponent = () => (

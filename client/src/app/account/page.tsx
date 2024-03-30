@@ -9,9 +9,12 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import { type Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
+export const metadata: Metadata = {
+  title: 'Cuenta | Buffet UNAHUR'
+}
 // TODO: ACTUALIZAR EN CADA SOFTROUTING LAS ORDENES FINALIZADAS
 // TODO: ORDENAR SEGUN ULTIMA ORDEN
 

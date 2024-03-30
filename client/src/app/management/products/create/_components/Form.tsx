@@ -20,6 +20,7 @@ const Form: FunctionComponent = () => {
 
       router.push(routes.attendant.PRODUCTS)
       router.refresh()
+      toast.success('Creado con exito')
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)
