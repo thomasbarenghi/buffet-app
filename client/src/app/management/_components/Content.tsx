@@ -1,6 +1,7 @@
 'use client'
 import { OrdersGrid } from '@/components'
 import { PaymentStatusApiEnum, RoleEnum, type OrderInterface } from '@/interfaces'
+import { changeOrderStatus } from '@/services/shop/change-order-status.service'
 import { Endpoints } from '@/utils/constants/endpoints.const'
 import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 import { Switch, Tab, Tabs } from '@nextui-org/react'
@@ -51,13 +52,23 @@ const orderFiltering = (orders: OrderInterface[]): FilteredOrders => {
   return filteredOrders
 }
 
-const Content = () => {
+const Content = ({ shopStatus }: { shopStatus: boolean }) => {
   const supabase = createClientComponentClient<Database>()
   const { data: ordersPrev, mutate } = useSWR<OrderInterface[]>(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey), {
     refreshInterval: 30000
   })
-  const [isSelected, setIsSelected] = useState(true)
+  const [isSelected, setIsSelected] = useState(shopStatus)
   const orders = orderFiltering(ordersPrev ?? [])
+
+  const handleShopStatus = async (v: boolean) => {
+    try {
+      setIsSelected(v)
+      await changeOrderStatus(v)
+      toast.success('Actualizado correctamente')
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   useEffect(() => {
     supabase
@@ -94,7 +105,7 @@ const Content = () => {
     <section className='flex w-full flex-col gap-4'>
       <div className='flex w-full flex-col gap-2 md:flex-row md:items-center md:justify-between'>
         <h1 className='text-2xl font-medium leading-tight'>Pedidos activos ({ordersPrev?.length})</h1>
-        <Switch defaultSelected classNames={{ label: 'font-light' }} onValueChange={setIsSelected}>
+        <Switch isSelected={isSelected} classNames={{ label: 'font-light' }} onValueChange={handleShopStatus}>
           {isSelected ? 'Recibiendo pedidos' : 'No recibiendo pedidos'}
         </Switch>
       </div>

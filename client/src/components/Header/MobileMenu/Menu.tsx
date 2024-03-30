@@ -1,26 +1,31 @@
 'use client'
 import { RoleEnum, type Profile } from '@/interfaces'
 import { menu } from '@/lib/menu.lib'
-import { Link, NavbarContent, NavbarItem } from '@nextui-org/react'
+import { Link, NavbarMenu, NavbarMenuItem } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 
-const Menu = ({ profile }: { profile: Profile }) => {
+interface Props {
+  profile: Profile
+}
+
+const Menu = ({ profile }: Props) => {
   const pathname = usePathname()
   const role = profile.role ?? RoleEnum.Customer
   return (
-    <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+    <NavbarMenu className='pt-14'>
       {menu[role].map((element, index) => (
-        <NavbarItem isActive={pathname === element.href} key={index}>
+        <NavbarMenuItem isActive={pathname === element.href} key={index}>
           <Link
             className={pathname === element.href ? 'font-semibold' : 'font-light'}
             color={pathname === element.href ? 'primary' : 'foreground'}
             href={element.href}
+            size='lg'
           >
             {element.title}
           </Link>
-        </NavbarItem>
+        </NavbarMenuItem>
       ))}
-    </NavbarContent>
+    </NavbarMenu>
   )
 }
 

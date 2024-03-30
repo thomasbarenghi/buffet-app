@@ -47,7 +47,7 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
         Chat
       </Button>
       {chatOpen && (
-        <div className='fixed bottom-0 right-0 top-0  z-50 flex w-full flex-col items-end overflow-hidden rounded-xl  border border-gray-300 bg-neutral-50 shadow-lg sm:m-4  sm:h-[80vh] sm:w-[350px]'>
+        <div className='fixed bottom-0 right-0 top-0 z-50  flex w-full flex-col items-end overflow-hidden rounded-xl border  border-gray-300 bg-neutral-50 shadow-lg sm:top-auto sm:m-4  sm:h-[80vh] sm:w-[350px]'>
           <div className='flex w-full items-center justify-start border-b bg-white px-3 py-2'>
             <div className=' cursor-pointer rounded-full p-2' onClick={toggleChat}>
               <Image src='/icons/cross.svg' alt='cross' width={10} height={10} />

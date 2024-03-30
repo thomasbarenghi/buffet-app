@@ -53,6 +53,8 @@ const Input: FunctionComponent<ExtendedProps> = ({ ...props }) => {
       }}
       placeholder={props.placeholder}
       errorMessage={props.errorMessage}
+      startContent={props.startContent}
+      endContent={props.endContent}
     />
   )
 }

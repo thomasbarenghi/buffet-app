@@ -2,12 +2,12 @@
 import React, { useState } from 'react'
 import { Link, Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react'
 import Image from 'next/image'
-import Cart from '../Cart'
 import { routes } from '@/utils/constants/routes.const'
 import { type Role, type Profile } from '@/interfaces'
 import AvatarMenu from './AvatarMenu'
-import MobileMenu from './MobileMenu'
+import MobileMenu from './MobileMenu/Main'
 import Menu from './Menu'
+import Cart from '../Cart/Cart'
 
 interface Props {
   mode?: Role

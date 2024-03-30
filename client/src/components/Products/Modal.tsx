@@ -55,7 +55,7 @@ const ModalProduct: FunctionComponent<Props> = ({ product, onClose, isOpen, mode
                   size='lg'
                   radius='lg'
                   onClick={() => {
-                    addItem(product)
+                    addItem(product.id)
                   }}
                 />
               </ModalFooter>

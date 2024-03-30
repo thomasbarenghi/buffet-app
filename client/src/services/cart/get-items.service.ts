@@ -1,15 +1,20 @@
-import { type Product } from '@/interfaces'
-import { getProduct } from '../products/get-product.service'
+import { type Response, type Product } from '@/interfaces'
+import { getRequest } from '../api.requests'
+import { Endpoints } from '@/utils/constants/endpoints.const'
+import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 
-export const getAllItems = async (items: Product[]): Promise<Product[]> => {
-  const ids = items.map((item) => item.id)
-  const res = await Promise.all(
-    ids.map(async (item) => {
-      const { data: product } = await getProduct(item)
-      if (!product) return null
-      return product
-    })
-  )
+export const arrayToFormattedString = (array: string[]) => {
+  const formattedString = `(${array.map((item) => `"${item}"`).join(',')})`
+  return formattedString
+}
 
-  return res.filter((product): product is Product => product !== null)
+export const getAllItems = async (items: string[]): Promise<Response<Product[]>> => {
+  const ids = arrayToFormattedString(items)
+
+  const res = await getRequest<Product[]>({
+    url: Endpoints.FIND_CART_PRODUCTS(ids, supabaseAnonApiKey),
+    cache: 'force-cache'
+  })
+
+  return res
 }

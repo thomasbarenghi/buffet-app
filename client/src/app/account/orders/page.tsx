@@ -1,4 +1,4 @@
-import { Footer, Header, OrdersTable } from '@/components'
+import { OrdersTable } from '@/components'
 import { RoleEnum } from '@/interfaces'
 import { getShopOrders } from '@/services/orders/get-shop-orders'
 import { getUserOrders } from '@/services/orders/get-user-orders'
@@ -17,16 +17,12 @@ const Products = async () => {
       : await getShopOrders(supabase, 'finished')
 
   return (
-    <>
-      <Header />
-      <main className='resp-pad-x flex flex-col items-center gap-4 bg-neutral-50 pb-9 pt-8'>
-        <section className='flex w-full flex-col gap-4'>
-          <h1 className='text-2xl font-medium leading-tight'>Ordenes realizadas</h1>
-          <OrdersTable orders={orders?.data ?? []} />
-        </section>
-      </main>
-      <Footer />
-    </>
+    <main className='resp-pad-x flex flex-col items-center gap-4 bg-neutral-50 pb-9 pt-8'>
+      <section className='flex w-full flex-col gap-4'>
+        <h1 className='text-2xl font-medium leading-tight'>Ordenes realizadas</h1>
+        <OrdersTable orders={orders?.data ?? []} />
+      </section>
+    </main>
   )
 }
 
