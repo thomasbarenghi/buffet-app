@@ -1,10 +1,10 @@
 'use client'
 import { useRef, useState } from 'react'
 import { type Profile, type Message, type OrderInterface } from '@/interfaces'
-import Button from '../Button'
 import Image from 'next/image'
 import { createMessage } from '@/services/messages/create-message.service'
 import { Input } from '@nextui-org/react'
+import ChatToggle from './ChatToggle'
 
 interface Props {
   order: OrderInterface | null
@@ -36,16 +36,7 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
 
   return (
     <>
-      <Button
-        color='primary'
-        size='sm'
-        className='!text-xs font-semibold'
-        radius='md'
-        variant='solid'
-        onClick={toggleChat}
-      >
-        Chat
-      </Button>
+      <ChatToggle toggleChat={toggleChat} />
       {chatOpen && (
         <div className='fixed bottom-0 right-0 top-0 z-50  flex w-full flex-col items-end overflow-hidden rounded-xl border  border-gray-300 bg-neutral-50 shadow-lg sm:top-auto sm:m-4  sm:h-[80vh] sm:w-[350px]'>
           <div className='flex w-full items-center justify-start border-b bg-white px-3 py-2'>

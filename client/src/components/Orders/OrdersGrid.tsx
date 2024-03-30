@@ -1,10 +1,11 @@
 'use client'
 import { useEffect, useState, type FunctionComponent } from 'react'
 import { type Role, type OrderInterface, type Profile } from '@/interfaces'
-import { OrderItemGroupPlaceholder, ProductOrderItem } from '..'
+import { ProductOrderItem } from '..'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { getProfile } from '@/services/user/get-profile.service'
-
+import dynamic from 'next/dynamic'
+const OrderItemGroupPlaceholder = dynamic(async () => await import('./Placeholders/OrderItemGroup'))
 interface Props {
   orders: OrderInterface[]
   withTitle?: boolean

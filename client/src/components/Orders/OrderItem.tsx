@@ -9,14 +9,21 @@ import {
   type Message
 } from '@/interfaces'
 import Image from 'next/image'
-import DropManager from './DropManager'
-import ChatBox from './ChatBox'
 import useSWR from 'swr'
 import { useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Endpoints } from '@/utils/constants/endpoints.const'
 import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 import { toast } from 'sonner'
+import dynamic from 'next/dynamic'
+import ChatToggle from './ChatToggle'
+import Trigger from './Drop/Trigger'
+const DropManager = dynamic(async () => await import('./Drop/DropManager'), {
+  loading: () => <Trigger />
+})
+const ChatBox = dynamic(async () => await import('./ChatBox'), {
+  loading: () => <ChatToggle toggleChat={() => {}} />
+})
 
 const Products = ({ order }: { order: OrderInterface }) => (
   <div className='grid w-full'>
@@ -27,7 +34,14 @@ const Products = ({ order }: { order: OrderInterface }) => (
           key={product.id}
         >
           <div className='relative aspect-square h-auto w-full max-w-[50px]'>
-            <Image src={product?.thumbnail} alt='picture' fill className='rounded-xl object-cover' />
+            <Image
+              src={product?.thumbnail}
+              alt='picture'
+              priority
+              quality={85}
+              fill
+              className='rounded-xl object-cover'
+            />
           </div>
           <div className='flex w-full flex-col gap-[2px] '>
             <h1 className='text-sm font-normal'>{product?.title}</h1>

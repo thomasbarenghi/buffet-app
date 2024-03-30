@@ -13,7 +13,7 @@ interface CartState {
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set, get) => ({
+    (set, _get) => ({
       items: [],
       addItem: (item) => {
         set((state) => {
@@ -23,7 +23,7 @@ export const useCartStore = create<CartState>()(
           }
 
           const updatedItems = [...state.items, item]
-          Cookies.set('cartItems', updatedItems.join(','))
+          Cookies.set('cartItems', updatedItems.join(','), { expires: 100 })
           toast.success('Producto agregado al carrito')
           revalidateCartPage()
           return { items: updatedItems }
@@ -34,13 +34,13 @@ export const useCartStore = create<CartState>()(
           ?.split(',')
           .filter((i) => i !== item)
 
-        Cookies.set('cartItems', items?.join(',') ?? '')
+        Cookies.set('cartItems', items?.join(',') ?? '', { expires: 100 })
         revalidateCartPage()
         console.log(items)
         set((state) => ({ items: state.items.filter((i) => i !== item) }))
       },
       cleanCart: () => {
-        Cookies.set('cartItems', '')
+        Cookies.set('cartItems', '', { expires: 100 })
         revalidateCartPage()
         set({ items: [] })
       }

@@ -119,16 +119,16 @@ const Content = ({ shopStatus }: { shopStatus: boolean }) => {
             tabList: 'bg-white border'
           }}
         >
-          <Tab key='1' title='Por aprobarse'>
+          <Tab key='1' title={`Por aprobarse (${orders.PendingApproval.length})`}>
             <OrdersGrid orders={orders.PendingApproval} mode={RoleEnum.Attendant} />
           </Tab>
-          <Tab key='2' title='Pendientes de preparacion'>
+          <Tab key='2' title={`Pendientes de preparacion (${orders.PendingPreparation.length})`}>
             <OrdersGrid orders={orders.PendingPreparation} mode={RoleEnum.Attendant} />
           </Tab>
-          <Tab key='3' title='En preparacion'>
+          <Tab key='3' title={`En preparacion (${orders.InProgress.length})`}>
             <OrdersGrid orders={orders.InProgress} mode={RoleEnum.Attendant} />
           </Tab>
-          <Tab key='4' title='Por ser entregados'>
+          <Tab key='4' title={`Por ser entregados (${orders.PendingDelivery.length})`}>
             <OrdersGrid orders={orders.PendingDelivery} mode={RoleEnum.Attendant} />
           </Tab>
         </Tabs>

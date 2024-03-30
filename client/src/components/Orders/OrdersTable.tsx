@@ -3,7 +3,6 @@ import { type OrderInterface, OrderStatusClientEnum } from '@/interfaces'
 import { TableCell, TableRow } from '@nextui-org/react'
 import { type FunctionComponent } from 'react'
 import { DynamicTable } from '..'
-
 import Image from 'next/image'
 
 interface Props {
@@ -33,6 +32,8 @@ const OrdersTable: FunctionComponent<Props> = ({ orders }) => (
                   alt='img'
                   width={100}
                   height={100}
+                  priority
+                  quality={85}
                   src={item.thumbnail}
                   className='aspect-square h-[50px] w-[50px] rounded-lg object-cover'
                 />

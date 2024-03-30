@@ -10,15 +10,15 @@ import useSWR from 'swr'
 
 interface Props {
   userId: string
+  ordersFallback: OrderInterface[]
 }
 
-const Content = ({ userId }: Props) => {
+const Content = ({ userId, ordersFallback }: Props) => {
   const supabase = createClientComponentClient<Database>()
-
   const { data: orders, mutate } = useSWR<OrderInterface[]>(
     Endpoints.FIND_USER_ACTIVE_ORDERS(userId, supabaseAnonApiKey),
     {
-      refreshInterval: 30000
+      fallbackData: ordersFallback
     }
   )
 

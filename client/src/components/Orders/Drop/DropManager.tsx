@@ -1,18 +1,26 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, useDisclosure } from '@nextui-org/react'
-import { getNextOrderStatus, getPreviousOrderStatus } from './local-utils'
+import { Button, Dropdown, DropdownTrigger, useDisclosure } from '@nextui-org/react'
+import { getNextOrderStatus, getPreviousOrderStatus } from '../local-utils'
 import { useSWRConfig } from 'swr'
 import { toast } from 'sonner'
 import { changeStatus } from '@/services/orders/change-status.service'
 import { Endpoints } from '@/utils/constants/endpoints.const'
 import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 import { type OrderInterface, OrderStatusApiEnum, type Profile } from '@/interfaces'
-import ClientModal from './ClientModal'
-import CompleteModal from './CompleteModal'
-import CancelModal from './CancelModal'
+import dynamic from 'next/dynamic'
+const DropMenu = dynamic(async () => await import('./DropMenu'))
+const ClientModal = dynamic(async () => await import('../ClientModal'))
+const CompleteModal = dynamic(async () => await import('../CompleteModal'))
+const CancelModal = dynamic(async () => await import('../CancelModal'))
 
 interface Props {
   order: OrderInterface
   client: Profile | null
+}
+
+export interface DropItems {
+  title: string
+  action: () => void
+  isVisible: boolean
 }
 
 const DropManager = ({ order, client }: Props) => {
@@ -88,7 +96,7 @@ const DropManager = ({ order, client }: Props) => {
     onCloseCancel()
   }
 
-  const dropItems = [
+  const dropItems: DropItems[] = [
     {
       title: 'Ver cliente',
       action: () => {
@@ -148,15 +156,7 @@ const DropManager = ({ order, client }: Props) => {
             Gestionar
           </Button>
         </DropdownTrigger>
-        <DropdownMenu aria-label='Action event example'>
-          {dropItems
-            .filter((item) => item.isVisible)
-            .map((item, index) => (
-              <DropdownItem key={index} onClick={item.action}>
-                {item.title}
-              </DropdownItem>
-            ))}
-        </DropdownMenu>
+        <DropMenu dropItems={dropItems} />
       </Dropdown>
     </>
   )
