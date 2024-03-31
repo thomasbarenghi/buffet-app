@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import axios, { type AxiosResponse } from 'axios'
-import { type HttpMethod, type Response, type GetRequestParams } from '@/interfaces'
+import { type Response, type GetRequestParams, type MutationRequestParams } from '@/interfaces'
 import { serverUrl } from '@/utils/constants/env.const'
 
 export const getRequest = async <T>(params: GetRequestParams): Promise<Response<T>> => {
   try {
     const axiosInstance = axios.create({
-      baseURL: serverUrl
+      baseURL: params.customUrl && params.customUrl?.length > 1 ? params.customUrl : serverUrl
     })
 
-    const response = await fetch(`${axiosInstance.defaults.baseURL}${params.url}`, {
+    const response = await fetch(`${axiosInstance.defaults.baseURL}${params.path}`, {
       cache: params.cache,
       next: { revalidate: params.revalidate || undefined, tags: params.tags }
     })
@@ -18,7 +18,7 @@ export const getRequest = async <T>(params: GetRequestParams): Promise<Response<
     if (!response.ok) {
       const errorResponse: Response<T> = {
         data: null,
-        error: { message: `Error en la solicitud GET a ${params.url}`, code: response.status }
+        error: { message: `Error en la solicitud GET a ${params.path}`, code: response.status }
       }
       return errorResponse
     }
@@ -29,21 +29,13 @@ export const getRequest = async <T>(params: GetRequestParams): Promise<Response<
   }
 }
 
-export const mutationRequest = async <T>(
-  method: HttpMethod,
-  path: string,
-  body?: any,
-  headers?: any,
-  customUrl?: string
-): Promise<Response<T>> => {
+export const mutationRequest = async <T>(params: MutationRequestParams): Promise<Response<T>> => {
   try {
-    console.log(customUrl, path)
-
     const axiosInstance = axios.create({
-      baseURL: customUrl && customUrl?.length > 1 ? customUrl : serverUrl
+      baseURL: params.customUrl && params.customUrl?.length > 1 ? params.customUrl : serverUrl
     })
 
-    const axiosResponse: AxiosResponse<T> = await axiosInstance[method](path, body, headers)
+    const axiosResponse: AxiosResponse<T> = await axiosInstance[params.method](params.path, params.body, params.headers)
     return { data: axiosResponse.data, error: null }
   } catch (error: any) {
     console.error(error)

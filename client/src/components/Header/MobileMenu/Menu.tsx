@@ -10,7 +10,7 @@ interface Props {
 
 const Menu = ({ profile }: Props) => {
   const pathname = usePathname()
-  const role = profile.role ?? RoleEnum.Customer
+  const role = profile?.role ?? RoleEnum.Customer
   return (
     <NavbarMenu className='pt-14'>
       {menu[role].map((element, index) => (

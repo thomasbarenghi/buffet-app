@@ -1,8 +1,7 @@
 'use client'
 import { OrdersGrid } from '@/components'
 import { type OrderInterface } from '@/interfaces'
-import { Endpoints } from '@/utils/constants/endpoints.const'
-import { supabaseAnonApiKey } from '@/utils/constants/env.const'
+import { endpoints } from '@/utils/constants/endpoints.const'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
@@ -15,12 +14,9 @@ interface Props {
 
 const Content = ({ userId, ordersFallback }: Props) => {
   const supabase = createClientComponentClient<Database>()
-  const { data: orders, mutate } = useSWR<OrderInterface[]>(
-    Endpoints.FIND_USER_ACTIVE_ORDERS(userId, supabaseAnonApiKey),
-    {
-      fallbackData: ordersFallback
-    }
-  )
+  const { data: orders, mutate } = useSWR<OrderInterface[]>(endpoints.users.ACTIVE_ORDERS('current'), {
+    fallbackData: ordersFallback
+  })
 
   useEffect(() => {
     supabase

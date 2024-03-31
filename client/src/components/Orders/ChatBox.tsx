@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react'
 import { type Profile, type Message, type OrderInterface } from '@/interfaces'
 import Image from 'next/image'
-import { createMessage } from '@/services/messages/create-message.service'
+import { createMessage } from '@/services/chat.service'
 import { Input } from '@nextui-org/react'
 import ChatToggle from './ChatToggle'
 

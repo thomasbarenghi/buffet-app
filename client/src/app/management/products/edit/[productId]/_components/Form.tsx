@@ -4,7 +4,7 @@ import { type Product, type ProductFormData } from '@/interfaces'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
-import { editProduct } from '@/services/products/edit-product.service'
+import { patchProduct } from '@/services/api-client'
 
 interface Props {
   orderId: string
@@ -16,7 +16,7 @@ const Form = ({ orderId, product }: Props) => {
 
   const handleSubmitForm = async (formData: ProductFormData) => {
     try {
-      const { error } = await editProduct(formData, orderId)
+      const { error } = await patchProduct(formData, orderId)
 
       if (error) {
         console.log(error)

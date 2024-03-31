@@ -2,9 +2,8 @@ import { Button, Dropdown, DropdownTrigger, useDisclosure } from '@nextui-org/re
 import { getNextOrderStatus, getPreviousOrderStatus } from '../local-utils'
 import { useSWRConfig } from 'swr'
 import { toast } from 'sonner'
-import { changeStatus } from '@/services/orders/change-status.service'
-import { Endpoints } from '@/utils/constants/endpoints.const'
-import { supabaseAnonApiKey } from '@/utils/constants/env.const'
+import { changeOrderStatus } from '@/services/api-client'
+import { endpoints } from '@/utils/constants/endpoints.const'
 import { type OrderInterface, OrderStatusApiEnum, type Profile } from '@/interfaces'
 import dynamic from 'next/dynamic'
 const DropMenu = dynamic(async () => await import('./DropMenu'))
@@ -46,8 +45,8 @@ const DropManager = ({ order, client }: Props) => {
     try {
       const next = getNextOrderStatus(order.status as OrderStatusApiEnum)
       if (next === OrderStatusApiEnum.Delivered) return toast.warning('No disponible')
-      await changeStatus(next ?? OrderStatusApiEnum.Canceled, order.id)
-      await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
+      await changeOrderStatus(next ?? OrderStatusApiEnum.Canceled, order.id)
+      await mutate(endpoints.shops.ACTIVE_ORDERS)
       toast.success('Realizado')
     } catch (error) {
       console.error(error)
@@ -60,8 +59,8 @@ const DropManager = ({ order, client }: Props) => {
       console.log('hola')
       const prev = getPreviousOrderStatus(order.status as OrderStatusApiEnum)
       if (prev === order.status) return toast.warning('No disponible')
-      await changeStatus(prev ?? OrderStatusApiEnum.Canceled, order.id)
-      await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
+      await changeOrderStatus(prev ?? OrderStatusApiEnum.Canceled, order.id)
+      await mutate(endpoints.shops.ACTIVE_ORDERS)
       toast.success('Realizado')
     } catch (error) {
       console.error(error)
@@ -74,8 +73,8 @@ const DropManager = ({ order, client }: Props) => {
       if (givenCode !== order.code.toString()) {
         return toast.error('Codigo incorrecto')
       }
-      await changeStatus(OrderStatusApiEnum.Delivered, order.id)
-      await mutate(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey))
+      await changeOrderStatus(OrderStatusApiEnum.Delivered, order.id)
+      await mutate(endpoints.shops.ACTIVE_ORDERS)
       onCloseComplete()
       toast.success('Finalizado')
     } catch (error) {

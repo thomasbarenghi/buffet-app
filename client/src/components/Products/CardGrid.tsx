@@ -1,11 +1,10 @@
 'use server'
 import { ProductCardVert } from '@/components'
-import { getProducts } from '@/services/products/get-products.service'
-import { getProfile } from '@/services/user/get-profile.service'
+import { getAllProducts, getUserProfile } from '@/services/api-server'
 
 const ProductCardGrid = async () => {
-  const products = await getProducts()
-  const profile = await getProfile()
+  const products = await getAllProducts()
+  const profile = await getUserProfile()
   return (
     <div className='grid w-full grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
       {products?.data?.map((product, index) => (

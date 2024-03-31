@@ -5,7 +5,7 @@ import { type FunctionComponent } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
-import { createProduct } from '@/services/products/create-product.service'
+import { createProduct } from '@/services/api-client'
 
 const Form: FunctionComponent = () => {
   const router = useRouter()

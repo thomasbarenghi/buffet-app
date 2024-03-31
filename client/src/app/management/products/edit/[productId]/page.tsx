@@ -1,5 +1,5 @@
 import Form from './_components/Form'
-import { getProduct } from '@/services/products/get-product.service'
+import { getProduct } from '@/services/api-server'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {

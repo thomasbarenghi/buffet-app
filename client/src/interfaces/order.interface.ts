@@ -11,11 +11,11 @@ export interface OrderInterface {
   payment_status: PaymentStatus
   total_price: number
   status: OrderStatusType
-  customer_id: string
-  products: Product[]
+  customer_id: string | null
+  products?: Product[]
   customer?: Profile
   code: number
-  instructions: string
+  instructions: string | null
 }
 
 export type OrderStatusType =

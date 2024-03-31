@@ -1,5 +1,5 @@
 export interface Shop {
   id: string
-  created_at: Date
+  created_at: string
   is_open: boolean
 }

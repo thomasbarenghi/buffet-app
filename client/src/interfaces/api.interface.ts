@@ -13,10 +13,19 @@ export interface Response<T> {
 }
 
 export interface GetRequestParams {
-  url: string
+  path: string
   cache?: 'default' | 'no-store' | 'reload' | 'force-cache' | 'only-if-cached'
   tags?: string[]
   revalidate?: number
+  customUrl?: string
 }
 
-export type HttpMethod = 'post' | 'put' | 'delete'
+export interface MutationRequestParams {
+  method: HttpMethod
+  path: string
+  body?: any
+  headers?: any
+  customUrl?: string
+}
+
+export type HttpMethod = 'post' | 'put' | 'delete' | 'patch'

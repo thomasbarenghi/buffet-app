@@ -27,35 +27,34 @@ const ChatBox = dynamic(async () => await import('./ChatBox'), {
 
 const Products = ({ order }: { order: OrderInterface }) => (
   <div className='grid w-full'>
-    {Array.isArray(order.products) &&
-      order?.products.map((product, index) => (
-        <div
-          className={`flex w-full flex-row items-center gap-2 pt-3 ${order.products.length - 1 !== index && 'border-b pb-3'}`}
-          key={product.id}
-        >
-          <div className='relative aspect-square h-auto w-full max-w-[50px]'>
-            <Image
-              src={product?.thumbnail}
-              alt='picture'
-              priority
-              quality={85}
-              fill
-              className='rounded-xl object-cover'
-            />
-          </div>
-          <div className='flex w-full flex-col gap-[2px] '>
-            <h1 className='text-sm font-normal'>{product?.title}</h1>
-            <p className='text-xs font-semibold'>${product?.price}</p>
-          </div>
+    {order.products?.map((product, index) => (
+      <div
+        className={`flex w-full flex-row items-center gap-2 pt-3 ${order?.products && order?.products?.length - 1 !== index && 'border-b pb-3'}`}
+        key={product.id}
+      >
+        <div className='relative aspect-square h-auto w-full max-w-[50px]'>
+          <Image
+            src={product?.thumbnail}
+            alt='picture'
+            priority
+            quality={85}
+            fill
+            className='rounded-xl object-cover'
+          />
         </div>
-      ))}
+        <div className='flex w-full flex-col gap-[2px] '>
+          <h1 className='text-sm font-normal'>{product?.title}</h1>
+          <p className='text-xs font-semibold'>${product?.price}</p>
+        </div>
+      </div>
+    ))}
   </div>
 )
 
 interface Props {
   order: OrderInterface
   profile: Profile
-  mode: Role
+  mode: Role | string
 }
 
 const ProductOrderItem = ({ order, mode, profile }: Props) => {

@@ -25,6 +25,8 @@ const Brand = () => (
 
 const Content = ({ mode = 'customer', withBorder = true, profile }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  console.log(profile)
+
   return (
     <Navbar
       shouldHideOnScroll
@@ -41,7 +43,7 @@ const Content = ({ mode = 'customer', withBorder = true, profile }: Props) => {
       <NavbarContent justify='end' className='sm:gap-10'>
         <Menu profile={profile} />
         <div className='flex items-center justify-between gap-4'>
-          {profile.role === 'customer' && <Cart />}
+          {profile?.role === 'customer' && <Cart />}
           <div>
             <AvatarMenu profile={profile} />
           </div>

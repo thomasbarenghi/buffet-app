@@ -1,7 +1,5 @@
 'use server'
-import { getProfile } from '@/services/user/get-profile.service'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { getUserProfile } from '@/services/api-server'
 import Content from './Content'
 import { type Role } from '@/interfaces'
 
@@ -11,12 +9,10 @@ interface Props {
 }
 
 const Header = async ({ mode = 'customer', withBorder = true }: Props) => {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const user = await supabase.auth.getUser()
-  const profile = await getProfile(user.data.user?.id ?? '')
+  const profile = await getUserProfile()
+  if (!profile.data) return
 
-  return <Content profile={profile.data!} mode={mode} withBorder={withBorder} />
+  return <Content profile={profile.data} mode={mode} withBorder={withBorder} />
 }
 
 export default Header

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 
 const Menu = ({ profile }: { profile: Profile }) => {
   const pathname = usePathname()
-  const role = profile.role ?? RoleEnum.Customer
+  const role = profile?.role ?? RoleEnum.Customer
   return (
     <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
       {menu[role].map((element, index) => (

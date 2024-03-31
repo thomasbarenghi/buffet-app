@@ -26,7 +26,7 @@ const OrdersTable: FunctionComponent<Props> = ({ orders }) => (
       renderRow={(order: OrderInterface) => (
         <TableRow key={order.id}>
           <TableCell className='grid min-w-[250px] gap-4'>
-            {order.products.map((item) => (
+            {order?.products?.map((item) => (
               <div className='flex items-center gap-2 ' key={item.id}>
                 <Image
                   alt='img'

@@ -16,7 +16,7 @@ import { truncateText } from '@/utils/functions/truncateText'
 import { routes } from '@/utils/constants/routes.const'
 import Link from 'next/link'
 import Image from 'next/image'
-import { deleteProduct } from '@/services/products/delete-product.service'
+import { deleteProduct } from '@/services/api-client'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 

@@ -1,9 +1,8 @@
 'use client'
 import { OrdersGrid } from '@/components'
 import { PaymentStatusApiEnum, RoleEnum, type OrderInterface } from '@/interfaces'
-import { changeOrderStatus } from '@/services/shop/change-order-status.service'
-import { Endpoints } from '@/utils/constants/endpoints.const'
-import { supabaseAnonApiKey } from '@/utils/constants/env.const'
+import { changeShopStatus } from '@/services/api-client'
+import { endpoints } from '@/utils/constants/endpoints.const'
 import { Switch, Tab, Tabs } from '@nextui-org/react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect, useState } from 'react'
@@ -54,7 +53,7 @@ const orderFiltering = (orders: OrderInterface[]): FilteredOrders => {
 
 const Content = ({ shopStatus }: { shopStatus: boolean }) => {
   const supabase = createClientComponentClient<Database>()
-  const { data: ordersPrev, mutate } = useSWR<OrderInterface[]>(Endpoints.FIND_SHOP_ACTIVE_ORDERS(supabaseAnonApiKey), {
+  const { data: ordersPrev, mutate } = useSWR<OrderInterface[]>(endpoints.shops.ACTIVE_ORDERS, {
     refreshInterval: 30000
   })
   const [isSelected, setIsSelected] = useState(shopStatus)
@@ -63,7 +62,7 @@ const Content = ({ shopStatus }: { shopStatus: boolean }) => {
   const handleShopStatus = async (v: boolean) => {
     try {
       setIsSelected(v)
-      await changeOrderStatus(v)
+      await changeShopStatus(v)
       toast.success('Actualizado correctamente')
     } catch (error) {
       console.error(error)

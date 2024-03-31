@@ -1,7 +1,7 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getProfile } from './services/user/get-profile.service'
+import { getUserProfile } from './services/api-server'
 
 enum RoutesEnum {
   Auth = '/auth',
@@ -17,7 +17,7 @@ const middleware = async (req: NextRequest) => {
   const supabase = createMiddlewareClient<Database>({ req, res })
   const { data } = await supabase.auth.getSession()
   const user = await supabase.auth.getUser()
-  const profile = await getProfile(user.data.user?.id ?? '')
+  const profile = await getUserProfile(user.data.user?.id ?? '')
   const origin = req.nextUrl.origin
   const isLoggedIn = !!data.session?.access_token
   const hasProfile = !!profile.data?.id

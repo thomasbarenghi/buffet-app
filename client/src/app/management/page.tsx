@@ -1,4 +1,4 @@
-import { getShopStatus } from '@/services/shop/get-shop-status.service'
+import { getShopStatus } from '@/services/api-server'
 import Content from './_components/Content'
 import { type Metadata } from 'next'
 

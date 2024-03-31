@@ -1,12 +1,8 @@
 import { Button, OrdersGrid } from '@/components'
 import { RoleEnum } from '@/interfaces'
-import { getShopOrders } from '@/services/orders/get-shop-orders'
-import { getUserOrders } from '@/services/orders/get-user-orders'
-import { getProfile } from '@/services/user/get-profile.service'
+import { getShopOrders, getUserOrders, getUserProfile } from '@/services/api-server'
 import { routes } from '@/utils/constants/routes.const'
 import { User } from '@nextui-org/react'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import { type Metadata } from 'next'
@@ -19,14 +15,9 @@ export const metadata: Metadata = {
 // TODO: ORDENAR SEGUN ULTIMA ORDEN
 
 const AccountPage = async () => {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const user = await supabase.auth.getUser()
-  const profile = await getProfile(user.data.user?.id ?? '')
+  const profile = await getUserProfile()
   const orders =
-    profile.data?.role === RoleEnum.Customer
-      ? await getUserOrders(supabase, 'finished')
-      : await getShopOrders(supabase, 'finished')
+    profile.data?.role === RoleEnum.Customer ? await getUserOrders('finished') : await getShopOrders('finished')
 
   return (
     <main className=' flex flex-col items-center pb-14 '>

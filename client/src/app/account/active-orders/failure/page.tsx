@@ -1,4 +1,4 @@
-import { getOrder } from '@/services/orders/get-order.service'
+import { getOrder } from '@/services/api-server'
 import { routes } from '@/utils/constants/routes.const'
 import { redirect } from 'next/navigation'
 

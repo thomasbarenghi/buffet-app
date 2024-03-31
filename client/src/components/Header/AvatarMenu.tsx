@@ -18,6 +18,7 @@ const AvatarMenu = ({ profile }: Props) => {
     await supabase.auth.signOut()
     router.push(routes.auth.LOGIN)
   }
+  console.log(profile)
 
   return (
     <Dropdown
@@ -26,7 +27,7 @@ const AvatarMenu = ({ profile }: Props) => {
       }}
     >
       <DropdownTrigger>
-        <Avatar isBordered radius='lg' src={profile.profile_image} />
+        <Avatar isBordered radius='lg' src={profile?.profile_image} />
       </DropdownTrigger>
       <DropdownMenu>
         <DropdownItem key='account' as={Link} href={routes.common.ACCOUNT}>
