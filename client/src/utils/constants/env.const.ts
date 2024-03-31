@@ -1,9 +1,9 @@
 export const serverUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 export const supabaseAnonApiKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 export const clientUrl = process.env.NEXT_PUBLIC_CLIENT_URL!
-export const mpPublicKey = process.env.NEXT_PUBLIC_MP_PUBLIC_KEY!
-export const mpAccessToken = process.env.NEXT_PUBLIC_MP_ACCESS_TOKEN!
 export const shopId = process.env.NEXT_PUBLIC_SHOP_ID!
+export const mpPublicKey = process.env.MP_PUBLIC_KEY!
+export const mpAccessToken = process.env.MP_ACCESS_TOKEN!
 export const cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME!
 export const cloudinaryApiSecret = process.env.CLOUDINARY_API_KEY!
 export const cloudinaryApiKey = process.env.CLOUDINARY_API_SECRET!
