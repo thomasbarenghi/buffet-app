@@ -16,6 +16,8 @@ const Form = ({ orderId, product }: Props) => {
 
   const handleSubmitForm = async (formData: ProductFormData) => {
     try {
+      formData.thumbnail = formData.thumbnail instanceof FileList ? formData.thumbnail[0] : undefined
+
       const { error } = await patchProduct(formData, orderId)
 
       if (error) {

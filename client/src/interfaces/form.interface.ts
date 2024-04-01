@@ -30,6 +30,6 @@ export interface OrderFormProps {
 export interface ProductFormData {
   title: string
   price: number
-  thumbnail?: string | FileList
+  thumbnail?: string | File | FileList
   description: string
 }

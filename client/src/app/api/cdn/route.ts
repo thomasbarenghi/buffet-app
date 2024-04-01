@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/brace-style */
 /* eslint-disable @typescript-eslint/indent */
 import * as streamifier from 'streamifier'
 import sharp from 'sharp'
 import { v2 as cloudinary, type UploadApiResponse } from 'cloudinary'
 import { type NextRequest } from 'next/server'
+import { headers } from 'next/headers'
+import { apiCdnAuthorization } from '@/utils/constants/env.const'
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -14,6 +17,22 @@ cloudinary.config({
 export const POST = async (req: NextRequest) => {
   try {
     const reqData = await req.formData()
+    const headersList = headers()
+    const authorization = headersList.get('api-cdn-authorization')
+
+    if (authorization !== apiCdnAuthorization) {
+      return new Response(
+        JSON.stringify({
+          message: 'No key provided'
+        }),
+        {
+          status: 401,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+    }
     const file = reqData.get('image') as File
 
     if (!file) {

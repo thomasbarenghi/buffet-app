@@ -22,14 +22,20 @@ export const createProduct = async (product: ProductFormData): Promise<Response<
     method: 'post',
     body: product,
     path: endpoints.products.CREATE_ONE,
-    customUrl: clientUrl
+    customUrl: clientUrl,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   })
 
 export const deleteProduct = async (id: string): Promise<Response<Product>> =>
   await mutationRequest<Product>({
     method: 'delete',
     path: endpoints.products.DELETE_ONE(id),
-    customUrl: clientUrl
+    customUrl: clientUrl,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   })
 
 export const patchProduct = async (product: ProductFormData, id: string): Promise<Response<Product>> =>
@@ -37,5 +43,8 @@ export const patchProduct = async (product: ProductFormData, id: string): Promis
     method: 'patch',
     body: product,
     path: endpoints.products.PATCH_ONE(id),
-    customUrl: clientUrl
+    customUrl: clientUrl,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
   })

@@ -9,7 +9,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com'
+        hostname: 'res.cloudinary.com',
+        pathname: '/spacesapp/**'
       },
       {
         protocol: 'https',

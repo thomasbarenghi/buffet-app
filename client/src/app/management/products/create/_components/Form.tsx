@@ -12,6 +12,8 @@ const Form: FunctionComponent = () => {
 
   const handleSubmitForm = async (formData: ProductFormData) => {
     try {
+      formData.thumbnail = formData.thumbnail instanceof FileList ? formData.thumbnail[0] : undefined
+
       const { error } = await createProduct(formData)
 
       if (error) {

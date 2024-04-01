@@ -8,6 +8,7 @@ export const routes = {
   common: commonRoutes,
   auth: {
     LOGIN: '/auth/login',
+    CALLBACK: '/auth/callback',
     REGISTER: '/auth/register'
   },
   customer: {

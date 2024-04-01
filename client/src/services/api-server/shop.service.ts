@@ -16,14 +16,16 @@ export const getShopStatus = async (): Promise<Response<Shop>> => {
 export const changeShopStatus = async (isOpen: boolean): Promise<Response<Shop>> => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  console.log(shopId)
 
   const { error, data } = await supabase
     .from('shop_config')
     .update({
       is_open: isOpen ?? false
     })
-    .eq('id', shopId)
+    .eq('id', 'b4a6e440-ef32-4748-ad30-6a5b010b1e30')
     .select()
+  console.log(error, data)
 
   return { error, data: arrayToObject<Shop>(data ?? []) }
 }

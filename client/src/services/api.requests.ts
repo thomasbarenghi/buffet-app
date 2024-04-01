@@ -35,7 +35,13 @@ export const mutationRequest = async <T>(params: MutationRequestParams): Promise
       baseURL: params.customUrl && params.customUrl?.length > 1 ? params.customUrl : serverUrl
     })
 
-    const axiosResponse: AxiosResponse<T> = await axiosInstance[params.method](params.path, params.body, params.headers)
+    const axiosResponse: AxiosResponse<T> = await axiosInstance({
+      method: params.method,
+      url: params.path,
+      data: params.body,
+      headers: params.headers
+    })
+
     return { data: axiosResponse.data, error: null }
   } catch (error: any) {
     console.error(error)

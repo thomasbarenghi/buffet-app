@@ -8,6 +8,8 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { routes } from '@/utils/constants/routes.const'
+import { clientUrl } from '@/utils/constants/env.const'
+import GoogleButton from '../../_components/GoogleButton'
 
 const Form: FunctionComponent = () => {
   const router = useRouter()
@@ -21,6 +23,27 @@ const Form: FunctionComponent = () => {
     mode: 'onChange'
   })
 
+  const oauthSignIn = async () => {
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: clientUrl + routes.auth.CALLBACK,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent'
+          }
+        }
+      })
+
+      console.log(data, error)
+      router.push(routes.common.ACCOUNT)
+      router.refresh()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const onSubmit: SubmitHandler<LoginFormData> = async (formData) => {
     try {
       const { error, data } = await supabase.auth.signInWithPassword({
@@ -31,12 +54,12 @@ const Form: FunctionComponent = () => {
       console.log(data)
 
       // SOLO PARA USO MANUAL DE DESARROLLO
-      const { data: data2 } = await supabase.auth.updateUser({
-        data: {
-          role: 'manager'
-        }
-      })
-      console.log(data2)
+      // const { data: data2 } = await supabase.auth.updateUser({
+      //   data: {
+      //     role: 'customer'
+      //   }
+      // })
+      // console.log(data2)
       const auth = await supabase.auth.getSession()
       console.log(auth)
 
@@ -56,31 +79,34 @@ const Form: FunctionComponent = () => {
   }
 
   return (
-    <form className='flex w-full flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
-      <Input
-        type='text'
-        label='Email'
-        placeholder='Ingrese su email'
-        name='email'
-        hookForm={{
-          register,
-          validations: emailValidations
-        }}
-        errorMessage={errors?.email?.message}
-      />
-      <Input
-        type='password'
-        label='Contraseña'
-        placeholder='Ingrese su contraseña'
-        name='password'
-        hookForm={{
-          register,
-          validations: passwordValidations
-        }}
-        errorMessage={errors?.password?.message}
-      />
-      <Button type='submit' isLoading={isSubmitting} size='lg' color='primary' radius='lg' title='Ingresar' />
-    </form>
+    <div className='flex w-full flex-col gap-2'>
+      <form className='flex w-full flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          type='text'
+          label='Email'
+          placeholder='Ingrese su email'
+          name='email'
+          hookForm={{
+            register,
+            validations: emailValidations
+          }}
+          errorMessage={errors?.email?.message}
+        />
+        <Input
+          type='password'
+          label='Contraseña'
+          placeholder='Ingrese su contraseña'
+          name='password'
+          hookForm={{
+            register,
+            validations: passwordValidations
+          }}
+          errorMessage={errors?.password?.message}
+        />
+        <Button type='submit' isLoading={isSubmitting} size='lg' color='primary' radius='lg' title='Ingresar' />
+      </form>
+      <GoogleButton fn={oauthSignIn} />
+    </div>
   )
 }
 

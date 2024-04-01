@@ -7,3 +7,4 @@ export const mpAccessToken = process.env.MP_ACCESS_TOKEN!
 export const cloudinaryCloudName = process.env.CLOUDINARY_CLOUD_NAME!
 export const cloudinaryApiSecret = process.env.CLOUDINARY_API_KEY!
 export const cloudinaryApiKey = process.env.CLOUDINARY_API_SECRET!
+export const apiCdnAuthorization = process.env.API_CDN_AUTHORIZATION!

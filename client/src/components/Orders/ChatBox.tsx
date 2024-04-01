@@ -1,6 +1,6 @@
 'use client'
 import { useRef, useState } from 'react'
-import { type Profile, type Message, type OrderInterface } from '@/interfaces'
+import { type Profile, type Message, type OrderInterface, RoleEnum } from '@/interfaces'
 import Image from 'next/image'
 import { Input } from '@nextui-org/react'
 import ChatToggle from './ChatToggle'
@@ -49,8 +49,8 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
           <div className='flex w-full flex-grow flex-col gap-3 overflow-y-auto px-3 py-3 '>
             {messages?.map((item, index) => {
               const prevIsNotOwned = index === 0 || messages[index - 1]?.user_id !== item?.user_id
-              console.log(item?.user_id === profile?.id, item.user_id, profile.id)
-
+              console.log(item?.user_id === profile?.id, item?.user_id, profile?.id)
+              const otherIsShop = profile?.role === RoleEnum.Customer && item?.user?.role !== RoleEnum.Customer
               return (
                 <div
                   key={index}
@@ -62,7 +62,7 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
                         item?.user_id === profile?.id ? 'text-end' : 'text-start'
                       }`}
                     >
-                      {item?.user?.first_name + ' ' + item?.user?.last_name}
+                      {!otherIsShop ? item?.user?.first_name + ' ' + item?.user?.last_name : 'Tienda'}
                     </p>
                   ) : null}
                   <div
