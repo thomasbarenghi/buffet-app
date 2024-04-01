@@ -21,12 +21,24 @@ const Form: FunctionComponent = () => {
     mode: 'onChange'
   })
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormData> = async (formData) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password
+      const { error, data } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password
       })
+
+      console.log(data)
+
+      // SOLO PARA USO MANUAL DE DESARROLLO
+      const { data: data2 } = await supabase.auth.updateUser({
+        data: {
+          role: 'manager'
+        }
+      })
+      console.log(data2)
+      const auth = await supabase.auth.getSession()
+      console.log(auth)
 
       if (error) {
         if (error.message === 'Invalid login credentials') {

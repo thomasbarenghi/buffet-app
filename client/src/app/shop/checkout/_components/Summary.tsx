@@ -1,7 +1,6 @@
 'use client'
 import { useCartStore } from '@/context/zustand/cart.store'
 import { type ShippingFormProps, type Product } from '@/interfaces'
-import { arrayToFormattedString } from '@/services/cart.service'
 import { Button, ProductCartGrid, Textarea } from '@/components'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
@@ -9,16 +8,14 @@ import axios from 'axios'
 import { createOrder } from '@/services/api-client'
 import { toast } from 'sonner'
 import Info from './Info'
-import { supabaseAnonApiKey } from '@/utils/constants/env.const'
 import useSWR from 'swr'
-import { Endpoints } from '@/utils/constants/endpoints.const'
+import { endpoints } from '@/utils/constants/endpoints.const'
 
 const Summary = ({ productsP }: { productsP: Product[] }) => {
   const router = useRouter()
   const items = useCartStore((state) => state.items)
-  const ids = arrayToFormattedString(items)
   const cleanCart = useCartStore((state) => state.cleanCart)
-  const { data: products } = useSWR<Product[]>(Endpoints.FIND_CART_PRODUCTS(ids, supabaseAnonApiKey), {
+  const { data: products } = useSWR<Product[]>(endpoints.products.FIND_ALL(items.join(',')), {
     refreshInterval: 30000,
     fallbackData: productsP
   })

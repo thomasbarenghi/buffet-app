@@ -12,8 +12,7 @@ import Image from 'next/image'
 import useSWR from 'swr'
 import { useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Endpoints } from '@/utils/constants/endpoints.const'
-import { supabaseAnonApiKey } from '@/utils/constants/env.const'
+import { endpoints } from '@/utils/constants/endpoints.const'
 import { toast } from 'sonner'
 import dynamic from 'next/dynamic'
 import ChatToggle from './ChatToggle'
@@ -69,20 +68,21 @@ const ProductOrderItem = ({ order, mode, profile }: Props) => {
     return <span className='text-[#FB5607]'>{statusText}</span>
   }
 
-  const { data: messages, mutate } = useSWR<Message[]>(
-    Endpoints.FIND_ORDER_MESSAGES(order?.id ?? '', supabaseAnonApiKey),
-    {
-      refreshInterval: 30000
-    }
-  )
+  const { data: messages, mutate } = useSWR<Message[]>(endpoints.messages.FIND_ORDER_MESSAGES(order?.id ?? ''), {
+    refreshInterval: 30000
+  })
 
   useEffect(() => {
+    console.log('xxx order id', order.id)
+
     supabase
-      .channel('custom-insert-channel2')
+      .channel(order?.id)
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'messages', filter: `order_id=eq.${order.id ?? ''}` },
         (payload) => {
+          console.log('xxx', payload.new.user_id, profile?.id)
+
           if (payload.new.user_id !== profile?.id) {
             toast.info('Nuevo mensaje en #' + order.id.slice(0, 4))
           }
@@ -115,7 +115,7 @@ const ProductOrderItem = ({ order, mode, profile }: Props) => {
             )}
           </div>
           <div className='flex items-start gap-1'>
-            {isActive && <ChatBox profile={profile} order={order} messages={messages!} />}
+            {isActive && <ChatBox profile={profile} order={order} messages={messages} />}
             {!isCustomer && isActive && <DropManager client={order.customer ?? null} order={order} />}
           </div>
         </div>

@@ -6,11 +6,12 @@ import { arrayToObject } from '@/utils/functions/arrayToObject'
 import { mutationRequest } from '../api.requests'
 import { clientUrl } from '@/utils/constants/env.const'
 
-export const getAllProducts = async (): Promise<Response<Product[]>> => {
+export const getAllProducts = async (ids: string[] | null): Promise<Response<Product[]>> => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const { data, error } = await supabase.from('products').select()
-
+  let query = supabase.from('products').select()
+  if (ids && Array.isArray(ids) && ids.length > 0) query = query.in('id', ids)
+  const { data, error } = await query
   return { error, data }
 }
 

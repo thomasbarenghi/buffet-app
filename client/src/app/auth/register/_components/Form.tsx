@@ -1,6 +1,6 @@
 'use client'
 import { Input, Button } from '@/components'
-import { type LoginFormData } from '@/interfaces'
+import { RoleEnum, type LoginFormData } from '@/interfaces'
 import { emailValidations, passwordValidations } from '@/utils/constants/validations.const'
 import { type FunctionComponent } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
@@ -28,7 +28,10 @@ const Form: FunctionComponent = () => {
         email: formData.email,
         password: formData.password,
         options: {
-          emailRedirectTo: clientUrl + '/auth/callback'
+          emailRedirectTo: clientUrl + '/auth/callback',
+          data: {
+            role: RoleEnum.Customer
+          }
         }
       })
 

@@ -3,10 +3,11 @@ import { getRequest, mutationRequest } from '../api.requests'
 import { type Response, type Product, type ProductFormData } from '@/interfaces'
 import { clientUrl } from '@/utils/constants/env.const'
 
-export const getAllProducts = async (): Promise<Response<Product[]>> =>
+export const getAllProducts = async (ids?: string): Promise<Response<Product[]>> =>
   await getRequest<Product[]>({
-    path: endpoints.products.FIND_ALL,
-    cache: 'force-cache'
+    path: endpoints.products.FIND_ALL(ids),
+    cache: 'force-cache',
+    customUrl: clientUrl
   })
 
 export const getProduct = async (id: string): Promise<Response<Product>> =>

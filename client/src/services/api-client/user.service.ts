@@ -3,11 +3,11 @@ import { getRequest, mutationRequest } from '../api.requests'
 import { endpoints } from '@/utils/constants/endpoints.const'
 import { clientUrl } from '@/utils/constants/env.const'
 
-export const createUserProfile = async (formData: ProfileFormData, id: string): Promise<Response<Profile>> =>
+export const createUserProfile = async (formData: ProfileFormData): Promise<Response<Profile>> =>
   await mutationRequest<Profile>({
     method: 'post',
     body: formData,
-    path: endpoints.users.CREATE_PROFILE(id),
+    path: endpoints.users.CREATE_PROFILE,
     customUrl: clientUrl
   })
 

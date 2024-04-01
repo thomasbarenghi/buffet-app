@@ -9,6 +9,8 @@ export const getUserProfile = async (id?: string | null): Promise<Response<Profi
   console.log(id)
 
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  console.log((await supabase.auth.getUser()).data.user?.id, await supabase.auth.getSession())
+
   const currentId = (await supabase.auth.getUser()).data.user?.id
   console.log(currentId)
 
@@ -28,9 +30,10 @@ export const getUserProfile = async (id?: string | null): Promise<Response<Profi
   return { error, data: pr }
 }
 
-export const createUserProfile = async (formData: ProfileFormData, id: string): Promise<Response<Profile>> => {
+export const createUserProfile = async (formData: ProfileFormData): Promise<Response<Profile>> => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  const id = (await supabase.auth.getUser()).data.user?.id
   const { error, data } = await supabase
     .from('profiles')
     .insert({

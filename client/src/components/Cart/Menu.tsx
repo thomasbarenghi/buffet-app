@@ -3,12 +3,12 @@ import { useState, useEffect, type Dispatch, type SetStateAction } from 'react'
 import { Button, ProductCartGrid } from '@/components'
 import { useCartStore } from '@/context/zustand/cart.store'
 import { type Product } from '@/interfaces'
-import { getAllItems } from '@/services/cart.service'
 import { useRouter } from 'next/navigation'
 import { routes } from '@/utils/constants/routes.const'
 import Image from 'next/image'
 import { ScrollShadow } from '@nextui-org/react'
 import { createPortal } from 'react-dom'
+import { getAllProducts } from '@/services/api-client'
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>
@@ -24,7 +24,7 @@ const CartMenu = ({ setIsOpen }: Props) => {
   }, [items])
 
   const handleUpdateCart = async (): Promise<void> => {
-    const products = await getAllItems(items)
+    const products = await getAllProducts(items.join(','))
     setProducts(products.data ?? [])
   }
 

@@ -2,17 +2,18 @@
 import { useRef, useState } from 'react'
 import { type Profile, type Message, type OrderInterface } from '@/interfaces'
 import Image from 'next/image'
-import { createMessage } from '@/services/chat.service'
 import { Input } from '@nextui-org/react'
 import ChatToggle from './ChatToggle'
+import { createMessage } from '@/services/api-client'
 
 interface Props {
   order: OrderInterface | null
   profile: Profile
-  messages: Message[]
+  messages: Message[] | undefined
 }
 
 const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
+  console.log(profile)
   const formRef = useRef<HTMLFormElement>(null)
   const [messageInput, setMessageInput] = useState<string>('')
   const [chatOpen, setChatOpen] = useState<boolean>(false)
@@ -43,32 +44,35 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
             <div className=' cursor-pointer rounded-full p-2' onClick={toggleChat}>
               <Image src='/icons/cross.svg' alt='cross' width={10} height={10} />
             </div>
+            <p className='text-sm font-semibold'>Orden #{order?.id.slice(0, 4)}</p>
           </div>
           <div className='flex w-full flex-grow flex-col gap-3 overflow-y-auto px-3 py-3 '>
             {messages?.map((item, index) => {
-              const prevIsNotOwned = index === 0 || messages[index - 1].user_id !== item.user_id
+              const prevIsNotOwned = index === 0 || messages[index - 1]?.user_id !== item?.user_id
+              console.log(item?.user_id === profile?.id, item.user_id, profile.id)
+
               return (
                 <div
                   key={index}
-                  className={`flex max-w-xs flex-col gap-1 ${!prevIsNotOwned && 'mt-[-6px]'} ${item.user_id === profile.id ? 'align-end w-9/12 self-end' : 'w-9/12 '}`}
+                  className={`flex max-w-xs flex-col gap-1 ${!prevIsNotOwned && 'mt-[-6px]'} ${item?.user_id === profile?.id ? 'align-end w-9/12 self-end' : 'w-9/12 '}`}
                 >
                   {prevIsNotOwned ? (
                     <p
                       className={`text-xs font-medium text-black ${
-                        item.user_id === profile.id ? 'text-end' : 'text-start'
+                        item?.user_id === profile?.id ? 'text-end' : 'text-start'
                       }`}
                     >
-                      {item.user.first_name + ' ' + item.user.last_name}
+                      {item?.user?.first_name + ' ' + item?.user?.last_name}
                     </p>
                   ) : null}
                   <div
                     className={` rounded-xl px-3 py-3 text-sm ${
-                      item.user_id === profile.id
+                      item?.user_id === profile?.id
                         ? ' rounded-br-none  bg-orange-100 text-orange-700 '
                         : ' rounded-tl-none  bg-neutral-200'
                     }`}
                   >
-                    <p className='text-sm font-light'>{item.message}</p>
+                    <p className='text-sm font-light'>{item?.message}</p>
                   </div>
                 </div>
               )

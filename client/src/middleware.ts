@@ -24,33 +24,33 @@ const middleware = async (req: NextRequest) => {
   const role = profile.data?.role
 
   // Proteccion general de rutas
-  if (!isLoggedIn && !req.nextUrl.pathname.startsWith(RoutesEnum.Auth)) {
-    return NextResponse.redirect(origin + RoutesEnum.Login)
-  } else if (data.session?.access_token && req.nextUrl.pathname.startsWith(RoutesEnum.Auth)) {
-    return NextResponse.redirect(origin + RoutesEnum.Account)
-  }
+  // if (!isLoggedIn && !req.nextUrl.pathname.startsWith(RoutesEnum.Auth)) {
+  //   return NextResponse.redirect(origin + RoutesEnum.Login)
+  // } else if (data.session?.access_token && req.nextUrl.pathname.startsWith(RoutesEnum.Auth)) {
+  //   return NextResponse.redirect(origin + RoutesEnum.Account)
+  // }
 
   // Ejecutor de onboarding
-  if (
-    !hasProfile &&
-    req.nextUrl.pathname !== RoutesEnum.Onboarding &&
-    !req.nextUrl.pathname.startsWith(RoutesEnum.Auth)
-  ) {
-    return NextResponse.redirect(origin + RoutesEnum.Onboarding)
-  } else if (
-    profile.data?.id &&
-    req.nextUrl.pathname === RoutesEnum.Onboarding &&
-    !req.nextUrl.pathname.startsWith(RoutesEnum.Auth)
-  ) {
-    return NextResponse.redirect(origin + RoutesEnum.Account)
-  }
+  // if (
+  //   !hasProfile &&
+  //   req.nextUrl.pathname !== RoutesEnum.Onboarding &&
+  //   !req.nextUrl.pathname.startsWith(RoutesEnum.Auth)
+  // ) {
+  //   return NextResponse.redirect(origin + RoutesEnum.Onboarding)
+  // } else if (
+  //   profile.data?.id &&
+  //   req.nextUrl.pathname === RoutesEnum.Onboarding &&
+  //   !req.nextUrl.pathname.startsWith(RoutesEnum.Auth)
+  // ) {
+  //   return NextResponse.redirect(origin + RoutesEnum.Account)
+  // }
 
   // Redirector segun rol
-  if (role === 'customer' && req.nextUrl.pathname.startsWith(RoutesEnum.Management)) {
-    return NextResponse.redirect(origin + RoutesEnum.Account)
-  } else if (role !== 'customer' && req.nextUrl.pathname.startsWith(RoutesEnum.Shop)) {
-    return NextResponse.redirect(origin + RoutesEnum.Management)
-  }
+  // if (role === 'customer' && req.nextUrl.pathname.startsWith(RoutesEnum.Management)) {
+  //   return NextResponse.redirect(origin + RoutesEnum.Account)
+  // } else if (role !== 'customer' && req.nextUrl.pathname.startsWith(RoutesEnum.Shop)) {
+  //   return NextResponse.redirect(origin + RoutesEnum.Management)
+  // }
 
   return res
 }
