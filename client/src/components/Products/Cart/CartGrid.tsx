@@ -1,13 +1,12 @@
-import { type FunctionComponent } from 'react'
 import { RoleEnum, type Product } from '@/interfaces'
-import { ProductCartItem } from '..'
+import { ProductCartItem } from '@/components'
 
 interface Props {
   products: Product[]
   withBg?: boolean
 }
 
-const ProductCartGrid: FunctionComponent<Props> = ({ products, withBg }) => (
+const ProductCartGrid = ({ products, withBg }: Props) => (
   <div className={`grid w-full ${withBg && 'gap-4'}`}>
     {products.map((product, index) => (
       <ProductCartItem

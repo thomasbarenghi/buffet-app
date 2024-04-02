@@ -3,13 +3,13 @@ import { getNextOrderStatus, getPreviousOrderStatus } from '../local-utils'
 import { useSWRConfig } from 'swr'
 import { toast } from 'sonner'
 import { changeOrderStatus } from '@/services/api-client'
-import { endpoints } from '@/utils/constants/endpoints.const'
+import { endpoints } from '@/utils/constants'
 import { type OrderInterface, OrderStatusApiEnum, type Profile } from '@/interfaces'
 import dynamic from 'next/dynamic'
 const DropMenu = dynamic(async () => await import('./DropMenu'))
-const ClientModal = dynamic(async () => await import('../ClientModal'))
-const CompleteModal = dynamic(async () => await import('../CompleteModal'))
-const CancelModal = dynamic(async () => await import('../CancelModal'))
+const ClientModal = dynamic(async () => await import('../Modal/Client'))
+const CompleteModal = dynamic(async () => await import('../Modal/Complete'))
+const CancelModal = dynamic(async () => await import('../Modal/Cancel'))
 
 interface Props {
   order: OrderInterface

@@ -1,6 +1,6 @@
 'use client'
 import { type RawUserMeta } from '@/interfaces'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'

@@ -1,6 +1,6 @@
 import { type Product } from '@/interfaces'
 import { clientUrl, mpAccessToken } from '@/utils/constants/env.const'
-import { formatProductsToMp } from '@/utils/functions/formatProductsToMp'
+import { formatProductsToMp } from '@/utils/functions'
 import { MercadoPagoConfig, Preference } from 'mercadopago'
 import { type NextRequest } from 'next/server'
 

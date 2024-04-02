@@ -1,5 +1,5 @@
 import { createUserProfile } from '@/services/api-server'
-import { generateErrorResponse } from '@/utils/functions/generateErrorResponse'
+import { generateErrorResponse } from '@/utils/functions'
 import { type PostgrestError } from '@supabase/supabase-js'
 import { type NextRequest } from 'next/server'
 

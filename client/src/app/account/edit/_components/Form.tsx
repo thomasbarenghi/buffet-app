@@ -1,6 +1,5 @@
 'use client'
 import { type RawUserMeta, type ProfileFormData } from '@/interfaces'
-import { type FunctionComponent } from 'react'
 import { toast } from 'sonner'
 import { ProfileDynamicForm } from '@/components'
 import { patchUserProfile } from '@/services/api-client'
@@ -10,7 +9,7 @@ interface Props {
   profile: RawUserMeta
 }
 
-const Form: FunctionComponent<Props> = ({ profile }) => {
+const Form = ({ profile }: Props) => {
   const handleSubmitForm = async (formData: ProfileFormData) => {
     try {
       const { error } = await patchUserProfile(formData, profile.id ?? '')

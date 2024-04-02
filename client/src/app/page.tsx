@@ -1,4 +1,4 @@
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'

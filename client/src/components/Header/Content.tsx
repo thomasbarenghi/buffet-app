@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Link, Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react'
 import Image from 'next/image'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { type RawUserMeta } from '@/interfaces'
 import AvatarMenu from './AvatarMenu'
 import MobileMenu from './MobileMenu/Main'

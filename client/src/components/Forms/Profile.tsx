@@ -1,7 +1,7 @@
 'use client'
 import { Input, Button } from '@/components'
 import { type RawUserMeta, type ProfileFormData } from '@/interfaces'
-import { userValidations } from '@/utils/constants/validations.const'
+import { userValidations } from '@/utils/constants'
 
 import { type SubmitHandler, useForm } from 'react-hook-form'
 

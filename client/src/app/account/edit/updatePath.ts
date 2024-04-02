@@ -1,5 +1,5 @@
 'use server'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { revalidateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 

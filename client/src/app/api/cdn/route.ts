@@ -6,7 +6,7 @@ import sharp from 'sharp'
 import { v2 as cloudinary, type UploadApiResponse } from 'cloudinary'
 import { type NextRequest } from 'next/server'
 import { headers } from 'next/headers'
-import { apiCdnAuthorization } from '@/utils/constants/env.const'
+import { apiCdnAuthorization } from '@/utils/constants'
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

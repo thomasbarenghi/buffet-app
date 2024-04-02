@@ -1,7 +1,7 @@
 'use server'
 import { ProductCardVert } from '@/components'
 import { getAllProducts } from '@/services/api-server'
-import { findUserMetaData } from '@/utils/functions/find-user-data'
+import { findUserMetaData } from '@/utils/functions'
 
 const ProductCardGrid = async () => {
   const products = await getAllProducts()

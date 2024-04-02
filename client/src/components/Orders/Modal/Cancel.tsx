@@ -1,6 +1,6 @@
 import { type OrderInterface } from '@/interfaces'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
-import Button from '../Button'
+import { Button } from '@/components'
 
 interface Props {
   isOpenCancel: boolean

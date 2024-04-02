@@ -1,13 +1,12 @@
 'use client'
 import { type ProfileFormData } from '@/interfaces'
-import { type FunctionComponent } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { createUserProfile } from '@/services/api-client'
 import { ProfileDynamicForm } from '@/components'
 
-const Form: FunctionComponent = () => {
+const Form = () => {
   const router = useRouter()
 
   const handleSubmitForm = async (formData: ProfileFormData) => {

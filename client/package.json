@@ -19,7 +19,6 @@
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.7",
     "axios": "^1.6.7",
-    "buffer-to-stream": "^1.0.0",
     "cloudinary": "^2.1.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
@@ -39,7 +38,6 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/buffer-to-stream": "^1.0.3",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",

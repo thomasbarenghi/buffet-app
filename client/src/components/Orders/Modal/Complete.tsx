@@ -1,10 +1,9 @@
 import { type OrderInterface, type Profile } from '@/interfaces'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
-import Input from '../Input'
+import { Input, Button } from '@/components'
 import Image from 'next/image'
-import { required } from '@/utils/constants/validations.const'
+import { required } from '@/utils/constants'
 import { type SubmitHandler, useForm } from 'react-hook-form'
-import Button from '../Button'
 
 export const LockIcon = () => <Image src='/icons/lock.svg' alt='lock' width={20} height={20} />
 

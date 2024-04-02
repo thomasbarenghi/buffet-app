@@ -1,4 +1,4 @@
-import { endpoints } from '@/utils/constants/endpoints.const'
+import { endpoints } from '@/utils/constants'
 import { getRequest, mutationRequest } from '../api.requests'
 import { type Response, type Product, type ProductFormData } from '@/interfaces'
 import { clientUrl } from '@/utils/constants/env.const'

@@ -1,7 +1,7 @@
 'use server'
 import Content from './Content'
 import { type Role } from '@/interfaces'
-import { findUserMetaData } from '@/utils/functions/find-user-data'
+import { findUserMetaData } from '@/utils/functions'
 
 interface Props {
   mode?: Role

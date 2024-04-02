@@ -1,5 +1,5 @@
 import { type Role } from '@/interfaces'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 
 interface Menu {
   title: string

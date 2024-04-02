@@ -1,5 +1,4 @@
 'use client'
-import React, { type FunctionComponent } from 'react'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/react'
 import { type Role, RoleEnum, type Product } from '@/interfaces'
 import Image from 'next/image'
@@ -13,7 +12,7 @@ interface Props {
   mode: Role
 }
 
-const ModalProduct: FunctionComponent<Props> = ({ product, onClose, isOpen, mode }) => {
+const ModalProduct = ({ product, onClose, isOpen, mode }: Props) => {
   const addItem = useCartStore((state) => state.addItem)
   return (
     <Modal

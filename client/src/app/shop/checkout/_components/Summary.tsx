@@ -9,7 +9,7 @@ import { createOrder } from '@/services/api-client'
 import { toast } from 'sonner'
 import Info from './Info'
 import useSWR from 'swr'
-import { endpoints } from '@/utils/constants/endpoints.const'
+import { endpoints } from '@/utils/constants'
 
 const Summary = ({ productsP }: { productsP: Product[] }) => {
   const router = useRouter()

@@ -1,12 +1,12 @@
 import { Button, OrdersGrid } from '@/components'
 import { RoleEnum } from '@/interfaces'
 import { getShopOrders, getUserOrders } from '@/services/api-server'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { User } from '@nextui-org/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { type Metadata } from 'next'
-import { findUserMetaData } from '@/utils/functions/find-user-data'
+import { findUserMetaData } from '@/utils/functions'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {

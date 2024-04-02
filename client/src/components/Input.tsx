@@ -1,6 +1,6 @@
 'use client'
 import { Input as InputUI } from '@nextui-org/react'
-import { type FunctionComponent, type ComponentProps } from 'react'
+import { type ComponentProps } from 'react'
 import { type RegisterOptions, type UseFormRegister } from 'react-hook-form'
 
 interface CustomProps {
@@ -24,7 +24,7 @@ interface CustomProps {
 type DefaultProps = ComponentProps<typeof InputUI>
 type ExtendedProps = DefaultProps & CustomProps
 
-const Input: FunctionComponent<ExtendedProps> = ({ ...props }) => {
+const Input = ({ ...props }: ExtendedProps) => {
   const HookForm = props.hookForm?.register(props.name, props.hookForm?.validations)
   return (
     <InputUI

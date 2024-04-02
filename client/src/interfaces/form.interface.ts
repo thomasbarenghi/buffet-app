@@ -1,4 +1,4 @@
-import { type Profile, type User } from '.'
+import { type Profile } from '.'
 
 export interface LoginFormData {
   email: string
@@ -6,16 +6,6 @@ export interface LoginFormData {
 }
 
 export type ProfileFormData = Omit<Profile, 'id' | 'created_at' | 'role' | 'profile_image'>
-
-export type RegisterFormData = Omit<User, 'id'>
-
-export type AccountFormProps = Omit<User, 'id' | 'createdAt' | 'updatedAt' | 'birthdate' | 'password'>
-
-export interface PasswordFormProps {
-  oldPassword: string
-  newPassword: string
-  repeatPassword: string
-}
 
 export interface ShippingFormProps {
   instructions: string

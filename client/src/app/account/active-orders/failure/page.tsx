@@ -1,5 +1,5 @@
 import { getOrder } from '@/services/api-server'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { redirect } from 'next/navigation'
 
 const Failure = async ({ searchParams }: { searchParams: Record<string, string> }) => {

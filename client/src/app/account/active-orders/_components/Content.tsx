@@ -1,7 +1,7 @@
 'use client'
 import { OrdersGrid } from '@/components'
 import { type OrderInterface } from '@/interfaces'
-import { endpoints } from '@/utils/constants/endpoints.const'
+import { endpoints } from '@/utils/constants'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect } from 'react'
 import { toast } from 'sonner'

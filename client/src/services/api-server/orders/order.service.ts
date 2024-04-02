@@ -8,9 +8,8 @@ import {
 } from '@/interfaces'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { arrayToObject } from '@/utils/functions/arrayToObject'
+import { arrayToObject, generateRandomNumber } from '@/utils/functions'
 import { getShopActive, getShopAll, getShopFinished, getUserActive, getUserAll, getUserFinished } from './order.utils'
-import { generateRandomNumber } from '@/utils/functions/generateRandomNumber'
 
 export const getShopOrders = async (type: 'active' | 'finished' | 'all'): Promise<Response<OrderInterface[]>> => {
   let response

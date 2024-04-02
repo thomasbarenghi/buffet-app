@@ -1,7 +1,7 @@
 'use client'
 import { Button as ButtonUI } from '@nextui-org/react'
 import Link from 'next/link'
-import { type FunctionComponent, type ComponentProps } from 'react'
+import { type ComponentProps } from 'react'
 
 interface CustomProps {
   children?: React.ReactNode
@@ -16,7 +16,7 @@ interface CustomProps {
 type DefaultProps = ComponentProps<typeof ButtonUI>
 type ExtendedProps = DefaultProps & CustomProps
 
-const Button: FunctionComponent<ExtendedProps> = ({ ...props }) => (
+const Button = ({ ...props }: ExtendedProps) => (
   <ButtonUI
     target={props.target}
     as={props?.href?.length ? Link : 'button'}

@@ -1,7 +1,7 @@
 import 'server-only'
 import { type Response, type Shop } from '@/interfaces'
 import { shopId } from '@/utils/constants/env.const'
-import { arrayToObject } from '@/utils/functions/arrayToObject'
+import { arrayToObject } from '@/utils/functions'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 

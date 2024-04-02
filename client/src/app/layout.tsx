@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Outfit } from 'next/font/google'
 import './globals.css'
-import { type FunctionComponent } from 'react'
 import dynamic from 'next/dynamic'
 import { Toaster } from 'sonner'
 const NextUiProvider = dynamic(async () => await import('@/context/providers/nextui.provider'))
@@ -27,7 +26,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const RootLayout: FunctionComponent<Props> = ({ children }: { children: React.ReactNode }) => (
+const RootLayout = ({ children }: Props) => (
   <html lang='en'>
     <body className={outfit.className}>
       <NextUiProvider>

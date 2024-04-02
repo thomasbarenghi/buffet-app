@@ -1,10 +1,10 @@
 'use client'
-import { useState, type FunctionComponent } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 const CartMenu = dynamic(async () => await import('./Menu'))
 
-const Cart: FunctionComponent = () => {
+const Cart = () => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpen = async (): Promise<void> => {

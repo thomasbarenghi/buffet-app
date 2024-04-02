@@ -1,6 +1,6 @@
 'use client'
 import { type RawUserMeta, RoleEnum } from '@/interfaces'
-import { menu } from '@/lib/menu.lib'
+import { menu } from '@/utils/constants'
 import { Link, NavbarMenu, NavbarMenuItem } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 

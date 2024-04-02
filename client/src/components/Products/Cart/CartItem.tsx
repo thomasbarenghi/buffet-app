@@ -1,13 +1,12 @@
 'use client'
 import { type Role, type Product } from '@/interfaces'
 import Image from 'next/image'
-import { type FunctionComponent } from 'react'
 import { useCartStore } from '@/context/zustand/cart.store'
 import { useDisclosure } from '@nextui-org/react'
-import { truncateText } from '@/utils/functions/truncateText'
+import { truncateText } from '@/utils/functions'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-const ModalProduct = dynamic(async () => await import('./Modal'))
+const ModalProduct = dynamic(async () => await import('../Modal'))
 
 interface Props {
   product: Product
@@ -16,7 +15,7 @@ interface Props {
   mode: Role
 }
 
-const ProductCartItem: FunctionComponent<Props> = ({ product, isLast, withBg = false, mode }) => {
+const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
   const removeItem = useCartStore((state) => state.removeItem)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()

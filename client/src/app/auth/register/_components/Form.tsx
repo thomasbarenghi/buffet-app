@@ -1,17 +1,15 @@
 'use client'
 import { Input, Button } from '@/components'
 import { type LoginFormData } from '@/interfaces'
-import { userValidations } from '@/utils/constants/validations.const'
-import { type FunctionComponent } from 'react'
+import { userValidations, routes } from '@/utils/constants'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { routes } from '@/utils/constants/routes.const'
 import { clientUrl } from '@/utils/constants/env.const'
 import GoogleButton from '../../_components/GoogleButton'
 
-const Form: FunctionComponent = () => {
+const Form = () => {
   const router = useRouter()
   const supabase = createClientComponentClient<Database>()
 

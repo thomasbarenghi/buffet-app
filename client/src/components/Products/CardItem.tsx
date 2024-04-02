@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import { useDisclosure } from '@nextui-org/react'
 import { type Role, type Product } from '@/interfaces'
-import { truncateText } from '@/utils/functions/truncateText'
+import { truncateText } from '@/utils/functions'
 const ModalProduct = dynamic(async () => await import('./Modal'))
 
 interface Props {

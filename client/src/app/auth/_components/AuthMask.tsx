@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import Link from 'next/link'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import Image from 'next/image'
 
 export const metadata: Metadata = {

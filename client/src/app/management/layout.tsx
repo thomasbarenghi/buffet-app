@@ -1,5 +1,4 @@
 import { Footer, Header } from '@/components'
-import { type FunctionComponent } from 'react'
 
 interface Props {
   children: React.ReactNode
@@ -7,7 +6,7 @@ interface Props {
 
 // TODO: ENVIAR MODE AL HEADER PARA OCULTAR EL LOGO ORIGINAL Y EL MENU, ENTRE OTROS
 
-const ManagerLayout: FunctionComponent<Props> = async ({ children }) => (
+const ManagerLayout = async ({ children }: Props) => (
   <>
     <Header />
     <main className=' mt-[-89px] flex flex-col items-center justify-stretch bg-neutral-50'>

@@ -1,6 +1,6 @@
 import { type Profile, type ProfileFormData, type Response } from '@/interfaces'
 import { getRequest, mutationRequest } from '../api.requests'
-import { endpoints } from '@/utils/constants/endpoints.const'
+import { endpoints } from '@/utils/constants'
 import { clientUrl } from '@/utils/constants/env.const'
 
 export const createUserProfile = async (formData: ProfileFormData): Promise<Response<Profile>> =>

@@ -10,10 +10,10 @@ import {
   TableRow,
   useDisclosure
 } from '@nextui-org/react'
-import { type SVGProps, useState, type FunctionComponent } from 'react'
+import { type SVGProps, useState } from 'react'
 import { DynamicTable, ModalProduct } from '..'
-import { truncateText } from '@/utils/functions/truncateText'
-import { routes } from '@/utils/constants/routes.const'
+import { truncateText } from '@/utils/functions'
+import { routes } from '@/utils/constants'
 import Link from 'next/link'
 import Image from 'next/image'
 import { deleteProduct } from '@/services/api-client'
@@ -46,7 +46,7 @@ const VerticalDotsIcon = ({ size = 24, width, height, ...props }: IconSvgProps) 
   </svg>
 )
 
-const ProductsTable: FunctionComponent<Props> = ({ products }) => {
+const ProductsTable = ({ products }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [product, setProduct] = useState<Product>()
   const router = useRouter()

@@ -1,6 +1,6 @@
 import 'server-only'
 import { type Message, type Response } from '@/interfaces'
-import { arrayToObject } from '@/utils/functions/arrayToObject'
+import { arrayToObject } from '@/utils/functions'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 

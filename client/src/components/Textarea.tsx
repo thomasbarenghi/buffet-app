@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/return-await */
 'use client'
 import { Textarea as TextareaUI } from '@nextui-org/react'
-import { type FunctionComponent, type ComponentProps } from 'react'
+import { type ComponentProps } from 'react'
 import { type RegisterOptions, type UseFormRegister } from 'react-hook-form'
 
 interface CustomProps {
@@ -20,7 +19,7 @@ interface CustomProps {
 type DefaultProps = ComponentProps<typeof TextareaUI>
 type ExtendedProps = DefaultProps & CustomProps
 
-const Textarea: FunctionComponent<ExtendedProps> = (props) => {
+const Textarea = ({ ...props }: ExtendedProps) => {
   const HookForm = props.hookForm?.register(props.name, props.hookForm?.validations)
   return (
     <TextareaUI

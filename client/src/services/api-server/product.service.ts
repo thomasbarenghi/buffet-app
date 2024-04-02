@@ -2,7 +2,7 @@ import 'server-only'
 import { type ProductFormData, type Response, type Product } from '@/interfaces'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { arrayToObject } from '@/utils/functions/arrayToObject'
+import { arrayToObject } from '@/utils/functions'
 
 export const getAllProducts = async (ids?: string[] | null): Promise<Response<Product[]>> => {
   const cookieStore = cookies()

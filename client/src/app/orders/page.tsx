@@ -1,7 +1,7 @@
 import { OrdersTable } from '@/components'
 import { RoleEnum } from '@/interfaces'
 import { getShopOrders, getUserOrders } from '@/services/api-server'
-import { findUserMetaData } from '@/utils/functions/find-user-data'
+import { findUserMetaData } from '@/utils/functions'
 import { type Metadata } from 'next'
 
 export const metadata: Metadata = {

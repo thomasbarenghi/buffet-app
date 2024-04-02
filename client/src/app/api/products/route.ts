@@ -1,7 +1,7 @@
 import { type PostgrestError } from '@supabase/supabase-js'
 import { type ProductFormData } from '@/interfaces'
 import { createProduct, getAllProducts } from '@/services/api-server'
-import { generateErrorResponse } from '@/utils/functions/generateErrorResponse'
+import { generateErrorResponse } from '@/utils/functions'
 import { type NextRequest } from 'next/server'
 import { imageUpload } from '@/services/api-server/image-upload.service'
 

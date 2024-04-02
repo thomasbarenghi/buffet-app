@@ -34,17 +34,17 @@ const middleware = async (req: NextRequest) => {
   const hasProfile = !!profile.data?.id
   const role = profile.data?.role
 
-  // Proteccion general de rutas
+  // General route protection
   if (!isLoggedIn && !pathStartsWith(authRoutes, currentPath)) return NextResponse.redirect(origin + RoutesEnum.Login)
   if (isLoggedIn && pathStartsWith(authRoutes, currentPath)) return NextResponse.redirect(origin + RoutesEnum.Account)
 
-  // Ejecutor de onboarding
+  // Onboarding executor
   if (!hasProfile && !pathStartsWith(onboardingRoutes, currentPath))
     return NextResponse.redirect(origin + RoutesEnum.Onboarding)
   if (hasProfile && pathStartsWith(onboardingRoutes, currentPath))
     return NextResponse.redirect(origin + RoutesEnum.Account)
 
-  // Redirector segun rol
+  // Redirector according to role
   if (role === RoleEnum.Customer)
     if (pathStartsWith(managementRoutes, currentPath)) return NextResponse.redirect(origin + RoutesEnum.Account)
   if (role !== RoleEnum.Customer)

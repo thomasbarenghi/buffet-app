@@ -3,7 +3,7 @@ import { ProductDynamicForm } from '@/components'
 import { type Product, type ProductFormData } from '@/interfaces'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { patchProduct } from '@/services/api-client'
 
 interface Props {

@@ -1,4 +1,10 @@
 'use client'
+import Image from 'next/image'
+import dynamic from 'next/dynamic'
+import useSWR from 'swr'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import {
   PaymentStatusClientEnum,
   type OrderInterface,
@@ -8,13 +14,7 @@ import {
   type Profile,
   type Message
 } from '@/interfaces'
-import Image from 'next/image'
-import useSWR from 'swr'
-import { useEffect } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { endpoints } from '@/utils/constants/endpoints.const'
-import { toast } from 'sonner'
-import dynamic from 'next/dynamic'
+import { endpoints } from '@/utils/constants'
 import ChatToggle from './ChatToggle'
 import Trigger from './Drop/Trigger'
 const DropManager = dynamic(async () => await import('./Drop/DropManager'), {

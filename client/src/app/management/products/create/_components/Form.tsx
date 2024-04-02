@@ -1,13 +1,12 @@
 'use client'
 import { ProductDynamicForm } from '@/components'
 import { type ProductFormData } from '@/interfaces'
-import { type FunctionComponent } from 'react'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { routes } from '@/utils/constants/routes.const'
+import { routes } from '@/utils/constants'
 import { createProduct } from '@/services/api-client'
 
-const Form: FunctionComponent = () => {
+const Form = () => {
   const router = useRouter()
 
   const handleSubmitForm = async (formData: ProductFormData) => {

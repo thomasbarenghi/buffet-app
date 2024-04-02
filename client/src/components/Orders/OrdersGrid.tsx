@@ -1,17 +1,19 @@
 'use client'
-import { useEffect, useState, type FunctionComponent } from 'react'
-import { type Role, type OrderInterface, type Profile } from '@/interfaces'
-import { ProductOrderItem } from '..'
-import { getUserProfile } from '@/services/api-client'
 import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+import { type Role, type OrderInterface, type Profile } from '@/interfaces'
+import { ProductOrderItem } from '@/components'
+import { getUserProfile } from '@/services/api-client'
+
 const OrderItemGroupPlaceholder = dynamic(async () => await import('./Placeholders/OrderItemGroup'))
+
 interface Props {
   orders: OrderInterface[]
   withTitle?: boolean
   mode: Role | string
 }
 
-const OrdersGrid: FunctionComponent<Props> = ({ orders, mode }) => {
+const OrdersGrid = ({ orders, mode }: Props) => {
   const [profile, setProfile] = useState<Profile | null>()
 
   const handleProfile = async () => {

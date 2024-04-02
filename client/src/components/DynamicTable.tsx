@@ -1,6 +1,6 @@
 'use client'
 import { Pagination, Table, TableBody, TableColumn, TableHeader } from '@nextui-org/react'
-import { useMemo, type FunctionComponent, useState, type ComponentProps } from 'react'
+import { useMemo, useState, type ComponentProps } from 'react'
 
 interface CustomProps<T> {
   data: T[]
@@ -12,7 +12,7 @@ interface CustomProps<T> {
 type DefaultProps = ComponentProps<typeof Table>
 type ExtendedProps = DefaultProps & CustomProps<any>
 
-const DynamicTable: FunctionComponent<ExtendedProps> = ({ data, rowsPerPage = 4, columns, renderRow, ...props }) => {
+const DynamicTable = ({ data, rowsPerPage = 4, columns, renderRow, ...props }: ExtendedProps) => {
   const [page, setPage] = useState(1)
 
   const pages = Math.ceil(data.length / rowsPerPage)
