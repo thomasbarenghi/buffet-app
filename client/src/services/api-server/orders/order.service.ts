@@ -11,6 +11,8 @@ import { cookies } from 'next/headers'
 import { arrayToObject, generateRandomNumber } from '@/utils/functions'
 import { getShopActive, getShopAll, getShopFinished, getUserActive, getUserAll, getUserFinished } from './order.utils'
 
+export const revalidate = 0
+
 export const getShopOrders = async (type: 'active' | 'finished' | 'all'): Promise<Response<OrderInterface[]>> => {
   let response
   const cookieStore = cookies()

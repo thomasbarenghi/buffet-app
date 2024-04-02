@@ -1,7 +1,7 @@
 const commonRoutes = {
   ACCOUNT: '/account',
   EDIT_ACCOUNT: '/account/edit',
-  ORDERS: '/account/orders'
+  ORDERS: '/orders'
 }
 
 export const routes = {

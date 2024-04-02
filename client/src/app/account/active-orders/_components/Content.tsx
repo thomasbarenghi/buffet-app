@@ -19,7 +19,7 @@ const Content = ({ ordersFallback }: Props) => {
 
   useEffect(() => {
     supabase
-      .channel('custom-insert-channel')
+      .channel('customer-active-orders')
       .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, (payload) => {
         console.log('Change received!', payload)
         toast.info('Ocurrió un cambio en tu pedido #' + payload.new.id.slice(0, 4))

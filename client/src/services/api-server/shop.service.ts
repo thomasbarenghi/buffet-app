@@ -5,6 +5,8 @@ import { arrayToObject } from '@/utils/functions'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
+export const revalidate = 0
+
 export const getShopStatus = async (): Promise<Response<Shop>> => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })

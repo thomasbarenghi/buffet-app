@@ -24,6 +24,8 @@ const ChatBox = dynamic(async () => await import('./ChatBox'), {
   loading: () => <ChatToggle toggleChat={() => {}} />
 })
 
+export const revalidate = 0
+
 const Products = ({ order }: { order: OrderInterface }) => (
   <div className='grid w-full'>
     {order.products?.map((product, index) => (

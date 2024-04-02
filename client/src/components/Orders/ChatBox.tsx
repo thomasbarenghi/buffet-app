@@ -48,6 +48,7 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
           <div className='flex w-full flex-grow flex-col gap-3 overflow-y-auto px-3 py-3 '>
             {messages?.map((item, index) => {
               const prevIsNotOwned = index === 0 || messages[index - 1]?.user_id !== item?.user_id
+              const owner = profile?.id === item?.user_id
               const otherIsShop = profile?.role === RoleEnum.Customer && item?.user?.role !== RoleEnum.Customer
               return (
                 <div
@@ -55,19 +56,13 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
                   className={`flex max-w-xs flex-col gap-1 ${!prevIsNotOwned && 'mt-[-6px]'} ${item?.user_id === profile?.id ? 'align-end w-9/12 self-end' : 'w-9/12 '}`}
                 >
                   {prevIsNotOwned ? (
-                    <p
-                      className={`text-xs font-medium text-black ${
-                        item?.user_id === profile?.id ? 'text-end' : 'text-start'
-                      }`}
-                    >
+                    <p className={`text-xs font-medium text-black ${owner ? 'text-end' : 'text-start'}`}>
                       {!otherIsShop ? item?.user?.first_name + ' ' + item?.user?.last_name : 'Tienda'}
                     </p>
                   ) : null}
                   <div
                     className={` rounded-xl px-3 py-3 text-sm ${
-                      item?.user_id === profile?.id
-                        ? ' rounded-br-none  bg-orange-100 text-orange-700 '
-                        : ' rounded-tl-none  bg-neutral-200'
+                      owner ? ' rounded-br-none  bg-orange-100 text-orange-700 ' : ' rounded-tl-none  bg-neutral-200'
                     }`}
                   >
                     <p className='text-sm font-light'>{item?.message}</p>
