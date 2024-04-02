@@ -71,30 +71,20 @@ const Content = ({ shopStatus }: { shopStatus: boolean }) => {
 
   useEffect(() => {
     supabase
-      .channel('custom-insert-channel')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, (payload) => {
-        console.log('Change received!', payload)
-        // toast.info('Nuevo pedido')
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        mutate()
-      })
-      .subscribe()
-
-    supabase
-      .channel('custom-insert-channel')
+      .channel('order-update')
       .on(
         'postgres_changes',
         {
           event: 'UPDATE',
           schema: 'public',
           table: 'orders',
-          filter: `payment_status=eq.${PaymentStatusApiEnum.Completed} `
+          filter: `payment_status=eq.${PaymentStatusApiEnum.Completed}`
         },
         (payload) => {
-          console.log('Change received!', payload)
-          toast.info('Nuevo pedido')
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           mutate()
+          console.log('Change received!', payload)
+          toast.info('Nuevo pedido!')
         }
       )
       .subscribe()
