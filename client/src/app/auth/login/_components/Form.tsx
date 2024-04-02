@@ -68,8 +68,8 @@ const Form = () => {
         return toast.error('Algo salió mal')
       }
 
-      // router.push(routes.common.ACCOUNT)
-      // router.refresh()
+      router.push(routes.common.ACCOUNT)
+      router.refresh()
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)

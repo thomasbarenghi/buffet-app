@@ -1,5 +1,5 @@
 import 'server-only'
-import { type Response, type Profile, type ProfileFormData } from '@/interfaces'
+import { type Response, type Profile, type ProfileFormData, RoleEnum } from '@/interfaces'
 import { arrayToObject } from '@/utils/functions'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
@@ -48,6 +48,7 @@ export const createUserProfile = async (formData: ProfileFormData): Promise<Resp
 
   await supabase.auth.updateUser({
     data: {
+      role: RoleEnum.Customer,
       full_name: res.first_name + ' ' + res.last_name,
       first_name: res.first_name,
       last_name: res.last_name,

@@ -39,9 +39,9 @@ const middleware = async (req: NextRequest) => {
   if (isLoggedIn && pathStartsWith(authRoutes, currentPath)) return NextResponse.redirect(origin + RoutesEnum.Account)
 
   // Onboarding executor
-  if (!hasProfile && !pathStartsWith(onboardingRoutes, currentPath))
+  if (!hasProfile && !pathStartsWith(onboardingRoutes, currentPath) && !pathStartsWith(authRoutes, currentPath))
     return NextResponse.redirect(origin + RoutesEnum.Onboarding)
-  if (hasProfile && pathStartsWith(onboardingRoutes, currentPath))
+  if (hasProfile && pathStartsWith(onboardingRoutes, currentPath) && !pathStartsWith(authRoutes, currentPath))
     return NextResponse.redirect(origin + RoutesEnum.Account)
 
   // Redirector according to role
