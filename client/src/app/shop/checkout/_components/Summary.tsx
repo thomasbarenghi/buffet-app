@@ -30,11 +30,12 @@ const Summary = ({ productsP }: { productsP: Product[] }) => {
 
   const onSubmit: SubmitHandler<ShippingFormProps> = async (data) => {
     try {
-      const orderId = await createOrder(products ?? [], data.instructions)
+      const { data: res } = await createOrder(products ?? [], data.instructions)
       const { data: preference } = await axios.post('/api/checkout', {
         products,
-        orderId
+        orderId: res
       })
+
       cleanCart()
       router.refresh()
       router.push(preference?.url as string)
