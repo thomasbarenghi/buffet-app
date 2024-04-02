@@ -13,7 +13,6 @@ interface Props {
 }
 
 const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
-  console.log(profile)
   const formRef = useRef<HTMLFormElement>(null)
   const [messageInput, setMessageInput] = useState<string>('')
   const [chatOpen, setChatOpen] = useState<boolean>(false)
@@ -49,7 +48,6 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
           <div className='flex w-full flex-grow flex-col gap-3 overflow-y-auto px-3 py-3 '>
             {messages?.map((item, index) => {
               const prevIsNotOwned = index === 0 || messages[index - 1]?.user_id !== item?.user_id
-              console.log(item?.user_id === profile?.id, item?.user_id, profile?.id)
               const otherIsShop = profile?.role === RoleEnum.Customer && item?.user?.role !== RoleEnum.Customer
               return (
                 <div

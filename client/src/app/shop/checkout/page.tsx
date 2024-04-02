@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 const Checkout = async () => {
   const shop = await getShopStatus()
   const isOpen = shop?.data?.is_open ?? false
-  console.log(shop)
   const cookieStore = cookies()
   const cookie = cookieStore.get('cartItems')?.value ?? ''
   const products = await getAllProducts(cookie)

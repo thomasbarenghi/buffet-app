@@ -73,16 +73,12 @@ const ProductOrderItem = ({ order, mode, profile }: Props) => {
   })
 
   useEffect(() => {
-    console.log('xxx order id', order.id)
-
     supabase
       .channel(order?.id)
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'messages', filter: `order_id=eq.${order.id ?? ''}` },
         (payload) => {
-          console.log('xxx', payload?.new?.user_id, profile?.id)
-
           if (payload?.new?.user_id !== profile?.id) {
             toast.info(`Nuevo mensaje en #${order?.id?.slice(0, 4)} (${OrderStatusClientEnum[order?.status]})`, {
               duration: 1800000,

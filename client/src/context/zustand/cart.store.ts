@@ -36,7 +36,6 @@ export const useCartStore = create<CartState>()(
 
         Cookies.set('cartItems', items?.join(',') ?? '', { expires: 100 })
         revalidateCartPage()
-        console.log(items)
         set((state) => ({ items: state.items.filter((i) => i !== item) }))
       },
       cleanCart: () => {

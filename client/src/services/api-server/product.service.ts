@@ -41,7 +41,6 @@ export const createProduct = async (product: ProductFormData): Promise<Response<
 }
 
 export const patchProduct = async (product: ProductFormData, id: string): Promise<Response<Product>> => {
-  console.log(product, id)
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
   const { error, data } = await supabase

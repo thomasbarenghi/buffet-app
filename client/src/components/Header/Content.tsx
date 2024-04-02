@@ -24,8 +24,6 @@ const Brand = () => (
 
 const Content = ({ withBorder = true, profile }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  console.log(profile)
-
   return (
     <Navbar
       shouldHideOnScroll

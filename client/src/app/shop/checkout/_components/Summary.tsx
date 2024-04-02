@@ -30,7 +30,6 @@ const Summary = ({ productsP }: { productsP: Product[] }) => {
 
   const onSubmit: SubmitHandler<ShippingFormProps> = async (data) => {
     try {
-      console.log(data)
       const orderId = await createOrder(products ?? [], data.instructions)
       const { data: preference } = await axios.post('/api/checkout', {
         products,

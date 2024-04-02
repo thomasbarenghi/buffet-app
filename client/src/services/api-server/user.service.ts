@@ -6,28 +6,19 @@ import { cookies } from 'next/headers'
 
 export const getUserProfile = async (id?: string | null): Promise<Response<Profile>> => {
   const cookieStore = cookies()
-  console.log(id)
-
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  console.log((await supabase.auth.getUser()).data.user?.id, await supabase.auth.getSession())
-
   const currentId = (await supabase.auth.getUser()).data.user?.id
-  console.log(currentId)
 
   if (!id && !currentId) {
-    console.log('no hay datos')
+    console.log('No hay datos')
   }
 
-  console.log(id, currentId)
   const { data, error } = await supabase
     .from('profiles')
     .select()
     .eq('id', id ?? currentId ?? '')
 
-  const pr = arrayToObject<any>(data ?? [])
-  console.log(pr)
-  console.log(error)
-  return { error, data: pr }
+  return { error, data: arrayToObject<any>(data ?? []) }
 }
 
 export const createUserProfile = async (formData: ProfileFormData): Promise<Response<Profile>> => {
@@ -65,7 +56,6 @@ export const createUserProfile = async (formData: ProfileFormData): Promise<Resp
 }
 
 export const patchUserProfile = async (formData: ProfileFormData, id: string): Promise<Response<Profile>> => {
-  console.log(formData, id)
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
   const { error, data } = await supabase

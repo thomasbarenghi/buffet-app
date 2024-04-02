@@ -34,11 +34,10 @@ const Form = () => {
         }
       })
 
-      console.log(data, error)
       router.push(routes.common.ACCOUNT)
       router.refresh()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

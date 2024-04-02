@@ -33,33 +33,21 @@ const Form = () => {
           }
         }
       })
-
-      console.log(data, error)
       router.push(routes.common.ACCOUNT)
       router.refresh()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
   const onSubmit: SubmitHandler<LoginFormData> = async (formData) => {
     try {
-      const { error, data } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password
       })
 
-      console.log(data.user?.user_metadata.count)
-
-      // SOLO PARA USO MANUAL DE DESARROLLO
-      await supabase.auth.updateUser({
-        data: {
-          count: parseInt(data.session?.user.user_metadata.count) + 1
-        }
-      })
-      // console.log(data2)
       const auth = await supabase.auth.getUser()
-      console.log(auth.data.user?.user_metadata)
 
       if (error) {
         if (error.message === 'Invalid login credentials') {

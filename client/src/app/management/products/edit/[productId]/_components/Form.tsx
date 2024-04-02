@@ -21,7 +21,7 @@ const Form = ({ orderId, product }: Props) => {
       const { error } = await patchProduct(formData, orderId)
 
       if (error) {
-        console.log(error)
+        console.error(error)
         return toast.error('Ocurrió un error')
       }
 

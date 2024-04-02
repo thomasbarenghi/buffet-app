@@ -18,7 +18,6 @@ const AvatarMenu = ({ profile }: Props) => {
     await supabase.auth.signOut()
     router.push(routes.auth.LOGIN)
   }
-  console.log(profile)
 
   return (
     <Dropdown

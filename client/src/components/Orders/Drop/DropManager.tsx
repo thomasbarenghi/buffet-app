@@ -56,7 +56,6 @@ const DropManager = ({ order, client }: Props) => {
 
   const handlePrevStep = async () => {
     try {
-      console.log('hola')
       const prev = getPreviousOrderStatus(order.status as OrderStatusApiEnum)
       if (prev === order.status) return toast.warning('No disponible')
       await changeOrderStatus(prev ?? OrderStatusApiEnum.Canceled, order.id)
@@ -91,7 +90,6 @@ const DropManager = ({ order, client }: Props) => {
   }
 
   const handleCancel = () => {
-    console.log('en desarrollo')
     onCloseCancel()
   }
 

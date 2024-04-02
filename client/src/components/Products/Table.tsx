@@ -65,7 +65,7 @@ const ProductsTable = ({ products }: Props) => {
       toast.success('Eliminado correctamente')
       router.refresh()
     } catch (error) {
-      console.log(error)
+      console.error(error)
       toast.error('Ocurrió un error')
     }
   }
