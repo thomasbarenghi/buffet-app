@@ -1,11 +1,11 @@
 'use client'
-import { RoleEnum, type Profile } from '@/interfaces'
+import { type RawUserMeta, RoleEnum } from '@/interfaces'
 import { menu } from '@/lib/menu.lib'
 import { Link, NavbarMenu, NavbarMenuItem } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
 
 interface Props {
-  profile: Profile
+  profile: RawUserMeta
 }
 
 const Menu = ({ profile }: Props) => {

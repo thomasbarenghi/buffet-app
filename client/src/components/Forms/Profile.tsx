@@ -1,13 +1,14 @@
 'use client'
 import { Input, Button } from '@/components'
-import { type Profile, type ProfileFormData } from '@/interfaces'
-import { nameValidations, required } from '@/utils/constants/validations.const'
+import { type RawUserMeta, type ProfileFormData } from '@/interfaces'
+import { userValidations } from '@/utils/constants/validations.const'
+
 import { type SubmitHandler, useForm } from 'react-hook-form'
 
 interface Props {
   mode: 'create' | 'edit'
   handleSubmitForm: (data: ProfileFormData) => Promise<any>
-  profile?: Profile
+  profile?: RawUserMeta
 }
 
 const ProfileDynamicForm = ({ mode, handleSubmitForm, profile }: Props) => {
@@ -33,7 +34,7 @@ const ProfileDynamicForm = ({ mode, handleSubmitForm, profile }: Props) => {
           name='first_name'
           hookForm={{
             register,
-            validations: nameValidations
+            validations: userValidations.firstName
           }}
           errorMessage={errors?.first_name?.message}
           defaultValue={mode === 'create' ? '' : profile?.first_name}
@@ -45,7 +46,7 @@ const ProfileDynamicForm = ({ mode, handleSubmitForm, profile }: Props) => {
           name='last_name'
           hookForm={{
             register,
-            validations: nameValidations
+            validations: userValidations.lastName
           }}
           errorMessage={errors?.last_name?.message}
           defaultValue={mode === 'create' ? '' : profile?.last_name}
@@ -57,7 +58,7 @@ const ProfileDynamicForm = ({ mode, handleSubmitForm, profile }: Props) => {
           name='dni'
           hookForm={{
             register,
-            validations: { required }
+            validations: userValidations.dni
           }}
           errorMessage={errors?.dni?.message}
           defaultValue={mode === 'create' ? '' : profile?.dni?.toString()}

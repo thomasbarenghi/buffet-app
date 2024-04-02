@@ -14,7 +14,6 @@ export const routes = {
   customer: {
     HOME: '/shop',
     CHECKOUT: '/shop/checkout',
-    ORDER_TRACKING: (id: string) => `/order-tracking/${id}`,
     ONBOARDING: '/account/onboarding',
     ACTIVE_ORDERS: '/account/active-orders'
   },

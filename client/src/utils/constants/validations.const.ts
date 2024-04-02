@@ -2,27 +2,9 @@ import { type RegisterOptions, type ValidationRule } from 'react-hook-form'
 
 export const required: ValidationRule<boolean> = { value: true, message: 'Este campo es requerido' }
 
-export const emailValidations: RegisterOptions = {
-  required,
-  pattern: {
-    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-    message: 'Email inválido'
-  }
-}
+export type UserValidations = 'firstName' | 'lastName' | 'email' | 'password' | 'dni'
 
-export const passwordValidations: RegisterOptions = {
-  required,
-  minLength: {
-    value: 6,
-    message: 'Debe tener al menos 6 caracteres'
-  },
-  maxLength: {
-    value: 25,
-    message: 'Debe tener máximo 25 caracteres'
-  }
-}
-
-export const nameValidations: Record<string, RegisterOptions> = {
+export const userValidations: Record<UserValidations, RegisterOptions> = {
   firstName: {
     required,
     minLength: {
@@ -44,56 +26,63 @@ export const nameValidations: Record<string, RegisterOptions> = {
       value: 25,
       message: 'Debe tener máximo 25 caracteres'
     }
+  },
+  email: {
+    required,
+    pattern: {
+      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+      message: 'Email inválido'
+    }
+  },
+  password: {
+    required,
+    minLength: {
+      value: 6,
+      message: 'Debe tener al menos 6 caracteres'
+    },
+    maxLength: {
+      value: 25,
+      message: 'Debe tener máximo 25 caracteres'
+    }
+  },
+  dni: {
+    required,
+    minLength: {
+      value: 6,
+      message: 'Debe tener al menos 6 números'
+    },
+    maxLength: {
+      value: 9,
+      message: 'No debe tener mas de 8 números'
+    },
+    valueAsNumber: true
   }
 }
 
-export const birthdateValidations: RegisterOptions = {
-  required
-}
-
-export const firstNameValidations: RegisterOptions = {
-  required
-}
-
-export const lastNameValidations: RegisterOptions = {
-  required
-}
-
-export const addressValidations: RegisterOptions = {
-  required
-}
-
-export type ProductValidations = 'name' | 'description' | 'price' | 'thumbnail'
+export type ProductValidations = 'title' | 'description' | 'price' | 'thumbnail'
 
 export const productValidations: Record<ProductValidations, RegisterOptions> = {
-  name: {
-    required
+  title: {
+    required,
+    maxLength: {
+      value: 50,
+      message: 'Máximo 50 carácteres'
+    }
   },
   description: {
-    required
+    required,
+    maxLength: {
+      value: 200,
+      message: 'Máximo 200 carácteres'
+    }
   },
   price: {
-    required
-  },
-  thumbnail: {
-    required
-  }
-}
-
-export type ShopValidations = 'name' | 'description' | 'address' | 'phone' | 'thumbnail'
-
-export const shopValidations: Record<ShopValidations, RegisterOptions> = {
-  name: {
-    required
-  },
-  description: {
-    required
-  },
-  address: {
-    required
-  },
-  phone: {
-    required
+    required,
+    min: {
+      value: 10,
+      message: 'Debe valer al menos $10'
+    },
+    valueAsNumber: true
   },
   thumbnail: {
     required

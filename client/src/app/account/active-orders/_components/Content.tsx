@@ -8,11 +8,10 @@ import { toast } from 'sonner'
 import useSWR from 'swr'
 
 interface Props {
-  userId: string
   ordersFallback: OrderInterface[]
 }
 
-const Content = ({ userId, ordersFallback }: Props) => {
+const Content = ({ ordersFallback }: Props) => {
   const supabase = createClientComponentClient<Database>()
   const { data: orders, mutate } = useSWR<OrderInterface[]>(endpoints.users.ACTIVE_ORDERS('current'), {
     fallbackData: ordersFallback

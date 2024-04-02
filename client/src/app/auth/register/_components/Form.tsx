@@ -1,7 +1,7 @@
 'use client'
 import { Input, Button } from '@/components'
 import { type LoginFormData } from '@/interfaces'
-import { emailValidations, passwordValidations } from '@/utils/constants/validations.const'
+import { userValidations } from '@/utils/constants/validations.const'
 import { type FunctionComponent } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -77,7 +77,7 @@ const Form: FunctionComponent = () => {
           name='email'
           hookForm={{
             register,
-            validations: emailValidations
+            validations: userValidations.email
           }}
           errorMessage={errors?.email?.message}
         />
@@ -88,7 +88,7 @@ const Form: FunctionComponent = () => {
           name='password'
           hookForm={{
             register,
-            validations: passwordValidations
+            validations: userValidations.password
           }}
           errorMessage={errors?.password?.message}
         />

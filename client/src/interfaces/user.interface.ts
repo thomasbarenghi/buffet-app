@@ -7,6 +7,17 @@ export interface Profile {
   dni: number
   profile_image: string
 }
+
+export interface RawUserMeta {
+  full_name: string
+  first_name: string
+  last_name: string
+  role: Role
+  dni: number
+  profile_image: string
+  id: string
+}
+
 export interface User {
   id: string
   email: string

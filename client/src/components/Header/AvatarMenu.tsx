@@ -1,5 +1,5 @@
 'use client'
-import { type Profile } from '@/interfaces'
+import { type RawUserMeta } from '@/interfaces'
 import { routes } from '@/utils/constants/routes.const'
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  profile: Profile
+  profile: RawUserMeta
 }
 
 const AvatarMenu = ({ profile }: Props) => {

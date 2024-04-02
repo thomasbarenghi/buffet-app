@@ -1,5 +1,5 @@
 import 'server-only'
-import { type Response, type Profile, type ProfileFormData, RoleEnum } from '@/interfaces'
+import { type Response, type Profile, type ProfileFormData } from '@/interfaces'
 import { arrayToObject } from '@/utils/functions/arrayToObject'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
@@ -44,13 +44,23 @@ export const createUserProfile = async (formData: ProfileFormData): Promise<Resp
     })
     .select()
 
+  const res = arrayToObject<any>(data ?? [])
+
   await supabase.auth.updateUser({
     data: {
-      role: RoleEnum.Customer
+      full_name: res.first_name + ' ' + res.last_name,
+      first_name: res.first_name,
+      last_name: res.last_name,
+      dni: res.dni,
+      profile_image: res.profile_image
     }
   })
 
-  return { error, data: arrayToObject<any>(data ?? []) }
+  await supabase.auth.refreshSession()
+  await supabase.auth.getUser()
+  await supabase.auth.getSession()
+
+  return { error, data: res }
 }
 
 export const patchUserProfile = async (formData: ProfileFormData, id: string): Promise<Response<Profile>> => {
@@ -63,5 +73,21 @@ export const patchUserProfile = async (formData: ProfileFormData, id: string): P
     .eq('id', id)
     .select()
 
-  return { error, data: arrayToObject<any>(data ?? []) }
+  const res = arrayToObject<any>(data ?? [])
+
+  await supabase.auth.updateUser({
+    data: {
+      ...(res?.first_name && res.last_name && { full_name: res.first_name + ' ' + res.last_name }),
+      ...(res?.first_name && { first_name: res.first_name }),
+      ...(res.last_name && { last_name: res.last_name }),
+      ...(res?.dni && { dni: res.dni }),
+      ...(res?.profile_image && { profile_image: res.profile_image })
+    }
+  })
+
+  await supabase.auth.refreshSession()
+  await supabase.auth.getUser()
+  await supabase.auth.getSession()
+
+  return { error, data: res }
 }

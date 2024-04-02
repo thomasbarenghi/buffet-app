@@ -1,7 +1,7 @@
 'use client'
 import { Input, Button, Textarea } from '@/components'
 import { type Product, type ProductFormData } from '@/interfaces'
-import { required } from '@/utils/constants/validations.const'
+import { productValidations } from '@/utils/constants/validations.const'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 
 interface Props {
@@ -33,7 +33,7 @@ const ProductDynamicForm = ({ mode, handleSubmitForm, product }: Props) => {
           name='title'
           hookForm={{
             register,
-            validations: { required }
+            validations: productValidations.title
           }}
           errorMessage={errors?.title?.message}
           defaultValue={mode === 'create' ? '' : product?.title}
@@ -43,9 +43,14 @@ const ProductDynamicForm = ({ mode, handleSubmitForm, product }: Props) => {
           label='Precio'
           placeholder='Ingrese el precio del producto'
           name='price'
+          startContent={
+            <div className='pointer-events-none flex items-center'>
+              <span className='text-small text-default-400'>$</span>
+            </div>
+          }
           hookForm={{
             register,
-            validations: { required }
+            validations: productValidations.price
           }}
           errorMessage={errors?.price?.message}
           defaultValue={mode === 'create' ? '' : product?.price?.toString()}
@@ -78,7 +83,7 @@ const ProductDynamicForm = ({ mode, handleSubmitForm, product }: Props) => {
           errorMessage={errors.description?.message}
           hookForm={{
             register,
-            validations: { required }
+            validations: productValidations.description
           }}
           defaultValue={mode === 'create' ? '' : product?.description}
         />

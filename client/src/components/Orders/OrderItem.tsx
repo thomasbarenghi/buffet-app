@@ -81,10 +81,13 @@ const ProductOrderItem = ({ order, mode, profile }: Props) => {
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'messages', filter: `order_id=eq.${order.id ?? ''}` },
         (payload) => {
-          console.log('xxx', payload.new.user_id, profile?.id)
+          console.log('xxx', payload?.new?.user_id, profile?.id)
 
-          if (payload.new.user_id !== profile?.id) {
-            toast.info('Nuevo mensaje en #' + order.id.slice(0, 4))
+          if (payload?.new?.user_id !== profile?.id) {
+            toast.info(`Nuevo mensaje en #${order?.id?.slice(0, 4)} (${OrderStatusClientEnum[order?.status]})`, {
+              duration: 1800000,
+              description: payload?.new?.message
+            })
           }
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           mutate()

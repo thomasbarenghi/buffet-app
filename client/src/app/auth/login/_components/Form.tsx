@@ -1,7 +1,6 @@
 'use client'
 import { Input, Button } from '@/components'
 import { type LoginFormData } from '@/interfaces'
-import { emailValidations, passwordValidations } from '@/utils/constants/validations.const'
 import { type FunctionComponent } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -10,6 +9,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { routes } from '@/utils/constants/routes.const'
 import { clientUrl } from '@/utils/constants/env.const'
 import GoogleButton from '../../_components/GoogleButton'
+import { userValidations } from '@/utils/constants/validations.const'
 
 const Form: FunctionComponent = () => {
   const router = useRouter()
@@ -51,17 +51,17 @@ const Form: FunctionComponent = () => {
         password: formData.password
       })
 
-      console.log(data)
+      console.log(data.user?.user_metadata.count)
 
       // SOLO PARA USO MANUAL DE DESARROLLO
-      // const { data: data2 } = await supabase.auth.updateUser({
-      //   data: {
-      //     role: 'customer'
-      //   }
-      // })
+      await supabase.auth.updateUser({
+        data: {
+          count: parseInt(data.session?.user.user_metadata.count) + 1
+        }
+      })
       // console.log(data2)
-      const auth = await supabase.auth.getSession()
-      console.log(auth)
+      const auth = await supabase.auth.getUser()
+      console.log(auth.data.user?.user_metadata)
 
       if (error) {
         if (error.message === 'Invalid login credentials') {
@@ -70,8 +70,8 @@ const Form: FunctionComponent = () => {
         return toast.error('Algo salió mal')
       }
 
-      router.push(routes.common.ACCOUNT)
-      router.refresh()
+      // router.push(routes.common.ACCOUNT)
+      // router.refresh()
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)
@@ -88,7 +88,7 @@ const Form: FunctionComponent = () => {
           name='email'
           hookForm={{
             register,
-            validations: emailValidations
+            validations: userValidations.email
           }}
           errorMessage={errors?.email?.message}
         />
@@ -99,7 +99,7 @@ const Form: FunctionComponent = () => {
           name='password'
           hookForm={{
             register,
-            validations: passwordValidations
+            validations: userValidations.password
           }}
           errorMessage={errors?.password?.message}
         />

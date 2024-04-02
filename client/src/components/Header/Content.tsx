@@ -3,16 +3,15 @@ import React, { useState } from 'react'
 import { Link, Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react'
 import Image from 'next/image'
 import { routes } from '@/utils/constants/routes.const'
-import { type Role, type Profile } from '@/interfaces'
+import { type RawUserMeta } from '@/interfaces'
 import AvatarMenu from './AvatarMenu'
 import MobileMenu from './MobileMenu/Main'
 import Menu from './Menu'
 import Cart from '../Cart/Cart'
 
 interface Props {
-  mode?: Role
   withBorder?: boolean
-  profile: Profile
+  profile: RawUserMeta
 }
 
 const Brand = () => (
@@ -23,7 +22,7 @@ const Brand = () => (
   </NavbarBrand>
 )
 
-const Content = ({ mode = 'customer', withBorder = true, profile }: Props) => {
+const Content = ({ withBorder = true, profile }: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   console.log(profile)
 

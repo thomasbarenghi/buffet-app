@@ -25,6 +25,10 @@ export const menu: Record<Role, Menu[]> = {
     {
       title: 'Productos',
       href: routes.attendant.PRODUCTS
+    },
+    {
+      title: 'Ordenes',
+      href: routes.common.ORDERS
     }
   ],
   manager: [],
