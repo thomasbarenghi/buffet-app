@@ -23,7 +23,7 @@ const Form = () => {
 
   const oauthSignIn = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: clientUrl + routes.auth.CALLBACK,
@@ -46,8 +46,6 @@ const Form = () => {
         email: formData.email,
         password: formData.password
       })
-
-      const auth = await supabase.auth.getUser()
 
       if (error) {
         if (error.message === 'Invalid login credentials') {

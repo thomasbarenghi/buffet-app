@@ -23,7 +23,7 @@ const Form = () => {
 
   const oauthSignIn = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: clientUrl + routes.auth.CALLBACK,
