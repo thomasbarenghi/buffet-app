@@ -1,11 +1,11 @@
 'use client'
 import Image from 'next/image'
-import { type OrderInterface, OrderStatusClientEnum } from '@/interfaces'
 import { TableCell, TableRow } from '@nextui-org/react'
 import { DynamicTable } from '@/components'
+import { type OrderInterface, OrderStatusClientEnum } from '@/interfaces'
 
 interface Props {
-  orders: OrderInterface[]
+  orders: OrderInterface[] | undefined
 }
 
 const OrdersTable = ({ orders }: Props) => (
@@ -17,7 +17,7 @@ const OrdersTable = ({ orders }: Props) => (
     }}
     radius='md'
     className='w-full rounded-xl border'
-    data={orders}
+    data={orders ?? []}
     rowsPerPage={8}
     columns={['Producto/s', 'Orden', 'Precio final', 'Estatus', 'Fecha']}
     selectionBehavior='toggle'

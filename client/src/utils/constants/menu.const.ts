@@ -1,5 +1,5 @@
-import { type Role } from '@/interfaces'
 import { routes } from '@/utils/constants'
+import { type Role } from '@/interfaces'
 
 interface Menu {
   title: string
@@ -31,6 +31,32 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.common.ORDERS
     }
   ],
-  manager: [],
-  admin: []
+  manager: [
+    {
+      title: 'Principal',
+      href: routes.attendant.HOME
+    },
+    {
+      title: 'Productos',
+      href: routes.attendant.PRODUCTS
+    },
+    {
+      title: 'Ordenes',
+      href: routes.common.ORDERS
+    }
+  ],
+  admin: [
+    {
+      title: 'Principal',
+      href: routes.attendant.HOME
+    },
+    {
+      title: 'Productos',
+      href: routes.attendant.PRODUCTS
+    },
+    {
+      title: 'Ordenes',
+      href: routes.common.ORDERS
+    }
+  ]
 }

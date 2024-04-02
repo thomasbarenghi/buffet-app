@@ -1,15 +1,12 @@
-import { OrderStatusApiEnum, PaymentStatusApiEnum } from '@/interfaces'
-import { mpAccessToken } from '@/utils/constants/env.const'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-// import MercadoPagoConfig, { Payment } from 'mercadopago'
 import { cookies } from 'next/headers'
 import type { NextRequest } from 'next/server'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { mpAccessToken } from '@/utils/constants/env.const'
+import { OrderStatusApiEnum, PaymentStatusApiEnum } from '@/interfaces'
 
 export const POST = async (request: NextRequest) => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  // const client = new MercadoPagoConfig({ accessToken: mpAccessToken })
-  // const payment = new Payment(client)
   const searchParams = request.nextUrl.searchParams
   const topic = searchParams.get('topic') || searchParams.get('type')
   const orderId = searchParams.get('orderId')
@@ -19,8 +16,6 @@ export const POST = async (request: NextRequest) => {
   try {
     if (topic === 'payment') {
       const paymentId = searchParams.get('id') || searchParams.get('data.id')
-      // const paymentRes = await payment.get({ id: paymentId ?? '' })
-      // const paymentStatus = paymentRes.api_response.status
 
       const response = await fetch('https://api.mercadopago.com/v1/payments/' + paymentId, {
         method: 'GET',

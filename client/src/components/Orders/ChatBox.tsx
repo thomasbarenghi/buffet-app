@@ -1,13 +1,13 @@
 'use client'
-import { useRef, useState } from 'react'
-import { type Profile, type Message, type OrderInterface, RoleEnum } from '@/interfaces'
 import Image from 'next/image'
+import { useRef, useState } from 'react'
 import { Input } from '@nextui-org/react'
-import ChatToggle from './ChatToggle'
+import { ChatToggle } from '@/components'
 import { createMessage } from '@/services/api-client'
+import { type Profile, type Message, type OrderInterface, RoleEnum } from '@/interfaces'
 
 interface Props {
-  order: OrderInterface | null
+  order: OrderInterface | undefined
   profile: Profile
   messages: Message[] | undefined
 }

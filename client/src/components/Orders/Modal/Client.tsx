@@ -1,12 +1,12 @@
-import { type OrderInterface, type Profile } from '@/interfaces'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
 import { Button } from '@/components'
+import { type OrderInterface, type Profile } from '@/interfaces'
 
 interface Props {
-  client: Profile | null
+  client: Profile | undefined
   isOpen: boolean
   onOpenChange: () => void
-  order: OrderInterface
+  order: OrderInterface | undefined
 }
 
 const ClientModal = ({ isOpen, onOpenChange, client, order }: Props) => (
@@ -14,7 +14,7 @@ const ClientModal = ({ isOpen, onOpenChange, client, order }: Props) => (
     <ModalContent>
       {(onClose) => (
         <>
-          <ModalHeader className='flex flex-col gap-1'>Detalle cliente - orden #{order.id.slice(0, 4)}</ModalHeader>
+          <ModalHeader className='flex flex-col gap-1'>Detalle cliente - orden #{order?.id?.slice(0, 4)}</ModalHeader>
           <ModalBody>
             <p className='font-light'>
               El cliente se llama{' '}

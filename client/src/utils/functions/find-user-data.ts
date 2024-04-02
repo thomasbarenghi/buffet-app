@@ -1,7 +1,7 @@
 'use server'
-import { RoleEnum, type RawUserMeta } from '@/interfaces'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { RoleEnum, type RawUserMeta } from '@/interfaces'
 
 export const findUserMetaData = async (): Promise<RawUserMeta> => {
   const cookieStore = cookies()

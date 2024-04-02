@@ -1,6 +1,6 @@
+import { type PostgrestError } from '@supabase/supabase-js'
 import { getUserOrders } from '@/services/api-server'
 import { generateErrorResponse } from '@/utils/functions'
-import { type PostgrestError } from '@supabase/supabase-js'
 
 export const GET = async () => {
   const { data, error } = await getUserOrders('active')

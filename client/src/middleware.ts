@@ -1,7 +1,6 @@
 /* eslint-disable curly */
+import { type NextRequest, NextResponse } from 'next/server'
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
 import { getUserProfile } from './services/api-server'
 import { RoleEnum } from './interfaces'
 

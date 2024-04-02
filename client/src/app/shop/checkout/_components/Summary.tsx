@@ -1,15 +1,15 @@
 'use client'
-import { useCartStore } from '@/context/zustand/cart.store'
-import { type ShippingFormProps, type Product } from '@/interfaces'
-import { Button, ProductCartGrid, Textarea } from '@/components'
-import { type SubmitHandler, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import axios from 'axios'
-import { createOrder } from '@/services/api-client'
-import { toast } from 'sonner'
-import Info from './Info'
 import useSWR from 'swr'
+import axios from 'axios'
+import { toast } from 'sonner'
+import { type SubmitHandler, useForm } from 'react-hook-form'
+import Info from './Info'
+import { Button, ProductCartGrid, Textarea } from '@/components'
+import { createOrder } from '@/services/api-client'
+import { useCartStore } from '@/context/zustand/cart.store'
 import { endpoints } from '@/utils/constants'
+import { type ShippingFormProps, type Product } from '@/interfaces'
 
 const Summary = ({ productsP }: { productsP: Product[] }) => {
   const router = useRouter()

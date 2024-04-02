@@ -1,10 +1,11 @@
+import { type Metadata } from 'next'
 import Content from './_components/Content'
 import { getUserOrders } from '@/services/api-server'
-import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Ordenes activas | Buffet UNAHUR'
 }
+
 // TODO: ORDENAR SEGUN ULTIMA ORDEN
 
 const ActiveOrders = async () => {

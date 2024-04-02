@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
-import { getShopStatus } from '@/services/api-server'
-import { cookies } from 'next/headers'
 import dynamic from 'next/dynamic'
+import { cookies } from 'next/headers'
+import { getShopStatus } from '@/services/api-server'
 import { getAllProducts } from '@/services/api-client'
 const ShopClose = dynamic(async () => await import('./_components/ShopClose'))
 const CartEmpty = dynamic(async () => await import('./_components/CartEmpty'))

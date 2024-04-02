@@ -1,13 +1,13 @@
 'use client'
+import { useEffect, useState } from 'react'
+import useSWR from 'swr'
+import { toast } from 'sonner'
 import { OrdersGrid } from '@/components'
-import { PaymentStatusApiEnum, RoleEnum, type OrderInterface } from '@/interfaces'
-import { changeShopStatus } from '@/services/api-client'
-import { endpoints } from '@/utils/constants'
 import { Switch, Tab, Tabs } from '@nextui-org/react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
-import useSWR from 'swr'
+import { changeShopStatus } from '@/services/api-client'
+import { endpoints } from '@/utils/constants'
+import { PaymentStatusApiEnum, RoleEnum, type OrderInterface } from '@/interfaces'
 
 interface FilteredOrders {
   PendingApproval: OrderInterface[]

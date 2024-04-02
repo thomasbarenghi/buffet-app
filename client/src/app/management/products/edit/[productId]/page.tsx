@@ -1,6 +1,6 @@
+import { type Metadata } from 'next'
 import Form from './_components/Form'
 import { getProduct } from '@/services/api-server'
-import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Editar producto | Administracion | Buffet UNAHUR'

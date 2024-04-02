@@ -1,8 +1,7 @@
-import { type ProductFormData } from '@/interfaces'
-import { deleteProduct, getProduct, patchProduct } from '@/services/api-server'
-import { imageUpload } from '@/services/api-server/image-upload.service'
-import { generateErrorResponse } from '@/utils/functions'
 import { type PostgrestError } from '@supabase/supabase-js'
+import { deleteProduct, getProduct, imageUpload, patchProduct } from '@/services/api-server'
+import { generateErrorResponse } from '@/utils/functions'
+import { type ProductFormData } from '@/interfaces'
 
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
   const { data, error } = await getProduct(params.id)

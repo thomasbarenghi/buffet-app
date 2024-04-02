@@ -1,5 +1,9 @@
 'use client'
-import { RoleEnum, type Product } from '@/interfaces'
+import Link from 'next/link'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { type SVGProps, useState } from 'react'
+import { toast } from 'sonner'
 import {
   Button,
   Dropdown,
@@ -10,15 +14,11 @@ import {
   TableRow,
   useDisclosure
 } from '@nextui-org/react'
-import { type SVGProps, useState } from 'react'
-import { DynamicTable, ModalProduct } from '..'
+import { DynamicTable, ModalProduct } from '@/components'
+import { deleteProduct } from '@/services/api-client'
 import { truncateText } from '@/utils/functions'
 import { routes } from '@/utils/constants'
-import Link from 'next/link'
-import Image from 'next/image'
-import { deleteProduct } from '@/services/api-client'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { RoleEnum, type Product } from '@/interfaces'
 
 interface Props {
   products: Product[]
@@ -72,7 +72,7 @@ const ProductsTable = ({ products }: Props) => {
 
   return (
     <>
-      <ModalProduct product={product!} isOpen={isOpen} mode={RoleEnum.Attendant} onClose={onClose} />
+      <ModalProduct product={product} isOpen={isOpen} mode={RoleEnum.Attendant} onClose={onClose} />
       <DynamicTable
         shadow='none'
         classNames={{

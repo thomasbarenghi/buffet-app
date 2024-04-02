@@ -1,10 +1,10 @@
 'use client'
-import { type ProfileFormData } from '@/interfaces'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { routes } from '@/utils/constants'
-import { createUserProfile } from '@/services/api-client'
 import { ProfileDynamicForm } from '@/components'
+import { createUserProfile } from '@/services/api-client'
+import { routes } from '@/utils/constants'
+import { type ProfileFormData } from '@/interfaces'
 
 const Form = () => {
   const router = useRouter()

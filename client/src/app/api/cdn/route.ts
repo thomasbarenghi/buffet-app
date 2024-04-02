@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/brace-style */
 /* eslint-disable @typescript-eslint/indent */
-import * as streamifier from 'streamifier'
-import sharp from 'sharp'
-import { v2 as cloudinary, type UploadApiResponse } from 'cloudinary'
-import { type NextRequest } from 'next/server'
 import { headers } from 'next/headers'
+import { type NextRequest } from 'next/server'
+import sharp from 'sharp'
+import * as streamifier from 'streamifier'
+import { v2 as cloudinary, type UploadApiResponse } from 'cloudinary'
 import { apiCdnAuthorization } from '@/utils/constants'
 
 cloudinary.config({

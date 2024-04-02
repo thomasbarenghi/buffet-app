@@ -1,10 +1,10 @@
 'use client'
-import { ProductDynamicForm } from '@/components'
-import { type Product, type ProductFormData } from '@/interfaces'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { routes } from '@/utils/constants'
+import { toast } from 'sonner'
+import { ProductDynamicForm } from '@/components'
 import { patchProduct } from '@/services/api-client'
+import { routes } from '@/utils/constants'
+import { type Product, type ProductFormData } from '@/interfaces'
 
 interface Props {
   orderId: string

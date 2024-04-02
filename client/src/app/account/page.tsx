@@ -1,17 +1,18 @@
+import { type Metadata } from 'next'
+import Link from 'next/link'
+import Image from 'next/image'
+import { User } from '@nextui-org/react'
 import { Button, OrdersGrid } from '@/components'
-import { RoleEnum } from '@/interfaces'
 import { getShopOrders, getUserOrders } from '@/services/api-server'
 import { routes } from '@/utils/constants'
-import { User } from '@nextui-org/react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { type Metadata } from 'next'
 import { findUserMetaData } from '@/utils/functions'
+import { RoleEnum } from '@/interfaces'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Cuenta | Buffet UNAHUR'
 }
+
 // TODO: ACTUALIZAR EN CADA SOFTROUTING LAS ORDENES FINALIZADAS
 // TODO: ORDENAR SEGUN ULTIMA ORDEN
 

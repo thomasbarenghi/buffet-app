@@ -1,10 +1,10 @@
 'use client'
-import { type RawUserMeta } from '@/interfaces'
-import { routes } from '@/utils/constants'
-import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
+import { routes } from '@/utils/constants'
+import { type RawUserMeta } from '@/interfaces'
 
 interface Props {
   profile: RawUserMeta

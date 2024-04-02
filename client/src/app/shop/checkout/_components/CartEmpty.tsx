@@ -1,7 +1,7 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components'
 import { routes } from '@/utils/constants'
-import { useRouter } from 'next/navigation'
 
 const CartEmpty = () => {
   const router = useRouter()

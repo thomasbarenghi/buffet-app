@@ -1,16 +1,15 @@
 'use client'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
-import { type Role, type OrderInterface, type Profile } from '@/interfaces'
 import { ProductOrderItem } from '@/components'
 import { getUserProfile } from '@/services/api-client'
-
+import { type Role, type OrderInterface, type Profile } from '@/interfaces'
 const OrderItemGroupPlaceholder = dynamic(async () => await import('./Placeholders/OrderItemGroup'))
 
 interface Props {
-  orders: OrderInterface[]
+  orders: OrderInterface[] | undefined
   withTitle?: boolean
-  mode: Role | string
+  mode: Role
 }
 
 const OrdersGrid = ({ orders, mode }: Props) => {
@@ -28,9 +27,7 @@ const OrdersGrid = ({ orders, mode }: Props) => {
   return (
     <div className='flex w-full flex-grow flex-col gap-4 2xl:container'>
       {Array.isArray(orders) && orders.length > 0 ? (
-        orders?.map((order: OrderInterface, index) => (
-          <ProductOrderItem order={order} mode={mode} key={index} profile={profile!} />
-        ))
+        orders?.map((order, index) => <ProductOrderItem order={order} mode={mode} key={index} profile={profile!} />)
       ) : (
         <OrderItemGroupPlaceholder
           title={

@@ -1,7 +1,7 @@
+import { type Metadata } from 'next'
 import { Button, ProductsTable } from '@/components'
 import { getAllProducts } from '@/services/api-server'
 import { routes } from '@/utils/constants'
-import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Productos | Administracion | Buffet UNAHUR'

@@ -1,11 +1,11 @@
 'use client'
-import { OrdersGrid } from '@/components'
-import { type OrderInterface } from '@/interfaces'
-import { endpoints } from '@/utils/constants'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect } from 'react'
-import { toast } from 'sonner'
 import useSWR from 'swr'
+import { toast } from 'sonner'
+import { OrdersGrid } from '@/components'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { endpoints } from '@/utils/constants'
+import { type OrderInterface } from '@/interfaces'
 
 interface Props {
   ordersFallback: OrderInterface[]

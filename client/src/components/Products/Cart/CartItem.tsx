@@ -1,15 +1,16 @@
 'use client'
-import { type Role, type Product } from '@/interfaces'
 import Image from 'next/image'
-import { useCartStore } from '@/context/zustand/cart.store'
-import { useDisclosure } from '@nextui-org/react'
-import { truncateText } from '@/utils/functions'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
+import { useDisclosure } from '@nextui-org/react'
+import { useCartStore } from '@/context/zustand/cart.store'
+import { truncateText } from '@/utils/functions'
+import { type Role, type Product } from '@/interfaces'
+
 const ModalProduct = dynamic(async () => await import('../Modal'))
 
 interface Props {
-  product: Product
+  product: Product | undefined
   isLast: boolean
   withBg?: boolean
   mode: Role
@@ -28,9 +29,9 @@ const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
         <div className='flex items-center gap-3'>
           <div className='relative aspect-square h-[80px] w-[80px] '>
             <Image
-              src={product.thumbnail}
+              src={product?.thumbnail ?? '/images/placeholder.png'}
               priority
-              alt={product.title}
+              alt={product?.title ?? 'image'}
               fill
               placeholder='empty'
               className='aspect-square rounded-lg object-cover'
@@ -38,10 +39,10 @@ const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
           </div>
           <div className='flex flex-col gap-2'>
             <div className='flex flex-col'>
-              <h1 className='font-normal'>{product.title}</h1>
-              <p className='text-xs font-light text-zinc-700'>{truncateText(product.description, 40)}</p>
+              <h1 className='font-normal'>{product?.title}</h1>
+              <p className='text-xs font-light text-zinc-700'>{truncateText(product?.description ?? '', 40)}</p>
             </div>
-            <p className='text-small font-semibold'>${product.price}</p>
+            <p className='text-small font-semibold'>${product?.price}</p>
           </div>
         </div>
         <Image
@@ -52,7 +53,8 @@ const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
           className='cursor-pointer'
           onClick={(e) => {
             e.stopPropagation()
-            removeItem(product.id)
+            if (!product) return
+            removeItem(product?.id)
             router.refresh()
           }}
         />

@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import Form from './_components/Form'
 import { type Metadata } from 'next'
+import Form from './_components/Form'
 
 export const metadata: Metadata = {
   title: 'Onboarding | Buffet UNAHUR'

@@ -4,8 +4,6 @@ interface Props {
   children: React.ReactNode
 }
 
-// TODO: ENVIAR MODE AL HEADER PARA OCULTAR EL LOGO ORIGINAL Y EL MENU, ENTRE OTROS
-
 const ManagerLayout = async ({ children }: Props) => (
   <>
     <Header />

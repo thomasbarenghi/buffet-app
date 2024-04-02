@@ -1,5 +1,5 @@
-import Form from './_components/Form'
 import { type Metadata } from 'next'
+import Form from './_components/Form'
 import AuthMask from '../_components/AuthMask'
 
 export const metadata: Metadata = {

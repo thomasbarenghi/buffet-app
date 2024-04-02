@@ -1,6 +1,6 @@
 'use client'
-import { NextUIProvider } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
+import { NextUIProvider } from '@nextui-org/react'
 
 interface Props {
   children: React.ReactNode

@@ -1,5 +1,5 @@
-import Form from './_components/Form'
 import { type Metadata } from 'next'
+import Form from './_components/Form'
 
 export const metadata: Metadata = {
   title: 'Crear un producto | Administracion | Buffet UNAHUR'

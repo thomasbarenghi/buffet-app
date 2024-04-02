@@ -1,5 +1,5 @@
-import { ProductCardGrid } from '@/components'
 import { type Metadata } from 'next'
+import { ProductCardGrid } from '@/components'
 
 export const metadata: Metadata = {
   title: 'Tienda | Buffet UNAHUR'

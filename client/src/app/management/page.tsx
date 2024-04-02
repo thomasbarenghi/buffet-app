@@ -1,6 +1,6 @@
-import { getShopStatus } from '@/services/api-server'
-import Content from './_components/Content'
 import { type Metadata } from 'next'
+import Content from './_components/Content'
+import { getShopStatus } from '@/services/api-server'
 
 export const metadata: Metadata = {
   title: 'Pedidos activos | Administracion | Buffet UNAHUR'

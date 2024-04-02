@@ -1,6 +1,6 @@
 'use client'
-import { Pagination, Table, TableBody, TableColumn, TableHeader } from '@nextui-org/react'
 import { useMemo, useState, type ComponentProps } from 'react'
+import { Pagination, Table, TableBody, TableColumn, TableHeader } from '@nextui-org/react'
 
 interface CustomProps<T> {
   data: T[]
@@ -14,7 +14,6 @@ type ExtendedProps = DefaultProps & CustomProps<any>
 
 const DynamicTable = ({ data, rowsPerPage = 4, columns, renderRow, ...props }: ExtendedProps) => {
   const [page, setPage] = useState(1)
-
   const pages = Math.ceil(data.length / rowsPerPage)
 
   const items = useMemo(() => {
@@ -26,16 +25,7 @@ const DynamicTable = ({ data, rowsPerPage = 4, columns, renderRow, ...props }: E
 
   return (
     <div className='flex w-full flex-col gap-4'>
-      <Table
-        isStriped={props.isStriped}
-        className={props.className}
-        classNames={props.classNames}
-        shadow={props.shadow}
-        radius={props.radius}
-        onRowAction={props.onRowAction}
-        selectionBehavior={props.selectionBehavior}
-        selectionMode={props.selectionMode}
-      >
+      <Table {...props}>
         <TableHeader>
           {columns.map((column, index) => (
             <TableColumn key={index}>{column}</TableColumn>

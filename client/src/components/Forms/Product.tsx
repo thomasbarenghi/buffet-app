@@ -1,13 +1,13 @@
 'use client'
-import { Input, Button, Textarea } from '@/components'
-import { type Product, type ProductFormData } from '@/interfaces'
-import { productValidations } from '@/utils/constants/validations.const'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Input, Button, Textarea } from '@/components'
+import { productValidations } from '@/utils/constants/validations.const'
+import { type Product, type ProductFormData } from '@/interfaces'
 
 interface Props {
   mode: 'create' | 'edit'
   handleSubmitForm: (data: ProductFormData) => Promise<unknown>
-  product?: Product
+  product?: Product | undefined
 }
 
 const ProductDynamicForm = ({ mode, handleSubmitForm, product }: Props) => {

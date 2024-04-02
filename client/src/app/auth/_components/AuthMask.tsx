@@ -1,7 +1,7 @@
-import { type Metadata } from 'next'
-import Link from 'next/link'
-import { routes } from '@/utils/constants'
 import Image from 'next/image'
+import Link from 'next/link'
+import { type Metadata } from 'next'
+import { routes } from '@/utils/constants'
 
 export const metadata: Metadata = {
   title: 'Ingresar | Buffet UNAHUR'

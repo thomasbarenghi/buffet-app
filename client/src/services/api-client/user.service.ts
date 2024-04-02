@@ -23,5 +23,5 @@ export const getUserProfile = async (id?: string): Promise<Response<Profile>> =>
   await getRequest<Profile>({
     path: endpoints.users.FIND_PROFILE(id ?? 'null'),
     customUrl: clientUrl,
-    cache: 'force-cache'
+    cache: 'no-store'
   })

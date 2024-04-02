@@ -1,8 +1,8 @@
 'use client'
+import { type ReactNode } from 'react'
 import { SWRConfig } from 'swr'
 import { fetcher } from '@/services/fetcher.service'
 import { localStorageProvider } from './localStorage.provider'
-import { type ReactNode } from 'react'
 
 interface Props {
   children: ReactNode

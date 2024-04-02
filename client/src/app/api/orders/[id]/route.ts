@@ -1,6 +1,6 @@
+import { type PostgrestError } from '@supabase/supabase-js'
 import { changeStatus } from '@/services/api-server'
 import { generateErrorResponse } from '@/utils/functions'
-import { type PostgrestError } from '@supabase/supabase-js'
 
 export const PATCH = async (req: Request, { params }: { params: { id: string } }) => {
   const { status } = await req.json()

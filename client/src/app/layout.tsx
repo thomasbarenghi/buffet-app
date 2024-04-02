@@ -1,7 +1,7 @@
-import type { Metadata, Viewport } from 'next'
-import { Outfit } from 'next/font/google'
 import './globals.css'
 import dynamic from 'next/dynamic'
+import { Outfit } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
 import { Toaster } from 'sonner'
 const NextUiProvider = dynamic(async () => await import('@/context/providers/nextui.provider'))
 const SWRProvider = dynamic(async () => await import('@/context/providers/swr.provider'), {

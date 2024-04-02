@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
+import { useState } from 'react'
 const CartMenu = dynamic(async () => await import('./Menu'))
 
 const Cart = () => {

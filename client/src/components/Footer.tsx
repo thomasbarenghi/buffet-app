@@ -1,6 +1,6 @@
-import { routes } from '@/utils/constants'
-import Image from 'next/image'
 import Link from 'next/link'
+import Image from 'next/image'
+import { routes } from '@/utils/constants'
 
 const Footer = () => (
   <footer className='resp-pad-x  flex min-h-[250px] justify-center border border-t py-10'>

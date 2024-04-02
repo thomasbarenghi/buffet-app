@@ -1,8 +1,8 @@
 'use client'
-import { type RawUserMeta, RoleEnum } from '@/interfaces'
-import { menu } from '@/utils/constants'
-import { Link, NavbarContent, NavbarItem } from '@nextui-org/react'
 import { usePathname } from 'next/navigation'
+import { Link, NavbarContent, NavbarItem } from '@nextui-org/react'
+import { menu } from '@/utils/constants'
+import { type RawUserMeta, RoleEnum } from '@/interfaces'
 
 const Menu = ({ profile }: { profile: RawUserMeta }) => {
   const pathname = usePathname()

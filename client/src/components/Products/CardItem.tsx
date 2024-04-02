@@ -1,13 +1,13 @@
 'use client'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 import { useDisclosure } from '@nextui-org/react'
-import { type Role, type Product } from '@/interfaces'
 import { truncateText } from '@/utils/functions'
+import { type Role, type Product } from '@/interfaces'
 const ModalProduct = dynamic(async () => await import('./Modal'))
 
 interface Props {
-  product: Product
+  product: Product | undefined
   mode: Role
 }
 
@@ -19,7 +19,7 @@ const ProductCardVert: React.FC<Props> = ({ product, mode }) => {
       <div className='flex w-full cursor-pointer flex-col gap-3' onClick={onOpen}>
         <div className='relative aspect-square w-full'>
           <Image
-            src={product.thumbnail}
+            src={product?.thumbnail ?? '/images/placeholder.png'}
             alt='image'
             width={250}
             height={250}
@@ -31,10 +31,10 @@ const ProductCardVert: React.FC<Props> = ({ product, mode }) => {
         </div>
         <div className='flex flex-col gap-2'>
           <div className='flex flex-col gap-1'>
-            <h1 className='font-normal'>{product.title}</h1>
-            <p className='text-xs font-light text-zinc-700'>{truncateText(product.description, 70)}</p>
+            <h1 className='font-normal'>{product?.title}</h1>
+            <p className='text-xs font-light text-zinc-700'>{truncateText(product?.description ?? '', 70)}</p>
           </div>
-          <p className='text-small font-semibold'>${product.price}</p>
+          <p className='text-small font-semibold'>${product?.price}</p>
         </div>
       </div>
       <ModalProduct product={product} isOpen={isOpen} mode={mode} onClose={onClose} />

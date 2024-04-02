@@ -1,9 +1,8 @@
-import { type PostgrestError } from '@supabase/supabase-js'
-import { type ProductFormData } from '@/interfaces'
-import { createProduct, getAllProducts } from '@/services/api-server'
-import { generateErrorResponse } from '@/utils/functions'
 import { type NextRequest } from 'next/server'
-import { imageUpload } from '@/services/api-server/image-upload.service'
+import { type PostgrestError } from '@supabase/supabase-js'
+import { createProduct, getAllProducts, imageUpload } from '@/services/api-server'
+import { generateErrorResponse } from '@/utils/functions'
+import { type ProductFormData } from '@/interfaces'
 
 export const GET = async (req: NextRequest) => {
   const searchParams = req.nextUrl.searchParams

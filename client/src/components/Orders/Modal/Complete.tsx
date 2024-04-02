@@ -1,17 +1,18 @@
-import { type OrderInterface, type Profile } from '@/interfaces'
+'use client'
+import Image from 'next/image'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from '@nextui-org/react'
 import { Input, Button } from '@/components'
-import Image from 'next/image'
 import { required } from '@/utils/constants'
-import { type SubmitHandler, useForm } from 'react-hook-form'
+import { type OrderInterface, type Profile } from '@/interfaces'
 
 export const LockIcon = () => <Image src='/icons/lock.svg' alt='lock' width={20} height={20} />
 
 interface Props {
-  client: Profile | null
+  client: Profile | undefined
   isOpenComplete: boolean
   onOpenChangeComplete: () => void
-  order: OrderInterface
+  order: OrderInterface | undefined
   handleFinish: (givenCode: string) => Promise<string | number | undefined>
 }
 
@@ -37,7 +38,7 @@ const CompleteModal = ({ isOpenComplete, onOpenChangeComplete, client, order, ha
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className='flex flex-col gap-1'>Finalizar orden #{order.id.slice(0, 4)}</ModalHeader>
+            <ModalHeader className='flex flex-col gap-1'>Finalizar orden #{order?.id?.slice(0, 4)}</ModalHeader>
             <form onSubmit={handleSubmit(onSubmit)}>
               <ModalBody>
                 <Input

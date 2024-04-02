@@ -1,7 +1,7 @@
+import { type NextRequest } from 'next/server'
+import { type PostgrestError } from '@supabase/supabase-js'
 import { createMessage, getOrderMessages } from '@/services/api-server'
 import { generateErrorResponse } from '@/utils/functions'
-import { type PostgrestError } from '@supabase/supabase-js'
-import { type NextRequest } from 'next/server'
 
 export const POST = async (req: Request) => {
   const { orderId, message } = await req.json()

@@ -1,7 +1,7 @@
-import { routes } from '@/utils/constants'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { routes } from '@/utils/constants'
 
 const Home = async () => {
   const cookieStore = cookies()

@@ -1,6 +1,6 @@
 'use client'
-import { Input as InputUI } from '@nextui-org/react'
 import { type ComponentProps } from 'react'
+import { Input as InputUI } from '@nextui-org/react'
 import { type RegisterOptions, type UseFormRegister } from 'react-hook-form'
 
 interface CustomProps {
@@ -29,14 +29,10 @@ const Input = ({ ...props }: ExtendedProps) => {
   return (
     <InputUI
       {...HookForm}
+      {...props}
       type={props.type ?? 'text'}
-      label={props.label}
       labelPlacement='inside'
-      name={props.name}
-      defaultValue={props.defaultValue}
       autoComplete='off'
-      min={props.min}
-      max={props.max}
       radius={props.radius ?? 'lg'}
       classNames={{
         inputWrapper:
@@ -45,16 +41,11 @@ const Input = ({ ...props }: ExtendedProps) => {
         errorMessage: 'text-sm font-light leading-[155%] text-red-800',
         input: '!text-black placeholder:!text-gray-400 placeholder:font-light'
       }}
-      className={props.className}
       // eslint-disable-next-line @typescript-eslint/return-await
       onChange={async (e: React.ChangeEvent<HTMLInputElement>) => await HookForm?.onChange(e)}
       onValueChange={(value: string) => {
         props.handleChange && props?.handleChange(value)
       }}
-      placeholder={props.placeholder}
-      errorMessage={props.errorMessage}
-      startContent={props.startContent}
-      endContent={props.endContent}
     />
   )
 }

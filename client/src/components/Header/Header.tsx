@@ -1,17 +1,14 @@
 'use server'
-import Content from './Content'
-import { type Role } from '@/interfaces'
+import { HeaderContent } from '@/components'
 import { findUserMetaData } from '@/utils/functions'
 
 interface Props {
-  mode?: Role
   withBorder?: boolean
 }
 
-const Header = async ({ mode = 'customer', withBorder = true }: Props) => {
+const Header = async ({ withBorder = true }: Props) => {
   const profile = await findUserMetaData()
-
-  return <Content profile={profile} withBorder={withBorder} />
+  return <HeaderContent profile={profile} withBorder={withBorder} />
 }
 
 export default Header

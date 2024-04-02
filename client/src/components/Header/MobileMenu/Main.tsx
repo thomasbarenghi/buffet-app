@@ -1,7 +1,7 @@
 'use client'
-import { type RawUserMeta } from '@/interfaces'
-import { NavbarMenuToggle } from '@nextui-org/react'
 import dynamic from 'next/dynamic'
+import { NavbarMenuToggle } from '@nextui-org/react'
+import { type RawUserMeta } from '@/interfaces'
 const Menu = dynamic(async () => await import('./Menu'))
 
 interface Props {

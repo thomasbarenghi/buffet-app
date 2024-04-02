@@ -14,7 +14,7 @@ export const getProduct = async (id: string): Promise<Response<Product>> =>
   await getRequest<Product>({
     path: endpoints.products.FIND_ONE(id),
     customUrl: clientUrl,
-    cache: 'force-cache'
+    cache: 'no-store'
   })
 
 export const createProduct = async (product: ProductFormData): Promise<Response<Product>> =>

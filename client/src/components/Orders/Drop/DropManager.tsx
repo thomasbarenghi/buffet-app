@@ -1,3 +1,4 @@
+'use client'
 import { Button, Dropdown, DropdownTrigger, useDisclosure } from '@nextui-org/react'
 import { getNextOrderStatus, getPreviousOrderStatus } from '../local-utils'
 import { useSWRConfig } from 'swr'
@@ -12,8 +13,8 @@ const CompleteModal = dynamic(async () => await import('../Modal/Complete'))
 const CancelModal = dynamic(async () => await import('../Modal/Cancel'))
 
 interface Props {
-  order: OrderInterface
-  client: Profile | null
+  order: OrderInterface | undefined
+  client: Profile | undefined
 }
 
 export interface DropItems {
@@ -43,9 +44,9 @@ const DropManager = ({ order, client }: Props) => {
 
   const handleNextStep = async () => {
     try {
-      const next = getNextOrderStatus(order.status as OrderStatusApiEnum)
+      const next = getNextOrderStatus(order?.status as OrderStatusApiEnum)
       if (next === OrderStatusApiEnum.Delivered) return toast.warning('No disponible')
-      await changeOrderStatus(next ?? OrderStatusApiEnum.Canceled, order.id)
+      await changeOrderStatus(next ?? OrderStatusApiEnum.Canceled, order?.id ?? '')
       await mutate(endpoints.shops.ACTIVE_ORDERS)
       toast.success('Realizado')
     } catch (error) {
@@ -56,9 +57,9 @@ const DropManager = ({ order, client }: Props) => {
 
   const handlePrevStep = async () => {
     try {
-      const prev = getPreviousOrderStatus(order.status as OrderStatusApiEnum)
-      if (prev === order.status) return toast.warning('No disponible')
-      await changeOrderStatus(prev ?? OrderStatusApiEnum.Canceled, order.id)
+      const prev = getPreviousOrderStatus(order?.status as OrderStatusApiEnum)
+      if (prev === order?.status) return toast.warning('No disponible')
+      await changeOrderStatus(prev ?? OrderStatusApiEnum.Canceled, order?.id ?? '')
       await mutate(endpoints.shops.ACTIVE_ORDERS)
       toast.success('Realizado')
     } catch (error) {
@@ -69,10 +70,10 @@ const DropManager = ({ order, client }: Props) => {
 
   const handleFinish = async (givenCode: string) => {
     try {
-      if (givenCode !== order.code.toString()) {
+      if (givenCode !== order?.code?.toString()) {
         return toast.error('Codigo incorrecto')
       }
-      await changeOrderStatus(OrderStatusApiEnum.Delivered, order.id)
+      await changeOrderStatus(OrderStatusApiEnum.Delivered, order?.id)
       await mutate(endpoints.shops.ACTIVE_ORDERS)
       onCloseComplete()
       toast.success('Finalizado')
@@ -83,7 +84,7 @@ const DropManager = ({ order, client }: Props) => {
   }
 
   const handleModalFinish = () => {
-    if (order.status !== 'PendingDelivery') {
+    if (order?.status !== OrderStatusApiEnum.PendingDelivery) {
       return toast.warning('No puedes finalizar un pedido en curso')
     }
     onOpenComplete()
@@ -104,19 +105,19 @@ const DropManager = ({ order, client }: Props) => {
     {
       title: 'Etapa siguiente',
       action: async () => await handleNextStep(),
-      isVisible: order.status !== OrderStatusApiEnum.PendingDelivery
+      isVisible: order?.status !== OrderStatusApiEnum.PendingDelivery
     },
     {
       title: 'Etapa anterior',
       action: async () => await handlePrevStep(),
-      isVisible: order.status !== OrderStatusApiEnum.PendingApproval
+      isVisible: order?.status !== OrderStatusApiEnum.PendingApproval
     },
     {
       title: 'Finalizar',
       action: async () => {
         handleModalFinish()
       },
-      isVisible: order.status === OrderStatusApiEnum.PendingDelivery
+      isVisible: order?.status === OrderStatusApiEnum.PendingDelivery
     },
     {
       title: 'Cancelar',

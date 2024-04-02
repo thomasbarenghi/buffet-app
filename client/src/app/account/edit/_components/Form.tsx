@@ -1,7 +1,7 @@
 'use client'
-import { type RawUserMeta, type ProfileFormData } from '@/interfaces'
 import { toast } from 'sonner'
 import { ProfileDynamicForm } from '@/components'
+import { type RawUserMeta, type ProfileFormData } from '@/interfaces'
 import { patchUserProfile } from '@/services/api-client'
 import { updateRedirect } from '../updatePath'
 
