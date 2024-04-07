@@ -22,7 +22,7 @@ const AvatarMenu = ({ profile }: Props) => {
   return (
     <Dropdown
       classNames={{
-        content: '!min-w-[150px] '
+        content: '!min-w-[170px] '
       }}
     >
       <DropdownTrigger>
@@ -36,7 +36,7 @@ const AvatarMenu = ({ profile }: Props) => {
           Editar perfil
         </DropdownItem>
         <DropdownItem key='orders' as={Link} href={routes.common.ORDERS}>
-          Ordenes
+          Pedidos finalizados
         </DropdownItem>
         <DropdownItem key='logout' onClick={handleSingOut} className='text-danger' variant='flat' color='danger'>
           Cerrar sesión

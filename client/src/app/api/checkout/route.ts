@@ -13,8 +13,8 @@ export const POST = async (req: NextRequest) => {
       body: {
         items: formatProductsToMp(reqJson?.products as Product[]),
         back_urls: {
-          success: clientUrl + '/account/active-orders?orderId=' + reqJson.orderId,
-          failure: clientUrl + '/account/active-orders/failure?orderId=' + reqJson.orderId
+          success: clientUrl + '/account?orderId=' + reqJson.orderId,
+          failure: clientUrl + '/account?status="failure"&orderId=' + reqJson.orderId
         },
         auto_return: 'approved',
         payment_methods: {

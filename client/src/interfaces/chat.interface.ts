@@ -4,7 +4,7 @@ export interface Message {
   user_id: string | null
   order_id: string | null
   message: string
-  createdAt: Date
+  created_at: string
   id: string
   user?: Profile
 }

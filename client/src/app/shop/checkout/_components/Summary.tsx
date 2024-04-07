@@ -1,7 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
-import axios from 'axios'
 import { toast } from 'sonner'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import Info from './Info'
@@ -11,7 +10,7 @@ import { useCartStore } from '@/context/zustand/cart.store'
 import { endpoints } from '@/utils/constants'
 import { type ShippingFormProps, type Product } from '@/interfaces'
 
-const Summary = ({ productsP }: { productsP: Product[] }) => {
+const Summary = ({ productsP }: { productsP: Product[] | undefined }) => {
   const router = useRouter()
   const items = useCartStore((state) => state.items)
   const cleanCart = useCartStore((state) => state.cleanCart)
@@ -30,15 +29,16 @@ const Summary = ({ productsP }: { productsP: Product[] }) => {
 
   const onSubmit: SubmitHandler<ShippingFormProps> = async (data) => {
     try {
-      const { data: res } = await createOrder(products ?? [], data.instructions)
-      const { data: preference } = await axios.post('/api/checkout', {
-        products,
-        orderId: res
-      })
+      const { data: res, error } = await createOrder(products ?? [], data.instructions)
+
+      if (error) {
+        toast.error('Algo salió mal')
+        return
+      }
 
       cleanCart()
       router.refresh()
-      router.push(preference?.url as string)
+      router.push(res?.payment_link ?? '')
     } catch (error) {
       console.error(error)
       toast.error('Algo salió mal')
@@ -53,11 +53,13 @@ const Summary = ({ productsP }: { productsP: Product[] }) => {
             <h1 className='text-2xl font-light'>
               Ya casi <span className='font-semibold'>terminamos</span>
             </h1>
-            <ProductCartGrid products={products ?? []} withBg />
+            <ProductCartGrid products={items.length > 0 ? products ?? [] : []} withBg />
           </div>
           <form className='flex w-full flex-col  gap-6' onSubmit={handleSubmit(onSubmit)}>
             <div className='flex w-full flex-col gap-4'>
-              <h1 className='text-2xl font-semibold'>Resumen</h1>
+              <h1 className='text-2xl font-light'>
+                Resumen <span className='font-semibold'>del pedido</span>
+              </h1>
               <div className='flex flex-col gap-1 rounded-xl border bg-white px-3 py-4'>
                 <p className='text-sm'>
                   Total: <span className='font-semibold'>${products?.reduce((sum, item) => sum + item.price, 0)}</span>
@@ -71,6 +73,7 @@ const Summary = ({ productsP }: { productsP: Product[] }) => {
                 label='Instrucciones adicionales'
                 placeholder='¿No queres que tenga sal o algo así? decíselo al cocinero'
                 errorMessage={errors.instructions?.message}
+                radius='md'
                 hookForm={{
                   register
                 }}

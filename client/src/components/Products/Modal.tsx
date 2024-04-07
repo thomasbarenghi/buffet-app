@@ -14,6 +14,7 @@ interface Props {
 
 const ModalProduct = ({ product, onClose, isOpen, mode }: Props) => {
   const addItem = useCartStore((state) => state.addItem)
+
   return (
     <Modal
       size={window.innerWidth > 768 ? 'xl' : '5xl'}
@@ -58,7 +59,7 @@ const ModalProduct = ({ product, onClose, isOpen, mode }: Props) => {
               radius='lg'
               onClick={() => {
                 if (!product) return
-                addItem(product.id)
+                addItem(product?.id)
               }}
             />
           </ModalFooter>

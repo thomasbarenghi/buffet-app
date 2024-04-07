@@ -7,6 +7,7 @@ customer: profiles ( * ),
 products: orders_products ( ...products (*) )
 `
 export const statusActive = [
+  OrderStatusApiEnum.PendingPayment,
   OrderStatusApiEnum.InProgress,
   OrderStatusApiEnum.PendingApproval,
   OrderStatusApiEnum.PendingDelivery,

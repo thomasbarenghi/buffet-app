@@ -36,7 +36,7 @@ const Input = ({ ...props }: ExtendedProps) => {
       radius={props.radius ?? 'lg'}
       classNames={{
         inputWrapper:
-          '!bg-white !text-black border px-3 py-2 text-start rounded-2xl hover:!bg-gray-100 focus:!bg-white',
+          '!bg-white !text-black border shadow-none px-3 py-2 text-start hover:!bg-gray-100 focus:!bg-white',
         // label: 'text-sm font-light leading-[155%]  gap-1 font-normal !text-black',
         errorMessage: 'text-sm font-light leading-[155%] text-red-800',
         input: '!text-black placeholder:!text-gray-400 placeholder:font-light'

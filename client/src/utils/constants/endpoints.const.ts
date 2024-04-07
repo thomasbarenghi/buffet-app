@@ -8,7 +8,8 @@ export const endpoints = {
   },
   orders: {
     CREATE_ONE: '/api/orders',
-    CHANGE_STATUS: (id: string) => '/api/orders/' + id
+    CHANGE_STATUS: (id: string) => '/api/orders/' + id,
+    CHECKOUT: '/api/checkout'
   },
   shops: {
     CHANGE_STATUS: '/api/shops',

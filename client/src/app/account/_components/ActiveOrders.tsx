@@ -17,6 +17,8 @@ const Content = ({ ordersFallback }: Props) => {
     fallbackData: ordersFallback
   })
 
+  console.log(orders)
+
   useEffect(() => {
     supabase
       .channel('customer-active-orders')

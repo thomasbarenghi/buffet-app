@@ -1,11 +1,11 @@
 'use client'
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
-import { useEffect } from 'react'
-import useSWR from 'swr'
-import { toast } from 'sonner'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { endpoints } from '@/utils/constants'
+// import { useEffect } from 'react'
+// import useSWR from 'swr'
+// import { toast } from 'sonner'
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+// import { endpoints } from '@/utils/constants'
 import {
   PaymentStatusClientEnum,
   type OrderInterface,
@@ -13,15 +13,16 @@ import {
   RoleEnum,
   OrderStatusClientEnum,
   type Profile,
-  type Message
+  // type Message,
+  OrderStatusApiEnum
 } from '@/interfaces'
-import { ChatToggle, DropTrigger } from '@/components'
+import { Button, DropTrigger } from '@/components'
 const DropManager = dynamic(async () => await import('./Drop/DropManager'), {
   loading: () => <DropTrigger />
 })
-const ChatBox = dynamic(async () => await import('./ChatBox'), {
-  loading: () => <ChatToggle toggleChat={() => {}} />
-})
+// const ChatBox = dynamic(async () => await import('./ChatBox'), {
+//   loading: () => <ChatToggle toggleChat={() => {}} />
+// })
 
 export const revalidate = 0
 
@@ -58,8 +59,8 @@ interface Props {
 }
 
 const ProductOrderItem = ({ order, mode, profile }: Props) => {
-  const supabase = createClientComponentClient<Database>()
-  const isActive = order?.status !== 'Canceled' && order?.status !== 'Delivered' && order?.status !== 'PendingPayment'
+  // const supabase = createClientComponentClient<Database>()
+  const isActive = order?.status !== 'Canceled' && order?.status !== 'Delivered'
   const isFinished = order?.status === 'Canceled' || order?.status === 'Delivered'
   const isCustomer = mode === RoleEnum.Customer
 
@@ -69,32 +70,32 @@ const ProductOrderItem = ({ order, mode, profile }: Props) => {
     return <span className='text-[#FB5607]'>{statusText}</span>
   }
 
-  const { data: messages, mutate } = useSWR<Message[]>(endpoints.messages.FIND_ORDER_MESSAGES(order?.id ?? ''), {
-    refreshInterval: 30000
-  })
+  // const { mutate } = useSWR<Message[]>(endpoints.messages.FIND_ORDER_MESSAGES(order?.id ?? ''), {
+  //   refreshInterval: 30000
+  // })
 
-  useEffect(() => {
-    supabase
-      .channel(order?.id ?? '')
-      .on(
-        'postgres_changes',
-        { event: 'INSERT', schema: 'public', table: 'messages', filter: `order_id=eq.${order?.id ?? ''}` },
-        (payload) => {
-          if (payload?.new?.user_id !== profile?.id) {
-            toast.info(
-              `Nuevo mensaje en #${order?.id?.slice(0, 4)} (${OrderStatusClientEnum[order?.status ?? 'PendingPayment']})`,
-              {
-                duration: 1800000,
-                description: payload?.new?.message
-              }
-            )
-          }
-          // eslint-disable-next-line @typescript-eslint/no-floating-promises
-          mutate()
-        }
-      )
-      .subscribe()
-  }, [mutate, order?.id, order?.status, profile, supabase])
+  // useEffect(() => {
+  //   supabase
+  //     .channel(order?.id ?? '')
+  //     .on(
+  //       'postgres_changes',
+  //       { event: 'INSERT', schema: 'public', table: 'messages', filter: `order_id=eq.${order?.id ?? ''}` },
+  //       (payload) => {
+  //         if (payload?.new?.user_id !== profile?.id) {
+  //           toast.info(
+  //             `Nuevo mensaje en #${order?.id?.slice(0, 4)} (${OrderStatusClientEnum[order?.status ?? 'PendingPayment']})`,
+  //             {
+  //               duration: 1800000,
+  //               description: payload?.new?.message
+  //             }
+  //           )
+  //         }
+  //         // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  //         mutate()
+  //       }
+  //     )
+  //     .subscribe()
+  // }, [mutate, order?.id, order?.status, profile, supabase])
 
   return (
     <div className='flex flex-col items-start rounded-2xl border border-gray-200 bg-white p-4'>
@@ -120,8 +121,11 @@ const ProductOrderItem = ({ order, mode, profile }: Props) => {
             )}
           </div>
           <div className='flex items-start gap-1'>
-            {isActive && <ChatBox profile={profile} order={order} messages={messages} />}
+            {/* {isActive && <ChatBox profile={profile} order={order} messages={messages} />} */}
             {!isCustomer && isActive && <DropManager client={order?.customer} order={order} />}
+            {isCustomer && isActive && order?.status === OrderStatusApiEnum.PendingPayment && (
+              <Button title='Pagar' size='sm' href={order?.payment_link} />
+            )}
           </div>
         </div>
       </div>

@@ -14,8 +14,7 @@ export const routes = {
   customer: {
     HOME: '/shop',
     CHECKOUT: '/shop/checkout',
-    ONBOARDING: '/account/onboarding',
-    ACTIVE_ORDERS: '/account/active-orders'
+    ONBOARDING: '/account/onboarding'
   },
   attendant: {
     HOME: '/management',

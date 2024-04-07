@@ -15,6 +15,7 @@ export interface OrderInterface {
   products?: Product[]
   customer?: Profile
   code: number
+  payment_link: string
   instructions: string | null
 }
 

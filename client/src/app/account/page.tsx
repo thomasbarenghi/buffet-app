@@ -1,73 +1,64 @@
 import { type Metadata } from 'next'
-import Link from 'next/link'
-import Image from 'next/image'
 import { User } from '@nextui-org/react'
-import { Button, OrdersGrid } from '@/components'
+import { OrdersGrid } from '@/components'
 import { getShopOrders, getUserOrders } from '@/services/api-server'
-import { routes } from '@/utils/constants'
 import { findUserMetaData } from '@/utils/functions'
 import { RoleEnum } from '@/interfaces'
+import ActiveOrders from './_components/ActiveOrders'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Cuenta | Buffet UNAHUR'
 }
 
-// TODO: ACTUALIZAR EN CADA SOFTROUTING LAS ORDENES FINALIZADAS
+// TODO: ACTUALIZAR EN CADA SOFTROUTING LAS Pedidos FINALIZADAS
 // TODO: ORDENAR SEGUN ULTIMA ORDEN
 
 const AccountPage = async () => {
   const profile = await findUserMetaData()
-  const orders = profile?.role === RoleEnum.Customer ? await getUserOrders('finished') : await getShopOrders('finished')
+  const orders = profile?.role === RoleEnum.Customer ? await getUserOrders('active') : await getShopOrders('finished')
 
   return (
-    <main className=' flex flex-col items-center pb-14 '>
-      <section className='resp-pad-x flex w-full justify-center gap-6 bg-neutral-50  pb-9 pt-8  '>
+    <main className=' flex flex-col items-center bg-neutral-50 pb-14 '>
+      <section className='resp-pad-x flex w-full justify-center gap-6 bg-white   pb-9 pt-8  '>
         <div className='flex w-full items-center justify-between gap-4 2xl:container sm:flex-row'>
           <User
             name={profile.full_name}
             description={'DNI ' + profile.dni}
             classNames={{
-              name: 'text-medium sm:text-lg font-semibold',
-              description: 'text-xs sm:text-sm text-neutral-600 font-light',
+              name: 'text-medium text-lg font-semibold',
+              description: 'text-sm text-neutral-600 font-light',
               base: 'flex gap-3'
             }}
             avatarProps={{
               src: `${profile?.profile_image}`,
               size: 'lg',
-              radius: 'lg',
+              radius: 'none',
               classNames: {
-                img: 'sm:h-[80px] sm:min-w-[80px] h-[60px] min-w-[60px]',
-                base: 'sm:h-[80px] sm:min-w-[80px] h-[60px] min-w-[60px]'
+                img: 'sm:h-[80px] sm:min-w-[80px] h-[80px] min-w-[80px]  ',
+                base: 'sm:h-[80px] sm:min-w-[80px] h-[80px] min-w-[80px] !rounded-[30px]'
               }
             }}
           />
-          <Link href={routes.common.EDIT_ACCOUNT}>
-            <Image src={'/icons/configuration.svg'} alt='configuration' height={30} width={30} />
-          </Link>
+          {/* <Button title='Editar perfil' /> */}
         </div>
       </section>
-      <section className='resp-pad-x flex w-full justify-center border-t bg-white pt-8 '>
-        <div className='flex w-full flex-col items-start justify-start gap-4 2xl:container'>
+      <section className='resp-pad-x flex w-full justify-center border-t bg-neutral-50 pt-10 '>
+        <div className='flex w-full flex-col items-start justify-start gap-6 2xl:container'>
           <div className='flex w-full items-center justify-between gap-3'>
-            <h1 className='text-xl font-medium leading-tight sm:text-2xl'>Ultimas ordenes</h1>
-            <div className='flex gap-2'>
-              {profile?.role === RoleEnum.Customer && (
-                <Button title='Ver activas' size='md' href={routes.customer.ACTIVE_ORDERS} />
-              )}
-              {profile?.role !== RoleEnum.Customer && (
-                <Button title='Ver en curso' size='md' href={routes.attendant.HOME} />
-              )}
-              <Button
-                title='Ver finalizadas'
-                variant='flat'
-                className='hidden sm:flex'
-                size='md'
-                href={routes.common.ORDERS}
-              />
-            </div>
+            {profile?.role === RoleEnum.Customer && (
+              <h1 className='text-2xl font-light leading-tight'>
+                Pedidos <span className='font-semibold'>en curso</span>
+              </h1>
+            )}
+            {profile?.role !== RoleEnum.Customer && (
+              <h1 className='text-2xl font-light leading-tight'>
+                Pedidos <span className='font-semibold'>finalizados</span>
+              </h1>
+            )}
           </div>
-          <OrdersGrid orders={orders?.data?.slice(0, 4) ?? []} mode={profile?.role ?? 'customer'} />
+          {profile?.role === RoleEnum.Customer && <ActiveOrders ordersFallback={orders.data ?? []} />}
+          {profile?.role !== RoleEnum.Customer && <OrdersGrid orders={orders.data ?? []} mode={RoleEnum.Attendant} />}
         </div>
       </section>
     </main>

@@ -23,9 +23,9 @@ const Button = ({ ...props }: ExtendedProps) => (
     color={props.color ?? 'primary'}
     variant={props.variant ?? 'solid'}
     size={props.size ?? 'lg'}
-    radius={props.radius ?? 'lg'}
+    radius={props.radius ?? 'full'}
     className={`!text-sm font-semibold ${props.className ?? ''} `}
-    onPress={props.onClick}
+    onPress={props.onPress}
   >
     {props.children}
     {props.title}

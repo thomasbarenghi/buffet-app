@@ -8,7 +8,7 @@ const Menu = ({ profile }: { profile: RawUserMeta }) => {
   const pathname = usePathname()
   const role = profile?.role ?? RoleEnum.Customer
   return (
-    <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+    <NavbarContent className='hidden gap-6 sm:flex' justify='center'>
       {menu[role].map((element, index) => (
         <NavbarItem isActive={pathname === element.href} key={index}>
           <Link

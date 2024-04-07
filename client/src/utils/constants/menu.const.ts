@@ -13,8 +13,12 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.customer.HOME
     },
     {
-      title: 'Pedidos en curso',
-      href: routes.customer.ACTIVE_ORDERS
+      title: 'Sobre nosotros',
+      href: routes.attendant.CREATE_PRODUCT
+    },
+    {
+      title: 'Atención al cliente',
+      href: routes.attendant.CREATE_PRODUCT
     }
   ],
   attendant: [
@@ -27,7 +31,7 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.attendant.PRODUCTS
     },
     {
-      title: 'Ordenes',
+      title: 'Pedidos',
       href: routes.common.ORDERS
     }
   ],
@@ -41,7 +45,7 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.attendant.PRODUCTS
     },
     {
-      title: 'Ordenes',
+      title: 'Pedidos',
       href: routes.common.ORDERS
     }
   ],
@@ -55,7 +59,7 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.attendant.PRODUCTS
     },
     {
-      title: 'Ordenes',
+      title: 'Pedidos',
       href: routes.common.ORDERS
     }
   ]

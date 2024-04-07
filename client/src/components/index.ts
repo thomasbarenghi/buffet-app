@@ -15,7 +15,6 @@ export { default as ProductDynamicForm } from './Forms/Product'
 
 // Header
 export { default as AvatarMenu } from './Header/AvatarMenu'
-export { default as HeaderContent } from './Header/Content'
 export { default as Header } from './Header/Header'
 export { default as HeaderMenu } from './Header/Menu'
 export { default as MobileMenu } from './Header/MobileMenu/Main'

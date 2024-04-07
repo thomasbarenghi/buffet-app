@@ -1,6 +1,5 @@
 import 'server-only'
 import { type Message, type Response } from '@/interfaces'
-import { arrayToObject } from '@/utils/functions'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
@@ -21,8 +20,9 @@ export const createMessage = async (orderId: string, message: string): Promise<R
       }
     ])
     .select()
+    .single()
 
-  return { error, data: arrayToObject<any>(data ?? []) }
+  return { error, data }
 }
 
 export const getOrderMessages = async (orderId: string): Promise<Response<any[]>> => {
