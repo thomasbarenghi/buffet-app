@@ -30,8 +30,10 @@ const Summary = ({ productsP }: { productsP: Product[] | undefined }) => {
   const onSubmit: SubmitHandler<ShippingFormProps> = async (data) => {
     try {
       const { data: res, error } = await createOrder(products ?? [], data.instructions)
+      console.log(res)
 
       if (error) {
+        console.log(error)
         toast.error('Algo salió mal')
         return
       }

@@ -129,7 +129,7 @@ export const createOrder = async (products: Product[], instructions: string): Pr
 
   console.log(orderUpdatedData)
 
-  const res = data as OrderInterface
+  const res = orderUpdatedData as OrderInterface
   return { error, data: res }
 }
 
