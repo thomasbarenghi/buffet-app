@@ -5,6 +5,30 @@ import { type Profile } from './user.interface'
 
 export type PaymentStatus = 'Pending' | 'Completed' | 'Failure'
 
+export interface CartItem {
+  id: string
+  quantity: number
+  price: number
+  title: string
+}
+
+interface OrderProducts {
+  product: Product
+  quantity: number
+}
+
+export type PaymentMethods = 'MercadoPago' | 'Cash'
+
+export enum PaymentMethodsApiEnum {
+  MercadoPago = 'MercadoPago',
+  Cash = 'Cash'
+}
+
+export enum PaymentMethodsClientEnum {
+  MercadoPago = 'Mercado Pago',
+  Cash = 'Efectivo'
+}
+
 export interface OrderInterface {
   id: string
   created_at: string
@@ -12,10 +36,11 @@ export interface OrderInterface {
   total_price: number
   status: OrderStatusType
   customer_id: string | null
-  products?: Product[]
+  products?: OrderProducts[]
   customer?: Profile
   code: number
   payment_link: string
+  payment_method: PaymentMethods
   instructions: string | null
 }
 
@@ -59,5 +84,5 @@ export enum PaymentStatusApiEnum {
 export enum PaymentStatusClientEnum {
   Pending = 'Pago Pendiente',
   Completed = 'Pago realizado',
-  Failure = 'No se realizó el pago'
+  Failure = 'Falló el pago'
 }

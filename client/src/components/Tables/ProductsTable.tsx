@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { type SVGProps, useState } from 'react'
+import { useState } from 'react'
 import { toast } from 'sonner'
 import {
   Button,
@@ -14,37 +14,15 @@ import {
   TableRow,
   useDisclosure
 } from '@nextui-org/react'
-import { DynamicTable, ModalProduct } from '@/components'
+import { DynamicTable, ModalProduct, VerticalDotsIcon } from '@/components'
 import { deleteProduct } from '@/services/api-client'
 import { truncateText } from '@/utils/functions'
 import { routes } from '@/utils/constants'
 import { RoleEnum, type Product } from '@/interfaces'
 
 interface Props {
-  products: Product[]
+  products: Product[] | undefined
 }
-
-export type IconSvgProps = SVGProps<SVGSVGElement> & {
-  size?: number
-}
-
-const VerticalDotsIcon = ({ size = 24, width, height, ...props }: IconSvgProps) => (
-  <svg
-    aria-hidden='true'
-    fill='none'
-    focusable='false'
-    height={size || height}
-    role='presentation'
-    viewBox='0 0 24 24'
-    width={size || width}
-    {...props}
-  >
-    <path
-      d='M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'
-      fill='currentColor'
-    />
-  </svg>
-)
 
 const ProductsTable = ({ products }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -80,7 +58,7 @@ const ProductsTable = ({ products }: Props) => {
         }}
         radius='md'
         className='w-full rounded-xl border'
-        data={products}
+        data={products ?? []}
         rowsPerPage={8}
         columns={['Producto', 'Descripcion', 'Acciones']}
         selectionBehavior='toggle'

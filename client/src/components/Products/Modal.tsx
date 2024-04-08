@@ -59,7 +59,7 @@ const ModalProduct = ({ product, onClose, isOpen, mode }: Props) => {
               radius='lg'
               onClick={() => {
                 if (!product) return
-                addItem(product?.id)
+                addItem({ id: product?.id, quantity: 1, price: product.price, title: product.title })
               }}
             />
           </ModalFooter>

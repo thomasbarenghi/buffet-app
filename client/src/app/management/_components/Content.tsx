@@ -56,6 +56,9 @@ const Content = ({ shopStatus }: { shopStatus: boolean }) => {
   const { data: ordersPrev, mutate } = useSWR<OrderInterface[]>(endpoints.shops.ACTIVE_ORDERS, {
     refreshInterval: 30000
   })
+
+  console.log(ordersPrev)
+
   const [isSelected, setIsSelected] = useState(shopStatus)
   const orders = orderFiltering(ordersPrev ?? [])
 

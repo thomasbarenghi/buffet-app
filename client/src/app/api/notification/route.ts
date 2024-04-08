@@ -40,7 +40,7 @@ export const POST = async (request: NextRequest) => {
       } else {
         await supabase
           .from('orders')
-          .update({ payment_status: PaymentStatusApiEnum.Failure, status: OrderStatusApiEnum.Canceled })
+          .update({ payment_status: PaymentStatusApiEnum.Failure, status: OrderStatusApiEnum.PendingPayment })
           .eq('id', orderId)
           .select()
       }

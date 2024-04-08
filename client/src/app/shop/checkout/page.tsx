@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { cookies } from 'next/headers'
-import { getAllProducts, getShopStatus } from '@/services/api-server'
+import { findCashAuthorization, getAllProducts, getShopStatus } from '@/services/api-server'
 const ShopClose = dynamic(async () => await import('./_components/ShopClose'))
 const CartEmpty = dynamic(async () => await import('./_components/CartEmpty'))
 const Summary = dynamic(async () => await import('./_components/Summary'))
@@ -17,7 +17,8 @@ const Checkout = async () => {
   const cartItemsStr = cookieStore.get('cartItems')
   const arrIds = cartItemsStr?.value.split(',') ?? []
   const cartItems = await getAllProducts(arrIds)
-
+  const cashAuthorization = await findCashAuthorization()
+  const isCashAuthorized = cashAuthorization.data?.is_authorized ?? false
   return (
     <main className='flex flex-col items-center  pb-9'>
       {!isOpen ? (
@@ -25,7 +26,7 @@ const Checkout = async () => {
       ) : isOpen && arrIds?.length > 0 && cartItems.data && cartItems?.data?.length <= 0 ? (
         <CartEmpty />
       ) : (
-        <Summary productsP={cartItems?.data ?? []} />
+        <Summary productsP={cartItems?.data ?? []} isCashAuthorized={isCashAuthorized} />
       )}
     </main>
   )

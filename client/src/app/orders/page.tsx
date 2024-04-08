@@ -15,7 +15,7 @@ const Products = async () => {
   return (
     <>
       <Header />
-      <main className='resp-pad-x flex flex-col items-center gap-4 bg-neutral-50 py-14'>
+      <main className='resp-pad-x flex flex-col items-center gap-4 bg-neutral-50 py-10'>
         <section className='flex w-full flex-col gap-6 2xl:container'>
           <h1 className='text-2xl font-medium leading-tight'>Pedidos finalizadas</h1>
           <OrdersTable orders={orders?.data ?? []} />

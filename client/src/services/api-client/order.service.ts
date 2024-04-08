@@ -1,12 +1,12 @@
-import { type Response, type OrderStatusApiEnum, type Product, type OrderInterface } from '@/interfaces'
+import { type Response, type OrderStatusApiEnum, type OrderInterface, type CreateOrderRequest } from '@/interfaces'
 import { mutationRequest } from '../api.requests'
 import { endpoints } from '@/utils/constants'
 import { clientUrl } from '@/utils/constants/env.const'
 
-export const createOrder = async (products: Product[], instructions: string): Promise<Response<OrderInterface>> =>
+export const createOrder = async (req: CreateOrderRequest): Promise<Response<OrderInterface>> =>
   await mutationRequest<OrderInterface>({
     method: 'post',
-    body: { products, instructions },
+    body: req,
     path: endpoints.orders.CREATE_ONE,
     customUrl: clientUrl
   })

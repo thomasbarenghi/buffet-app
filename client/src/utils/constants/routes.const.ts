@@ -17,6 +17,7 @@ export const routes = {
     ONBOARDING: '/account/onboarding'
   },
   attendant: {
+    AUTHORIZE_CASH: '/management/authorize-cash',
     HOME: '/management',
     PRODUCTS: '/management/products',
     CREATE_PRODUCT: '/management/products/create',

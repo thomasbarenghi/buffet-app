@@ -1,14 +1,16 @@
 import 'server-only'
 import {
   type Response,
-  type Product,
   type OrderInterface,
   OrderStatusApiEnum,
-  PaymentStatusApiEnum
+  PaymentStatusApiEnum,
+  type CartItem,
+  type CreateOrderRequest,
+  PaymentMethodsApiEnum
 } from '@/interfaces'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { generateRandomNumber } from '@/utils/functions'
+import { calculateFinalPrice, generateRandomNumber } from '@/utils/functions'
 import { getShopActive, getShopAll, getShopFinished, getUserActive, getUserAll, getUserFinished } from './order.utils'
 import { clientUrl, endpoints } from '@/utils/constants'
 import { getShopStatus } from '../shop.service'
@@ -54,41 +56,7 @@ export const getOrder = async (id: string): Promise<Response<OrderInterface>> =>
   return { error, data: res }
 }
 
-export const createOrder = async (products: Product[], instructions: string): Promise<Response<OrderInterface>> => {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const user = await supabase.auth.getUser()
-  const totalPrice = products.reduce((sum, item) => sum + item.price, 0)
-
-  const { data: shopStatus } = await getShopStatus()
-
-  if (!shopStatus?.is_open) {
-    return {
-      data: null,
-      error: {
-        code: 400,
-        message: 'Shop is close'
-      }
-    }
-  }
-
-  const { data: orderData, error } = await supabase
-    .from('orders')
-    .insert([
-      {
-        total_price: totalPrice,
-        customer_id: user.data.user?.id ?? '',
-        instructions,
-        status: OrderStatusApiEnum.PendingPayment,
-        payment_status: PaymentStatusApiEnum.Pending,
-        code: generateRandomNumber()
-      }
-    ])
-    .select()
-    .single()
-
-  if (error) throw new Error()
-
+const getPreference = async (products: CartItem[], orderData: OrderInterface) => {
   const response = await fetch(clientUrl + endpoints.orders.CHECKOUT, {
     method: 'POST',
     headers: {
@@ -105,38 +73,95 @@ export const createOrder = async (products: Product[], instructions: string): Pr
   }
 
   const data = await response.json()
-  const preference = data
+  return data
+}
 
-  const { data: orderUpdatedData, error: errorUpdate } = await supabase
+export const createOrder = async (req: CreateOrderRequest): Promise<Response<OrderInterface>> => {
+  const { details, products } = req
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  const user = await supabase.auth.getUser()
+  const totalPrice = calculateFinalPrice(products)
+  const { data: shopStatus } = await getShopStatus()
+
+  if (!shopStatus?.is_open) {
+    return {
+      data: null,
+      error: {
+        code: 400,
+        message: 'Shop is close'
+      }
+    }
+  }
+
+  console.log(products, details)
+
+  const { data: orderData, error } = await supabase
     .from('orders')
-    .update({
-      payment_link: preference?.url as string
-    })
-    .eq('id', orderData.id)
+    .insert([
+      {
+        total_price: totalPrice,
+        customer_id: user.data.user?.id ?? '',
+        instructions: details?.instructions,
+        payment_method: details?.payment_method,
+        status:
+          details?.payment_method === 'MercadoPago'
+            ? OrderStatusApiEnum.PendingPayment
+            : OrderStatusApiEnum.PendingApproval,
+        payment_status: PaymentStatusApiEnum.Pending,
+        code: generateRandomNumber()
+      }
+    ])
     .select()
     .single()
 
-  if (errorUpdate) throw new Error()
+  if (!orderData) throw new Error()
+
+  let preference
+
+  if (details.payment_method === PaymentMethodsApiEnum.MercadoPago) {
+    preference = await getPreference(products, orderData as OrderInterface)
+
+    const { error: errorUpdate } = await supabase
+      .from('orders')
+      .update({
+        payment_link: preference?.url as string
+      })
+      .eq('id', orderData?.id)
+      .select()
+      .single()
+
+    console.log(errorUpdate?.message)
+
+    orderData.payment_link = preference?.url as string
+    console.log('orderData.payment_link', orderData.payment_link)
+  }
 
   for (const iterator of products) {
     const { error: errorI } = await supabase
       .from('orders_products')
-      .insert([{ order_id: orderUpdatedData?.id, product_id: iterator.id }])
+      .insert([{ order_id: orderData?.id, product_id: iterator.id, quantity: iterator.quantity }])
       .select()
 
     if (errorI) throw new Error()
   }
 
-  console.log(orderUpdatedData)
-
-  const res = orderUpdatedData as OrderInterface
+  const res = orderData as OrderInterface
   return { error, data: res }
 }
 
 export const changeStatus = async (status: OrderStatusApiEnum, id: string): Promise<Response<OrderInterface>> => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const { error, data } = await supabase.from('orders').update({ status }).eq('id', id).select().single()
+  const { error, data } = await supabase
+    .from('orders')
+    .update({
+      status,
+      ...(status === OrderStatusApiEnum.Delivered && { payment_status: PaymentStatusApiEnum.Completed })
+    })
+    .eq('id', id)
+    .select()
+    .single()
 
   const res = data as OrderInterface
   return { error, data: res }

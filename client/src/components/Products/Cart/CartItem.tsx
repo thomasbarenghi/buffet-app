@@ -2,10 +2,10 @@
 import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import { useDisclosure } from '@nextui-org/react'
+import { Button, useDisclosure } from '@nextui-org/react'
 import { useCartStore } from '@/context/zustand/cart.store'
-import { truncateText } from '@/utils/functions'
 import { type Role, type Product } from '@/interfaces'
+import { findCartItem } from '@/utils/functions'
 
 const ModalProduct = dynamic(async () => await import('../Modal'))
 
@@ -18,8 +18,12 @@ interface Props {
 
 const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
   const removeItem = useCartStore((state) => state.removeItem)
+  const items = useCartStore((state) => state.items)
+  const addUnit = useCartStore((state) => state.addUnit)
+  const subtractUnit = useCartStore((state) => state.subtractUnit)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
+  const quantity = findCartItem(items, product?.id ?? '')?.quantity ?? 1
   return (
     <>
       <div
@@ -39,17 +43,49 @@ const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
           </div>
           <div className='flex flex-col gap-2'>
             <div className='flex flex-col'>
-              <h1 className='font-normal'>{product?.title}</h1>
-              <p className='text-xs font-light text-zinc-700'>{truncateText(product?.description ?? '', 40)}</p>
+              <h1 className='font-light'>{product?.title}</h1>
+              {/* <p className='text-xs font-light text-zinc-700'>{truncateText(product?.description ?? '', 40)}</p> */}
+              <p className='text-small font-semibold'>${product?.price} C/U</p>
             </div>
-            <p className='text-small font-semibold'>${product?.price}</p>
+            <div className='flex w-max items-center justify-center gap-3'>
+              <Button
+                isIconOnly
+                radius='full'
+                className='h-6 w-6'
+                size='sm'
+                color='primary'
+                variant='flat'
+                disabled={quantity <= 1}
+                onClick={() => {
+                  if (!product) return
+                  subtractUnit(product?.id)
+                }}
+              >
+                -
+              </Button>
+              <p className='text-sm font-semibold leading-none'>{quantity}</p>
+              <Button
+                isIconOnly
+                radius='full'
+                size='sm'
+                color='primary'
+                className='h-6 w-6'
+                variant='flat'
+                onClick={() => {
+                  if (!product) return
+                  addUnit(product?.id)
+                }}
+              >
+                +
+              </Button>
+            </div>
           </div>
         </div>
         <Image
-          src={'/icons/cross-bold.svg'}
+          src={'/icons/trash.svg'}
           alt='configuration'
-          height={25}
-          width={25}
+          height={20}
+          width={20}
           className='cursor-pointer'
           onClick={(e) => {
             e.stopPropagation()

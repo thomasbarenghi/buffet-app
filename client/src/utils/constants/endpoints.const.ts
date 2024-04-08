@@ -16,6 +16,7 @@ export const endpoints = {
     ACTIVE_ORDERS: '/api/shops/active-orders'
   },
   users: {
+    AUTHORIZE_CASH: '/api/users/authorize-cash',
     FIND_PROFILE: (id: string) => '/api/users/' + id,
     CREATE_PROFILE: '/api/users',
     PATCH_PROFILE: (id: string) => '/api/users/' + id,

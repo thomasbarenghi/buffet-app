@@ -10,6 +10,7 @@ import { useCartStore } from '@/context/zustand/cart.store'
 import { routes } from '@/utils/constants'
 import { type Product } from '@/interfaces'
 import { motion } from 'framer-motion'
+import { itemToIdArray } from '@/utils/functions'
 
 interface Props {
   setIsOpen: Dispatch<SetStateAction<boolean>>
@@ -26,7 +27,7 @@ const CartMenu = ({ setIsOpen, itemsFallback }: Props) => {
   }, [items])
 
   const handleUpdateCart = async (): Promise<void> => {
-    const products = await getAllProducts(items.join(','))
+    const products = await getAllProducts(itemToIdArray(items).join(','))
     setProducts(products.data ?? [])
   }
 

@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/indent */
 import { type PostgrestError } from '@supabase/supabase-js'
+import { type CartItem } from './order.interface'
+import { type OrderFormProps } from './form.interface'
 
 export interface Response<T> {
   data: T | null
@@ -29,3 +31,8 @@ export interface MutationRequestParams {
 }
 
 export type HttpMethod = 'post' | 'put' | 'delete' | 'patch'
+
+export interface CreateOrderRequest {
+  products: CartItem[]
+  details: OrderFormProps
+}

@@ -27,6 +27,10 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.attendant.HOME
     },
     {
+      title: 'Pedidos en efectivo',
+      href: routes.attendant.AUTHORIZE_CASH
+    },
+    {
       title: 'Productos',
       href: routes.attendant.PRODUCTS
     },
@@ -41,6 +45,10 @@ export const menu: Record<Role, Menu[]> = {
       href: routes.attendant.HOME
     },
     {
+      title: 'Pedidos en efectivo',
+      href: routes.attendant.AUTHORIZE_CASH
+    },
+    {
       title: 'Productos',
       href: routes.attendant.PRODUCTS
     },
@@ -53,6 +61,10 @@ export const menu: Record<Role, Menu[]> = {
     {
       title: 'Principal',
       href: routes.attendant.HOME
+    },
+    {
+      title: 'Pedidos en efectivo',
+      href: routes.attendant.AUTHORIZE_CASH
     },
     {
       title: 'Productos',

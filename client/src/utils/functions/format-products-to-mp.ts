@@ -1,9 +1,9 @@
-import { type Product } from '@/interfaces'
+import { type CartItem } from '@/interfaces'
 
-export const formatProductsToMp = (products: Product[]) =>
-  products.map((product: Product) => ({
+export const formatProductsToMp = (products: CartItem[]) =>
+  products.map((product: CartItem) => ({
     id: product.id,
-    title: product.title,
-    quantity: 1,
+    title: `x${product.quantity} ${product.title} `,
+    quantity: product.quantity,
     unit_price: product.price
   }))

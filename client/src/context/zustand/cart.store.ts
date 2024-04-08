@@ -3,38 +3,40 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import Cookies from 'js-cookie'
 import { revalidateCartPage } from './revalidateCartPage'
+import { type CartItem } from '@/interfaces'
+import { itemToIdArray } from '@/utils/functions'
 
 interface CartState {
-  items: string[]
-  addItem: (item: string) => void
+  items: CartItem[]
+  addItem: (item: CartItem) => void
   removeItem: (item: string) => void
   cleanCart: () => void
+  addUnit: (item: string) => void
+  subtractUnit: (item: string) => void
+  // updateItem: (oldItem: string, newItem: string) => void
 }
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set, _get) => ({
+    (set, get) => ({
       items: [],
       addItem: (item) => {
         set((state) => {
-          // Verificar si el producto ya está en el carrito
-          const isItemInCart = state.items.some((cartItem) => cartItem === item)
+          const isItemInCart = state.items.some((cartItem) => cartItem.id === item.id)
 
           if (isItemInCart) {
             console.log('Producto ya en el carrito:', item)
             toast.info('Ya tienes este producto en el carrito')
-            return state // No realizar cambios en el estado si el producto ya está en el carrito
+            return state
           }
 
-          // Agregar el producto al carrito
           const updatedItems = [...state.items, item]
-          Cookies.set('cartItems', updatedItems.join(','), { expires: 100 })
+          Cookies.set('cartItems', itemToIdArray(updatedItems).join(','), { expires: 100 })
           toast.success('Producto agregado al carrito')
-          revalidateCartPage() // Actualizar la página del carrito si es necesario
+          revalidateCartPage()
           return { items: updatedItems }
         })
       },
-
       removeItem: (item) => {
         const items = Cookies.get('cartItems')
           ?.split(',')
@@ -42,12 +44,42 @@ export const useCartStore = create<CartState>()(
 
         Cookies.set('cartItems', items?.join(',') ?? '', { expires: 100 })
         revalidateCartPage()
-        set((state) => ({ items: state.items.filter((i) => i !== item) }))
+        set((state) => ({ items: state.items.filter((i) => i.id !== item) }))
       },
       cleanCart: () => {
         Cookies.set('cartItems', '', { expires: 100 })
         revalidateCartPage()
         set({ items: [] })
+      },
+      addUnit: (item) => {
+        set((state) => {
+          const index = state.items.findIndex((cartItem) => cartItem.id === item)
+
+          if (index !== -1) {
+            const updatedItems = [...state.items]
+            updatedItems[index].quantity = updatedItems[index].quantity + 1
+            Cookies.set('cartItems', itemToIdArray(updatedItems).join(','), { expires: 100 })
+            return { items: updatedItems }
+          }
+          toast.error('No se encontró el item')
+          return state
+        })
+      },
+      subtractUnit: (item) => {
+        set((state) => {
+          const index = state.items.findIndex((cartItem) => cartItem.id === item)
+
+          if (index !== -1) {
+            const updatedItems = [...state.items]
+            if (updatedItems[index].quantity > 1) {
+              updatedItems[index].quantity = updatedItems[index].quantity - 1
+            }
+            Cookies.set('cartItems', itemToIdArray(updatedItems).join(','), { expires: 100 })
+            return { items: updatedItems }
+          }
+          toast.error('No se encontró el item')
+          return state
+        })
       }
     }),
     {

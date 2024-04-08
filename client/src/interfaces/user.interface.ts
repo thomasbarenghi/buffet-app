@@ -1,3 +1,10 @@
+export interface CashAuthorizations {
+  authorized_by: string | null
+  created_at: string
+  id: string
+  is_authorized: boolean
+}
+
 export interface Profile {
   id: string
   created_at: string
@@ -6,6 +13,10 @@ export interface Profile {
   role: Role
   dni: number
   profile_image: string
+  cash_authorizations?: {
+    is_authorized: boolean
+    authorized_by: Profile
+  }
 }
 
 export interface RawUserMeta {

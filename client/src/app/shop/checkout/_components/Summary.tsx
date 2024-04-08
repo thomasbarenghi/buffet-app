@@ -1,20 +1,28 @@
+/* eslint-disable @typescript-eslint/member-delimiter-style */
 'use client'
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import { toast } from 'sonner'
-import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import Info from './Info'
 import { Button, ProductCartGrid, Textarea } from '@/components'
 import { createOrder } from '@/services/api-client'
 import { useCartStore } from '@/context/zustand/cart.store'
-import { endpoints } from '@/utils/constants'
-import { type ShippingFormProps, type Product } from '@/interfaces'
+import { endpoints, routes } from '@/utils/constants'
+import { type OrderFormProps, type Product, type PaymentMethods, PaymentMethodsApiEnum } from '@/interfaces'
+import { calculateFinalPrice, itemToIdArray } from '@/utils/functions'
+import { Radio, RadioGroup } from '@nextui-org/react'
 
-const Summary = ({ productsP }: { productsP: Product[] | undefined }) => {
+interface Props {
+  isCashAuthorized: boolean
+  productsP: Product[] | undefined
+}
+
+const Summary = ({ productsP, isCashAuthorized }: Props) => {
   const router = useRouter()
   const items = useCartStore((state) => state.items)
   const cleanCart = useCartStore((state) => state.cleanCart)
-  const { data: products } = useSWR<Product[]>(endpoints.products.FIND_ALL(items.join(',')), {
+  const { data: products } = useSWR<Product[]>(endpoints.products.FIND_ALL(itemToIdArray(items).join(',')), {
     refreshInterval: 30000,
     fallbackData: productsP
   })
@@ -22,15 +30,21 @@ const Summary = ({ productsP }: { productsP: Product[] | undefined }) => {
   const {
     formState: { errors, isSubmitting },
     handleSubmit,
-    register
-  } = useForm<ShippingFormProps>({
+    register,
+    control,
+    setValue
+  } = useForm<OrderFormProps>({
     mode: 'onChange'
   })
 
-  const onSubmit: SubmitHandler<ShippingFormProps> = async (data) => {
+  const onSubmit: SubmitHandler<OrderFormProps> = async (data) => {
     try {
-      const { data: res, error } = await createOrder(products ?? [], data.instructions)
-      console.log(res)
+      console.log(data)
+
+      const { data: res, error } = await createOrder({
+        details: data,
+        products: items ?? []
+      })
 
       if (error) {
         console.log(error)
@@ -40,12 +54,25 @@ const Summary = ({ productsP }: { productsP: Product[] | undefined }) => {
 
       cleanCart()
       router.refresh()
-      router.push(res?.payment_link ?? '')
+      router.push(res?.payment_link ?? routes.common.ACCOUNT)
     } catch (error) {
       console.error(error)
       toast.error('Algo salió mal')
     }
   }
+
+  const paymentMethods: Array<{ value: PaymentMethods; label: string; isVisible: boolean }> = [
+    {
+      value: PaymentMethodsApiEnum.MercadoPago,
+      label: 'Mercado Pago',
+      isVisible: true
+    },
+    {
+      value: PaymentMethodsApiEnum.Cash,
+      label: 'Efectivo',
+      isVisible: isCashAuthorized
+    }
+  ]
 
   return (
     <>
@@ -62,12 +89,37 @@ const Summary = ({ productsP }: { productsP: Product[] | undefined }) => {
               <h1 className='text-2xl font-light'>
                 Resumen <span className='font-semibold'>del pedido</span>
               </h1>
-              <div className='flex flex-col gap-1 rounded-xl border bg-white px-3 py-4'>
+              <div className='flex flex-col gap-3 rounded-xl border bg-white px-3 py-4'>
+                <div className='flex flex-col gap-2'>
+                  <p className='text-sm font-semibold'>Metodo de pago</p>
+                  <Controller
+                    control={control}
+                    rules={{ required: { value: true, message: 'Este campo es requerido' } }}
+                    name='payment_method'
+                    render={({ field: { onBlur, value } }) => (
+                      <RadioGroup
+                        onValueChange={(selected) => {
+                          setValue('payment_method', selected as PaymentMethods)
+                        }}
+                        onBlur={onBlur}
+                        value={value}
+                        color='primary'
+                        size='sm'
+                        defaultValue={PaymentMethodsApiEnum.MercadoPago}
+                      >
+                        {paymentMethods
+                          .filter((item) => item.isVisible)
+                          .map((item) => (
+                            <Radio value={item.value} key={item.value}>
+                              {item.label}{' '}
+                            </Radio>
+                          ))}
+                      </RadioGroup>
+                    )}
+                  />
+                </div>
                 <p className='text-sm'>
-                  Total: <span className='font-semibold'>${products?.reduce((sum, item) => sum + item.price, 0)}</span>
-                </p>
-                <p className='text-sm'>
-                  Vas a pagar con: <span className='font-semibold'>Mercado Pago</span>
+                  Total: <span className='font-semibold'>${calculateFinalPrice(items)}</span>
                 </p>
               </div>
               <Textarea

@@ -2,7 +2,7 @@ import { type NextRequest } from 'next/server'
 import { MercadoPagoConfig, Preference } from 'mercadopago'
 import { formatProductsToMp } from '@/utils/functions'
 import { clientUrl, mpAccessToken } from '@/utils/constants/env.const'
-import { type Product } from '@/interfaces'
+import { type CartItem } from '@/interfaces'
 
 const client = new MercadoPagoConfig({ accessToken: mpAccessToken })
 
@@ -11,7 +11,7 @@ export const POST = async (req: NextRequest) => {
     const reqJson = await req.json()
     const response = await new Preference(client).create({
       body: {
-        items: formatProductsToMp(reqJson?.products as Product[]),
+        items: formatProductsToMp(reqJson?.products as CartItem[]),
         back_urls: {
           success: clientUrl + '/account?orderId=' + reqJson.orderId,
           failure: clientUrl + '/account?orderId=' + reqJson.orderId

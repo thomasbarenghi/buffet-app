@@ -1,7 +1,15 @@
-import { type Profile, type ProfileFormData, type Response } from '@/interfaces'
+import { type AuthorizeBody, type Profile, type ProfileFormData, type Response } from '@/interfaces'
 import { getRequest, mutationRequest } from '../api.requests'
 import { endpoints } from '@/utils/constants'
 import { clientUrl } from '@/utils/constants/env.const'
+
+export const authorizeCash = async (formData: AuthorizeBody): Promise<Response<Profile>> =>
+  await mutationRequest<Profile>({
+    method: 'patch',
+    body: formData,
+    path: endpoints.users.AUTHORIZE_CASH,
+    customUrl: clientUrl
+  })
 
 export const createUserProfile = async (formData: ProfileFormData): Promise<Response<Profile>> =>
   await mutationRequest<Profile>({
