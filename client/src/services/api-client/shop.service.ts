@@ -1,12 +1,12 @@
-import { type Shop, type Response } from '@/interfaces'
+import { type Shop, type Response, type ChangeShopStatusRequest } from '@/interfaces'
 import { mutationRequest } from '../api.requests'
 import { endpoints } from '@/utils/constants'
 import { clientUrl } from '@/utils/constants/env.const'
 
-export const changeShopStatus = async (isOpen: boolean): Promise<Response<Shop>> =>
+export const changeShopStatus = async (req: ChangeShopStatusRequest): Promise<Response<Shop>> =>
   await mutationRequest<Shop>({
     method: 'patch',
-    body: { isOpen },
+    body: req,
     path: endpoints.shops.CHANGE_STATUS,
     customUrl: clientUrl
   })

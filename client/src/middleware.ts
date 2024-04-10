@@ -27,7 +27,7 @@ const middleware = async (req: NextRequest) => {
   const { data } = await supabase.auth.getSession()
 
   const user = await supabase.auth.getUser()
-  const profile = await getUserProfile(user.data.user?.id ?? '')
+  const profile = await getUserProfile({ id: user.data.user?.id ?? '' })
 
   const isLoggedIn = !!data.session?.access_token
   const hasProfile = !!profile.data?.id

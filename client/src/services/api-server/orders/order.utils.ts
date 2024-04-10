@@ -1,74 +1,35 @@
-import { OrderStatusApiEnum } from '@/interfaces'
-import { type UserResponse, type SupabaseClient } from '@supabase/supabase-js'
+import { type OrderInterface, type OrderQueryParams, OrderStatusApiEnum, type Response } from '@/interfaces'
+import { generateServiceError } from '@/utils/functions'
 
-export const productsCustomerTemplate = `
+const productsCustomerTemplate = `
 *,
 customer: profiles ( * ),
 products: orders_products ( quantity, product: products (*) )
 `
 
-export const statusActive = [
+const statusActive = [
   OrderStatusApiEnum.InProgress,
   OrderStatusApiEnum.PendingApproval,
   OrderStatusApiEnum.PendingDelivery,
   OrderStatusApiEnum.PendingPreparation
 ]
 
-export const statusFinished = [OrderStatusApiEnum.Delivered, OrderStatusApiEnum.Canceled]
+const statusFinished = [OrderStatusApiEnum.Delivered, OrderStatusApiEnum.Canceled]
 
-export const getShopAll = async (supabase: SupabaseClient) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(productsCustomerTemplate)
-    .order('created_at', { ascending: false })
-  return { data, error }
-}
+export const getAllOrders = async (params: OrderQueryParams): Promise<Response<OrderInterface[]>> => {
+  const { supabase, userId, type } = params
 
-export const getShopFinished = async (supabase: SupabaseClient) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(productsCustomerTemplate)
-    .order('created_at', { ascending: false })
-    .in('status', statusFinished)
-  return { data, error }
-}
+  try {
+    let query = supabase.from('orders').select(productsCustomerTemplate).order('created_at', { ascending: false })
 
-export const getShopActive = async (supabase: SupabaseClient) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(productsCustomerTemplate)
-    .order('created_at', { ascending: false })
-    .in('status', statusActive)
-  return { data, error }
-}
+    if (userId) query = query.eq('customer_id', userId)
+    if (type === 'active') query = query.in('status', statusActive)
+    if (type === 'finished') query = query.in('status', statusFinished)
 
-export const getUserAll = async (supabase: SupabaseClient, user: UserResponse) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(productsCustomerTemplate)
-    .order('created_at', { ascending: false })
-    .eq('customer_id', user.data.user?.id ?? '')
+    const { data, error } = await query
 
-  return { data, error }
-}
-
-export const getUserFinished = async (supabase: SupabaseClient, user: UserResponse) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(productsCustomerTemplate)
-    .order('created_at', { ascending: false })
-    .eq('customer_id', user.data.user?.id ?? '')
-    .in('status', statusFinished)
-  return { data, error }
-}
-
-export const getUserActive = async (supabase: SupabaseClient, user: UserResponse) => {
-  const { data, error } = await supabase
-    .from('orders')
-    .select(productsCustomerTemplate)
-    .order('created_at', { ascending: false })
-    .eq('customer_id', user.data.user?.id ?? '')
-    .in('status', statusActive)
-
-  return { data, error }
+    return { data, error }
+  } catch (error) {
+    return generateServiceError(500, 'Internal Server Error')
+  }
 }

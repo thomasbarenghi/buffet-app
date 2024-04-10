@@ -1,4 +1,10 @@
-import { type AuthorizeBody, type Profile, type ProfileFormData, type Response } from '@/interfaces'
+import {
+  type CreateProfileRequest,
+  type AuthorizeBody,
+  type Profile,
+  type Response,
+  type PatchUserProfile
+} from '@/interfaces'
 import { getRequest, mutationRequest } from '../api.requests'
 import { endpoints } from '@/utils/constants'
 import { clientUrl } from '@/utils/constants/env.const'
@@ -11,19 +17,19 @@ export const authorizeCash = async (formData: AuthorizeBody): Promise<Response<P
     customUrl: clientUrl
   })
 
-export const createUserProfile = async (formData: ProfileFormData): Promise<Response<Profile>> =>
+export const createUserProfile = async (req: CreateProfileRequest): Promise<Response<Profile>> =>
   await mutationRequest<Profile>({
     method: 'post',
-    body: formData,
+    body: req,
     path: endpoints.users.CREATE_PROFILE,
     customUrl: clientUrl
   })
 
-export const patchUserProfile = async (formData: ProfileFormData, id: string): Promise<Response<Profile>> =>
+export const patchUserProfile = async (req: PatchUserProfile): Promise<Response<Profile>> =>
   await mutationRequest<Profile>({
     method: 'patch',
-    body: formData,
-    path: endpoints.users.PATCH_PROFILE(id),
+    body: req,
+    path: endpoints.users.PATCH_PROFILE(req.id),
     customUrl: clientUrl
   })
 

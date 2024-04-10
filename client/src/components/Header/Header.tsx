@@ -23,7 +23,7 @@ const Header = async ({ withBorder = true }: Props) => {
   const profile = await findUserMetaData()
   const cookieStore = cookies()
   const cartItemsStr = cookieStore.get('cartItems')
-  const cartItems = await getAllProducts(cartItemsStr?.value.split(','))
+  const cartItems = await getAllProducts({ ids: cartItemsStr?.value.split(',') })
 
   return (
     // const [isMenuOpen, setIsMenuOpen] = useState(false)

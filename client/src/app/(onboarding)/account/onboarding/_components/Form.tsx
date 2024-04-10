@@ -11,7 +11,7 @@ const Form = () => {
 
   const handleSubmitForm = async (formData: ProfileFormData) => {
     try {
-      const { error } = await createUserProfile(formData)
+      const { error } = await createUserProfile({ formData })
       if (error) return toast.error('Algo salió mal')
       router.refresh()
       router.push(routes.customer.HOME)

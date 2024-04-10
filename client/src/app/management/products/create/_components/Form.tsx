@@ -13,7 +13,7 @@ const Form = () => {
     try {
       formData.thumbnail = formData.thumbnail instanceof FileList ? formData.thumbnail[0] : undefined
 
-      const { error } = await createProduct(formData)
+      const { error } = await createProduct({ product: formData })
 
       if (error) {
         return toast.error('Ocurrió un error')

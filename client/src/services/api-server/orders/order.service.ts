@@ -4,165 +4,151 @@ import {
   type OrderInterface,
   OrderStatusApiEnum,
   PaymentStatusApiEnum,
-  type CartItem,
   type CreateOrderRequest,
-  PaymentMethodsApiEnum
+  PaymentMethodsApiEnum,
+  type GetPreferenceRequest,
+  type GetOrdersRequest,
+  type OrderQueryParams,
+  type ChangeOrderStatusRequest
 } from '@/interfaces'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { calculateFinalPrice, generateRandomNumber } from '@/utils/functions'
-import { getShopActive, getShopAll, getShopFinished, getUserActive, getUserAll, getUserFinished } from './order.utils'
+import { calculateFinalPrice, generateRandomNumber, generateServiceError } from '@/utils/functions'
+import { getAllOrders } from './order.utils'
 import { clientUrl, endpoints } from '@/utils/constants'
 import { getShopStatus } from '../shop.service'
 
 export const revalidate = 0
 
-export const getShopOrders = async (type: 'active' | 'finished' | 'all'): Promise<Response<OrderInterface[]>> => {
-  let response
+export const getOrders = async (req: GetOrdersRequest): Promise<Response<OrderInterface[]>> => {
+  const { type, mode } = req
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  try {
+    const user = await supabase.auth.getUser()
+    if (!user?.data?.user?.id) return generateServiceError(400, 'Cant access current user id')
 
-  if (type === 'all') response = await getShopAll(supabase)
-  else if (type === 'active') response = await getShopActive(supabase)
-  else if (type === 'finished') response = await getShopFinished(supabase)
+    const queryParams: OrderQueryParams = { supabase, type }
+    if (mode === 'user') queryParams.userId = user.data.user?.id
 
-  return {
-    data: response?.data as unknown as OrderInterface[],
-    error: response?.error ?? null
+    const { data, error } = await getAllOrders(queryParams)
+
+    return { data, error }
+  } catch (error) {
+    console.error(error)
+    return generateServiceError(500, 'Catch: Internal Server Error')
   }
 }
 
-export const getUserOrders = async (type: 'active' | 'finished' | 'all'): Promise<Response<OrderInterface[]>> => {
-  let response
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const user = await supabase.auth.getUser()
-
-  if (type === 'all') response = await getUserAll(supabase, user)
-  else if (type === 'active') response = await getUserActive(supabase, user)
-  else if (type === 'finished') response = await getUserFinished(supabase, user)
-
-  return {
-    data: response?.data as unknown as OrderInterface[],
-    error: response?.error ?? null
-  }
-}
-
-export const getOrder = async (id: string): Promise<Response<OrderInterface>> => {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const { data, error } = await supabase.from('orders').select().eq('id', id).single()
-  const res = data as OrderInterface
-  return { error, data: res }
-}
-
-const getPreference = async (products: CartItem[], orderData: OrderInterface) => {
-  const response = await fetch(clientUrl + endpoints.orders.CHECKOUT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      products,
-      orderId: orderData.id
+const getPreference = async (req: GetPreferenceRequest): Promise<Response<Record<string, string>>> => {
+  try {
+    const response = await fetch(clientUrl + endpoints.orders.CHECKOUT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req)
     })
-  })
 
-  if (!response.ok) {
-    throw new Error('Network response was not ok')
+    if (!response.ok) return generateServiceError(500, 'Cant generate preference')
+
+    return { data: await response.json(), error: null }
+  } catch (error) {
+    console.error(error)
+    return generateServiceError(500, 'Catch: Internal Server Error')
   }
-
-  const data = await response.json()
-  return data
 }
 
 export const createOrder = async (req: CreateOrderRequest): Promise<Response<OrderInterface>> => {
   const { details, products } = req
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const user = await supabase.auth.getUser()
-  const totalPrice = calculateFinalPrice(products)
-  const { data: shopStatus } = await getShopStatus()
+  try {
+    const { data: shopStatus, error: shopStatusError } = await getShopStatus()
+    if (shopStatusError) return generateServiceError(500, shopStatusError.message)
+    if (!shopStatus?.is_open) return generateServiceError(400, 'Shop is close')
 
-  if (!shopStatus?.is_open) {
-    return {
-      data: null,
-      error: {
-        code: 400,
-        message: 'Shop is close'
-      }
+    const user = await supabase.auth.getUser()
+    if (!user) return generateServiceError(400, 'Cant access current user')
+    const totalPrice = calculateFinalPrice(products)
+
+    const newOrder = {
+      total_price: totalPrice,
+      customer_id: user.data.user?.id,
+      instructions: details?.instructions,
+      payment_method: details?.payment_method,
+      status:
+        details?.payment_method === 'MercadoPago'
+          ? OrderStatusApiEnum.PendingPayment
+          : OrderStatusApiEnum.PendingApproval,
+      payment_status: PaymentStatusApiEnum.Pending,
+      code: generateRandomNumber()
     }
-  }
 
-  console.log(products, details)
+    const { data: insertData, error: insertError } = await supabase.from('orders').insert([newOrder]).select().single()
 
-  const { data: orderData, error } = await supabase
-    .from('orders')
-    .insert([
-      {
-        total_price: totalPrice,
-        customer_id: user.data.user?.id ?? '',
-        instructions: details?.instructions,
-        payment_method: details?.payment_method,
-        status:
-          details?.payment_method === 'MercadoPago'
-            ? OrderStatusApiEnum.PendingPayment
-            : OrderStatusApiEnum.PendingApproval,
-        payment_status: PaymentStatusApiEnum.Pending,
-        code: generateRandomNumber()
+    if (insertError) return generateServiceError(500, insertError.message)
+
+    let preference
+
+    if (details.payment_method === PaymentMethodsApiEnum.MercadoPago) {
+      preference = await getPreference({ products, orderData: insertData as OrderInterface })
+      const paymentLink = preference?.data?.url
+
+      if (!paymentLink) return generateServiceError(400, 'Cant access payment link')
+
+      const { error: updateError } = await supabase
+        .from('orders')
+        .update({
+          payment_link: paymentLink
+        })
+        .eq('id', insertData?.id)
+        .select()
+        .single()
+
+      if (updateError) return generateServiceError(500, updateError.message)
+
+      insertData.payment_link = paymentLink
+    }
+
+    const insertionPromises = products.map(async (product) => {
+      const { error: productInsertError } = await supabase
+        .from('orders_products')
+        .insert([{ order_id: insertData?.id, product_id: product.id, quantity: product.quantity }])
+        .single()
+
+      if (productInsertError) {
+        return generateServiceError(500, productInsertError.message)
       }
-    ])
-    .select()
-    .single()
+    })
 
-  if (!orderData) throw new Error()
+    await Promise.all(insertionPromises)
 
-  let preference
+    return { error: null, data: insertData as OrderInterface }
+  } catch (error) {
+    console.error(error)
+    return generateServiceError(500, 'Catch: Internal Server Error')
+  }
+}
 
-  if (details.payment_method === PaymentMethodsApiEnum.MercadoPago) {
-    preference = await getPreference(products, orderData as OrderInterface)
-
-    const { error: errorUpdate } = await supabase
+export const changeStatus = async (req: ChangeOrderStatusRequest): Promise<Response<OrderInterface>> => {
+  const { orderId, status } = req
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  try {
+    const { error, data } = await supabase
       .from('orders')
       .update({
-        payment_link: preference?.url as string
+        status,
+        ...(status === OrderStatusApiEnum.Delivered && { payment_status: PaymentStatusApiEnum.Completed })
       })
-      .eq('id', orderData?.id)
+      .eq('id', orderId)
       .select()
       .single()
 
-    console.log(errorUpdate?.message)
-
-    orderData.payment_link = preference?.url as string
-    console.log('orderData.payment_link', orderData.payment_link)
+    return { error, data: data as OrderInterface }
+  } catch (error) {
+    console.error(error)
+    return generateServiceError(500, 'Catch: Internal Server Error')
   }
-
-  for (const iterator of products) {
-    const { error: errorI } = await supabase
-      .from('orders_products')
-      .insert([{ order_id: orderData?.id, product_id: iterator.id, quantity: iterator.quantity }])
-      .select()
-
-    if (errorI) throw new Error()
-  }
-
-  const res = orderData as OrderInterface
-  return { error, data: res }
-}
-
-export const changeStatus = async (status: OrderStatusApiEnum, id: string): Promise<Response<OrderInterface>> => {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const { error, data } = await supabase
-    .from('orders')
-    .update({
-      status,
-      ...(status === OrderStatusApiEnum.Delivered && { payment_status: PaymentStatusApiEnum.Completed })
-    })
-    .eq('id', id)
-    .select()
-    .single()
-
-  const res = data as OrderInterface
-  return { error, data: res }
 }

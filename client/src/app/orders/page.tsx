@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import { Footer, Header, OrdersTable } from '@/components'
-import { getShopOrders, getUserOrders } from '@/services/api-server'
+import { getOrders } from '@/services/api-server'
 import { findUserMetaData } from '@/utils/functions'
 import { RoleEnum } from '@/interfaces'
 
@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 
 const Products = async () => {
   const profile = await findUserMetaData()
-  const orders = profile?.role === RoleEnum.Customer ? await getUserOrders('finished') : await getShopOrders('finished')
+  const mode = profile?.role === RoleEnum.Customer ? 'user' : 'shop'
+  const type = profile?.role === RoleEnum.Customer ? 'active' : 'finished'
+  const orders = await getOrders({ mode, type })
 
   return (
     <>

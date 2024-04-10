@@ -18,7 +18,7 @@ const Form = ({ orderId, product }: Props) => {
     try {
       formData.thumbnail = formData.thumbnail instanceof FileList ? formData.thumbnail[0] : undefined
 
-      const { error } = await patchProduct(formData, orderId)
+      const { error } = await patchProduct({ product: formData, id: orderId })
 
       if (error) {
         console.error(error)

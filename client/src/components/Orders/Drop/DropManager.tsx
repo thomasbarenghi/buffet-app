@@ -46,7 +46,7 @@ const DropManager = ({ order, client }: Props) => {
     try {
       const next = getNextOrderStatus(order?.status as OrderStatusApiEnum)
       if (next === OrderStatusApiEnum.Delivered) return toast.warning('No disponible')
-      await changeOrderStatus(next ?? OrderStatusApiEnum.Canceled, order?.id ?? '')
+      await changeOrderStatus({ status: next ?? OrderStatusApiEnum.Canceled, orderId: order?.id ?? '' })
       await mutate(endpoints.shops.ACTIVE_ORDERS)
       toast.success('Realizado')
     } catch (error) {
@@ -59,7 +59,7 @@ const DropManager = ({ order, client }: Props) => {
     try {
       const prev = getPreviousOrderStatus(order?.status as OrderStatusApiEnum)
       if (prev === order?.status) return toast.warning('No disponible')
-      await changeOrderStatus(prev ?? OrderStatusApiEnum.Canceled, order?.id ?? '')
+      await changeOrderStatus({ status: prev ?? OrderStatusApiEnum.Canceled, orderId: order?.id ?? '' })
       await mutate(endpoints.shops.ACTIVE_ORDERS)
       toast.success('Realizado')
     } catch (error) {
@@ -73,7 +73,7 @@ const DropManager = ({ order, client }: Props) => {
       if (givenCode !== order?.code?.toString()) {
         return toast.error('Codigo incorrecto')
       }
-      await changeOrderStatus(OrderStatusApiEnum.Delivered, order?.id)
+      await changeOrderStatus({ status: OrderStatusApiEnum.Delivered, orderId: order?.id ?? '' })
       await mutate(endpoints.shops.ACTIVE_ORDERS)
       onCloseComplete()
       toast.success('Finalizado')

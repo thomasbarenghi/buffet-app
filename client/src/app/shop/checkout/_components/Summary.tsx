@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import useSWR from 'swr'
 import { toast } from 'sonner'
+import { Radio, RadioGroup } from '@nextui-org/react'
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form'
 import Info from './Info'
 import { Button, ProductCartGrid, Textarea } from '@/components'
@@ -11,7 +12,6 @@ import { useCartStore } from '@/context/zustand/cart.store'
 import { endpoints, routes } from '@/utils/constants'
 import { type OrderFormProps, type Product, type PaymentMethods, PaymentMethodsApiEnum } from '@/interfaces'
 import { calculateFinalPrice, itemToIdArray } from '@/utils/functions'
-import { Radio, RadioGroup } from '@nextui-org/react'
 
 interface Props {
   isCashAuthorized: boolean
@@ -34,7 +34,10 @@ const Summary = ({ productsP, isCashAuthorized }: Props) => {
     control,
     setValue
   } = useForm<OrderFormProps>({
-    mode: 'onChange'
+    mode: 'onChange',
+    defaultValues: {
+      payment_method: 'MercadoPago'
+    }
   })
 
   const onSubmit: SubmitHandler<OrderFormProps> = async (data) => {
@@ -49,7 +52,6 @@ const Summary = ({ productsP, isCashAuthorized }: Props) => {
       if (error) {
         console.log(error)
         toast.error('Algo salió mal')
-        return
       }
 
       cleanCart()
@@ -96,6 +98,7 @@ const Summary = ({ productsP, isCashAuthorized }: Props) => {
                     control={control}
                     rules={{ required: { value: true, message: 'Este campo es requerido' } }}
                     name='payment_method'
+                    defaultValue='MercadoPago'
                     render={({ field: { onBlur, value } }) => (
                       <RadioGroup
                         onValueChange={(selected) => {
@@ -105,6 +108,7 @@ const Summary = ({ productsP, isCashAuthorized }: Props) => {
                         value={value}
                         color='primary'
                         size='sm'
+                        errorMessage={errors.payment_method?.message}
                         defaultValue={PaymentMethodsApiEnum.MercadoPago}
                       >
                         {paymentMethods

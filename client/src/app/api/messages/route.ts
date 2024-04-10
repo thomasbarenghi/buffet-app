@@ -4,17 +4,17 @@ import { createMessage, getOrderMessages } from '@/services/api-server'
 import { generateErrorResponse } from '@/utils/functions'
 
 export const POST = async (req: Request) => {
-  const { orderId, message } = await req.json()
-  const { error, data } = await createMessage(orderId, message)
+  const body = await req.json()
+  const { error, data } = await createMessage(body)
   if (error) return generateErrorResponse(error as PostgrestError)
   return Response.json(data)
 }
 
 export const GET = async (req: NextRequest) => {
   const searchParams = req.nextUrl.searchParams
-  const query = searchParams.get('orderId')
+  const orderId = searchParams.get('orderId')
 
-  if (!query) {
+  if (!orderId) {
     return Response.json(
       { message: 'Missing orderId' },
       {
@@ -26,7 +26,7 @@ export const GET = async (req: NextRequest) => {
     )
   }
 
-  const { data, error } = await getOrderMessages(query)
+  const { data, error } = await getOrderMessages({ orderId })
   if (error) return generateErrorResponse(error as PostgrestError)
   return Response.json(data)
 }

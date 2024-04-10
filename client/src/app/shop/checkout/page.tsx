@@ -16,7 +16,7 @@ const Checkout = async () => {
   const cookieStore = cookies()
   const cartItemsStr = cookieStore.get('cartItems')
   const arrIds = cartItemsStr?.value.split(',') ?? []
-  const cartItems = await getAllProducts(arrIds)
+  const cartItems = await getAllProducts({ ids: arrIds })
   const cashAuthorization = await findCashAuthorization()
   const isCashAuthorized = cashAuthorization.data?.is_authorized ?? false
   return (

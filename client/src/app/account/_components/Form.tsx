@@ -12,7 +12,7 @@ interface Props {
 const Form = ({ profile }: Props) => {
   const handleSubmitForm = async (formData: ProfileFormData) => {
     try {
-      const { error } = await patchUserProfile(formData, profile.id ?? '')
+      const { error } = await patchUserProfile({ formData, id: profile.id ?? '' })
       if (error) return toast.error('Algo salió mal')
       // await updateRedirect()
     } catch (error) {

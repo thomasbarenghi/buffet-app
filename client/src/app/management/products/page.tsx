@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 }
 
 const Products = async () => {
-  const products = await getAllProducts()
+  const products = await getAllProducts({})
   return (
     <section className='flex w-full flex-col gap-4'>
       <div className='flex w-full items-center justify-between'>

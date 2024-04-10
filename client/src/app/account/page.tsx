@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import { Tooltip, User } from '@nextui-org/react'
 import { OrdersGrid } from '@/components'
-import { findCashAuthorization, getShopOrders, getUserOrders } from '@/services/api-server'
+import { findCashAuthorization, getOrders } from '@/services/api-server'
 import { findUserMetaData } from '@/utils/functions'
 import { RoleEnum } from '@/interfaces'
 import ActiveOrders from './_components/ActiveOrders'
@@ -15,7 +15,9 @@ export const metadata: Metadata = {
 const AccountPage = async () => {
   const profile = await findUserMetaData()
   const cashAuthorization = await findCashAuthorization()
-  const orders = profile?.role === RoleEnum.Customer ? await getUserOrders('active') : await getShopOrders('finished')
+  const mode = profile?.role === RoleEnum.Customer ? 'user' : 'shop'
+  const type = profile?.role === RoleEnum.Customer ? 'active' : 'finished'
+  const orders = await getOrders({ mode, type })
   const isCashAuthorized = cashAuthorization.data?.is_authorized
   const primaryColor = isCashAuthorized ? '#FB5607' : '#C5C5C5'
   const secondaryColor = isCashAuthorized ? 'white' : 'white'

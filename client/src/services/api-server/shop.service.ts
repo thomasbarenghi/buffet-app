@@ -1,31 +1,40 @@
 import 'server-only'
-import { type Response, type Shop } from '@/interfaces'
+import { type ChangeShopStatusRequest, type Response, type Shop } from '@/interfaces'
 import { shopId } from '@/utils/constants/env.const'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { generateServiceError } from '@/utils/functions'
 
 export const revalidate = 0
 
 export const getShopStatus = async (): Promise<Response<Shop>> => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
-  const { data, error } = await supabase.from('shop_config').select().eq('id', shopId).single()
-
-  return { error, data }
+  try {
+    const { data, error } = await supabase.from('shop_config').select().eq('id', shopId).single()
+    return { error, data }
+  } catch (error) {
+    console.error(error)
+    return generateServiceError(500, 'Catch: Internal Server Error')
+  }
 }
 
-export const changeShopStatus = async (isOpen: boolean): Promise<Response<Shop>> => {
+export const changeShopStatus = async (req: ChangeShopStatusRequest): Promise<Response<Shop>> => {
   const cookieStore = cookies()
   const supabase = createServerComponentClient<Database>({ cookies: () => cookieStore })
+  try {
+    const { error, data } = await supabase
+      .from('shop_config')
+      .update({
+        is_open: req.isOpen ?? false
+      })
+      .eq('id', shopId)
+      .select()
+      .single()
 
-  const { error, data } = await supabase
-    .from('shop_config')
-    .update({
-      is_open: isOpen ?? false
-    })
-    .eq('id', 'b4a6e440-ef32-4748-ad30-6a5b010b1e30')
-    .select()
-    .single()
-
-  return { error, data }
+    return { error, data }
+  } catch (error) {
+    console.error(error)
+    return generateServiceError(500, 'Catch: Internal Server Error')
+  }
 }

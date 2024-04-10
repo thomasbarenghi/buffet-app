@@ -12,7 +12,7 @@ interface Props {
 }
 
 const Edit = async ({ params }: Props) => {
-  const product = await getProduct(params.productId)
+  const product = await getProduct({ id: params.productId })
   return (
     <section className='flex w-full max-w-md flex-col gap-4'>
       <h1 className='w-full text-2xl font-light leading-tight'>

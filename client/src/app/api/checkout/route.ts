@@ -2,19 +2,19 @@ import { type NextRequest } from 'next/server'
 import { MercadoPagoConfig, Preference } from 'mercadopago'
 import { formatProductsToMp } from '@/utils/functions'
 import { clientUrl, mpAccessToken } from '@/utils/constants/env.const'
-import { type CartItem } from '@/interfaces'
+import { type GetPreferenceRequest } from '@/interfaces'
 
 const client = new MercadoPagoConfig({ accessToken: mpAccessToken })
 
 export const POST = async (req: NextRequest) => {
   try {
-    const reqJson = await req.json()
+    const reqJson = (await req.json()) as GetPreferenceRequest
     const response = await new Preference(client).create({
       body: {
-        items: formatProductsToMp(reqJson?.products as CartItem[]),
+        items: formatProductsToMp(reqJson?.products),
         back_urls: {
-          success: clientUrl + '/account?orderId=' + reqJson.orderId,
-          failure: clientUrl + '/account?orderId=' + reqJson.orderId
+          success: clientUrl + '/account?orderId=' + reqJson.orderData.id,
+          failure: clientUrl + '/account?orderId=' + reqJson.orderData.id
         },
         auto_return: 'approved',
         payment_methods: {
@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
             }
           ]
         },
-        notification_url: clientUrl + '/api/notification?orderId=' + reqJson.orderId
+        notification_url: clientUrl + '/api/notification?orderId=' + reqJson.orderData.id
       }
     })
 

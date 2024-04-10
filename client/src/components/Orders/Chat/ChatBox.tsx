@@ -26,7 +26,7 @@ const ChatBox: React.FC<Props> = ({ order, profile, messages }) => {
       e.preventDefault()
       const { message } = e.target
       if (message.value.length <= 0) return
-      await createMessage(order?.id ?? '', message.value)
+      await createMessage({ orderId: order?.id ?? '', message: message.value })
       setMessageInput('')
       formRef.current?.reset()
     } catch (error) {

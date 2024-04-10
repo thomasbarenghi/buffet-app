@@ -56,6 +56,7 @@ const ProductsTable = ({ products }: Props) => {
         classNames={{
           wrapper: 'overflow-x-scroll'
         }}
+        pag
         radius='md'
         className='w-full rounded-xl border'
         data={products ?? []}

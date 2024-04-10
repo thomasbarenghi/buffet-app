@@ -33,24 +33,25 @@ const DynamicTable = ({ data, rowsPerPage = 4, columns, renderRow, ...props }: E
         </TableHeader>
         <TableBody>{items.map((product) => renderRow(product))}</TableBody>
       </Table>
-      {pages > 1 && (
-        <div className='flex w-full justify-center'>
-          <Pagination
-            variant='light'
-            isCompact
-            showControls
-            showShadow
-            size='sm'
-            color='primary'
-            page={page}
-            boundaries={0}
-            total={pages}
-            onChange={(page) => {
-              setPage(page)
-            }}
-          />
-        </div>
-      )}
+      {pages > 1 ||
+        (page > pages && (
+          <div className='flex w-full justify-center'>
+            <Pagination
+              variant='light'
+              isCompact
+              showControls
+              showShadow
+              size='sm'
+              color='primary'
+              page={page}
+              boundaries={0}
+              total={pages}
+              onChange={(page) => {
+                setPage(page)
+              }}
+            />
+          </div>
+        ))}
     </div>
   )
 }

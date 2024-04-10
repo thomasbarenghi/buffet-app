@@ -65,7 +65,7 @@ const Content = ({ shopStatus }: { shopStatus: boolean }) => {
   const handleShopStatus = async (v: boolean) => {
     try {
       setIsSelected(v)
-      await changeShopStatus(v)
+      await changeShopStatus({ isOpen: v })
       toast.success('Actualizado correctamente')
     } catch (error) {
       console.error(error)

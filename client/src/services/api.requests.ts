@@ -15,6 +15,7 @@ export const getRequest = async <T>(params: GetRequestParams): Promise<Response<
     })
 
     const responseData = await response.json()
+
     if (!response.ok) {
       const errorResponse: Response<T> = {
         data: null,

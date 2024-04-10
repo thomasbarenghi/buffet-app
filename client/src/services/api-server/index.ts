@@ -8,6 +8,7 @@ export {
   authorizeCash,
   findCashAuthorization
 } from './user.service'
-export { changeStatus, createOrder, getOrder, getShopOrders, getUserOrders } from './orders/order.service'
+export { changeStatus, createOrder, getOrders } from './orders/order.service'
 export { createMessage, getOrderMessages } from './message.service'
-export * from './image-upload.service'
+// Generates errors for unknown reasons
+// export { imageUpload } from './image-upload.service'
