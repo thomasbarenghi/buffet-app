@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { mpAccessToken } from '@/utils/constants/env.const'
 import { OrderStatusApiEnum, PaymentStatusApiEnum } from '@/interfaces'
+import { generateErrorResponse } from '@/utils/functions'
 
 export const POST = async (request: NextRequest) => {
   const cookieStore = cookies()
@@ -52,20 +53,10 @@ export const POST = async (request: NextRequest) => {
         }
       })
     } else {
-      return new Response(JSON.stringify({ message: 'Invalid topic' }), {
-        status: 400,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
+      return generateErrorResponse({ status: 400, error: { message: 'Invalid topic' } })
     }
   } catch (error) {
     console.error(error)
-    return new Response(JSON.stringify({ message: 'Internal Server Error', error }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    return generateErrorResponse({ status: 500, error: { message: 'Internal Server Error', error } })
   }
 }

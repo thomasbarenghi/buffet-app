@@ -1,5 +1,4 @@
 import { type NextRequest } from 'next/server'
-import { type PostgrestError } from '@supabase/supabase-js'
 import { createProduct, getAllProducts } from '@/services/api-server'
 import { generateErrorResponse } from '@/utils/functions'
 import { type ProductFormData } from '@/interfaces'
@@ -10,7 +9,7 @@ export const GET = async (req: NextRequest) => {
   const query = searchParams.get('ids')
   const ids = query?.split(',') ?? null
   const { data, error } = await getAllProducts({ ids })
-  if (error) return generateErrorResponse(error as PostgrestError)
+  if (error) return generateErrorResponse({ status: error.code, error })
   return Response.json(data)
 }
 
@@ -34,6 +33,6 @@ export const POST = async (req: Request) => {
   }
 
   const { error, data } = await createProduct({ product })
-  if (error) return generateErrorResponse(error as PostgrestError)
+  if (error) return generateErrorResponse({ status: error.code, error })
   return Response.json(data)
 }

@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 const Products = async () => {
   const profile = await findUserMetaData()
   const mode = profile?.role === RoleEnum.Customer ? 'user' : 'shop'
-  const type = profile?.role === RoleEnum.Customer ? 'active' : 'finished'
-  const orders = await getOrders({ mode, type })
+  const orders = await getOrders({ mode, type: 'finished' })
 
   return (
     <>

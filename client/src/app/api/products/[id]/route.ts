@@ -1,4 +1,3 @@
-import { type PostgrestError } from '@supabase/supabase-js'
 import { deleteProduct, getProduct, patchProduct } from '@/services/api-server'
 import { generateErrorResponse } from '@/utils/functions'
 import { type ProductFormData } from '@/interfaces'
@@ -6,7 +5,7 @@ import { imageUpload } from '@/services/api-server/image-upload.service'
 
 export const GET = async (req: Request, { params }: { params: { id: string } }) => {
   const { data, error } = await getProduct({ id: params.id })
-  if (error) return generateErrorResponse(error as PostgrestError)
+  if (error) return generateErrorResponse({ status: error.code, error })
   return Response.json({ data })
 }
 
@@ -30,12 +29,12 @@ export const PATCH = async (req: Request, { params }: { params: { id: string } }
   }
 
   const { data, error } = await patchProduct({ product, id: params.id })
-  if (error) return generateErrorResponse(error as PostgrestError)
+  if (error) return generateErrorResponse({ status: error.code, error })
   return Response.json({ data })
 }
 
 export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
   const { data, error } = await deleteProduct({ id: params.id })
-  if (error) return generateErrorResponse(error as PostgrestError)
+  if (error) return generateErrorResponse({ status: error.code, error })
   return Response.json({ data })
 }

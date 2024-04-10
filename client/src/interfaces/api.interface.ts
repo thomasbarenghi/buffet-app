@@ -5,15 +5,17 @@ import { type ProductFormData, type OrderFormProps, type ProfileFormData } from 
 
 export interface Response<T> {
   data: T | null
-  error:
-    | {
-        message: string
-        code: number
-      }
-    | null
-    | PostgrestError
-    | undefined
+  error: GeneralError
 }
+
+export type GeneralError =
+  | {
+      message: string
+      code: number
+    }
+  | null
+  | PostgrestError
+  | undefined
 
 export interface GetRequestParams {
   path: string

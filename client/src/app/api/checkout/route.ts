@@ -1,6 +1,6 @@
 import { type NextRequest } from 'next/server'
 import { MercadoPagoConfig, Preference } from 'mercadopago'
-import { formatProductsToMp } from '@/utils/functions'
+import { formatProductsToMp, generateErrorResponse } from '@/utils/functions'
 import { clientUrl, mpAccessToken } from '@/utils/constants/env.const'
 import { type GetPreferenceRequest } from '@/interfaces'
 
@@ -36,17 +36,6 @@ export const POST = async (req: NextRequest) => {
     })
   } catch (error) {
     console.error(error)
-    return new Response(
-      JSON.stringify({
-        message: 'Internal Server Error',
-        error
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    )
+    return generateErrorResponse({ status: 500, error: { message: 'Internal Server Error', error } })
   }
 }

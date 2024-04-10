@@ -1,12 +1,11 @@
 import { type NextRequest } from 'next/server'
-import { type PostgrestError } from '@supabase/supabase-js'
 import { createMessage, getOrderMessages } from '@/services/api-server'
 import { generateErrorResponse } from '@/utils/functions'
 
 export const POST = async (req: Request) => {
   const body = await req.json()
   const { error, data } = await createMessage(body)
-  if (error) return generateErrorResponse(error as PostgrestError)
+  if (error) return generateErrorResponse({ status: error.code, error })
   return Response.json(data)
 }
 
@@ -27,6 +26,6 @@ export const GET = async (req: NextRequest) => {
   }
 
   const { data, error } = await getOrderMessages({ orderId })
-  if (error) return generateErrorResponse(error as PostgrestError)
+  if (error) return generateErrorResponse({ status: error.code, error })
   return Response.json(data)
 }
