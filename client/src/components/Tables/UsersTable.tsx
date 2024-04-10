@@ -22,11 +22,10 @@ const UsersTable = ({ users }: Props) => {
 
   const handleAuthorize = async (value: boolean, userId: string) => {
     try {
-      const { data, error } = await authorizeCash({ is_authorized: value, userId })
-      console.log(data)
+      const { error } = await authorizeCash({ is_authorized: value, userId })
 
       if (error) {
-        console.log(error)
+        console.error(error)
         return toast.error('Algo salió mal')
       }
 

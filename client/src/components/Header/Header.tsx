@@ -1,7 +1,7 @@
 'use server'
 import Image from 'next/image'
 import { Link, Navbar, NavbarBrand, NavbarContent } from '@nextui-org/react'
-import { AvatarMenu, Cart, HeaderMenu } from '@/components'
+import { AvatarMenu, Cart, HeaderMenu, MobileMenu } from '@/components'
 import { routes } from '@/utils/constants'
 import { cookies } from 'next/headers'
 import { getAllProducts } from '@/services/api-server'
@@ -36,7 +36,7 @@ const Header = async ({ withBorder = true }: Props) => {
       }}
     >
       <NavbarContent>
-        {/* <MobileMenu profile={profile} isMenuOpen={isMenuOpen} /> */}
+        <MobileMenu profile={profile} />
         <Brand />
       </NavbarContent>
       <NavbarContent justify='end' className='sm:gap-10'>

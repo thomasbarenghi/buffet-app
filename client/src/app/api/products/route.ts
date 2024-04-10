@@ -24,8 +24,6 @@ export const POST = async (req: Request) => {
     description: formData.get('product[description]') as string
   }
 
-  console.log(body)
-
   const image = await imageUpload({ image: body.thumbnail })
 
   const product: ProductFormData = {

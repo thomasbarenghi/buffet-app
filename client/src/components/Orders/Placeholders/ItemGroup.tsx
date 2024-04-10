@@ -1,4 +1,4 @@
-import ProductOrderItemPlaceholder from './OrderItem'
+import ProductOrderItemPlaceholder from './Item'
 
 interface Props {
   title?: JSX.Element

@@ -57,8 +57,6 @@ const Content = ({ shopStatus }: { shopStatus: boolean }) => {
     refreshInterval: 30000
   })
 
-  console.log(ordersPrev)
-
   const [isSelected, setIsSelected] = useState(shopStatus)
   const orders = orderFiltering(ordersPrev ?? [])
 

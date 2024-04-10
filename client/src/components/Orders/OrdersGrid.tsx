@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { ProductOrderItem } from '@/components'
 import { getUserProfile } from '@/services/api-client'
 import { type Role, type OrderInterface, type Profile } from '@/interfaces'
-const OrderItemGroupPlaceholder = dynamic(async () => await import('./Placeholders/OrderItemGroup'))
+const OrderItemGroupPlaceholder = dynamic(async () => await import('./Placeholders/ItemGroup'))
 
 interface Props {
   orders: OrderInterface[] | undefined

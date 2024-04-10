@@ -13,7 +13,7 @@ import {
 } from '@/interfaces'
 import { Button, DropTrigger } from '@/components'
 import ProductList from './ProductList'
-import OrderFooter from './OrderFooter'
+import OrderFooter from './Footer'
 const DropManager = dynamic(async () => await import('../Drop/DropManager'), {
   loading: () => <DropTrigger />
 })

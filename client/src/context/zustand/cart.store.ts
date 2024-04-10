@@ -25,7 +25,6 @@ export const useCartStore = create<CartState>()(
           const isItemInCart = state.items.some((cartItem) => cartItem.id === item.id)
 
           if (isItemInCart) {
-            console.log('Producto ya en el carrito:', item)
             toast.info('Ya tienes este producto en el carrito')
             return state
           }

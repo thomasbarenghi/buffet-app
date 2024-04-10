@@ -42,15 +42,13 @@ const Summary = ({ productsP, isCashAuthorized }: Props) => {
 
   const onSubmit: SubmitHandler<OrderFormProps> = async (data) => {
     try {
-      console.log(data)
-
       const { data: res, error } = await createOrder({
         details: data,
         products: items ?? []
       })
 
       if (error) {
-        console.log(error)
+        console.error(error)
         toast.error('Algo salió mal')
       }
 
