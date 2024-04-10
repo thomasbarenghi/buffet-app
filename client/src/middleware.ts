@@ -12,7 +12,7 @@ enum RoutesEnum {
 }
 
 const managementRoutes = ['/management']
-const customerRoutes = ['/shop', '/account/active-orders']
+const customerRoutes = ['/shop', '/account/active-orders', '/explore']
 const authRoutes = ['/auth']
 const onboardingRoutes = ['/account/onboarding']
 
@@ -60,7 +60,8 @@ export const config = {
     '/account',
     '/account/:path*',
     '/management',
-    '/management/:path*'
+    '/management/:path*',
+    '/explore'
     /*
      * Match all request paths except for the ones starting with:
      * - _next/static (static files)

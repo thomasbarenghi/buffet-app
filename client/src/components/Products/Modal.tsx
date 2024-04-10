@@ -21,7 +21,7 @@ const ModalProduct = ({ product, onClose, isOpen, mode }: Props) => {
       isOpen={isOpen}
       onClose={onClose}
       classNames={{
-        base: ` ${window.innerHeight > 800 ? 'flex-grow-0' : 'flex-grow'} lg:!my-4`,
+        base: ` ${window.innerHeight > 800 ? 'flex-grow-0' : 'flex-grow'} my-6 lg:my-4`,
         wrapper: 'flex flex-col'
       }}
       placement='center'

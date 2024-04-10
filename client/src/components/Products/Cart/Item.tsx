@@ -53,7 +53,7 @@ const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
                 radius='full'
                 className='h-6 w-6'
                 size='sm'
-                color='primary'
+                color='default'
                 variant='flat'
                 disabled={quantity <= 1}
                 onClick={() => {
@@ -68,8 +68,8 @@ const ProductCartItem = ({ product, isLast, withBg = false, mode }: Props) => {
                 isIconOnly
                 radius='full'
                 size='sm'
-                color='primary'
                 className='h-6 w-6'
+                color='default'
                 variant='flat'
                 onClick={() => {
                   if (!product) return

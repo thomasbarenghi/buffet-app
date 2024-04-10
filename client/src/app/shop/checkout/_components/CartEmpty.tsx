@@ -15,7 +15,7 @@ const CartEmpty = () => {
         <Button
           title='Ir a comprar'
           onClick={() => {
-            router.push(routes.customer.HOME)
+            router.push(routes.customer.SHOP)
           }}
         />
       </div>

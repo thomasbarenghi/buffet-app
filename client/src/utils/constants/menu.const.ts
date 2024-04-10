@@ -9,8 +9,12 @@ interface Menu {
 export const menu: Record<Role, Menu[]> = {
   customer: [
     {
+      title: 'Inicio',
+      href: routes.customer.EXPLORE
+    },
+    {
       title: 'Tienda',
-      href: routes.customer.HOME
+      href: routes.customer.SHOP
     },
     {
       title: 'Sobre nosotros',

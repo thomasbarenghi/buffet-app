@@ -12,7 +12,8 @@ export const routes = {
     REGISTER: '/auth/register'
   },
   customer: {
-    HOME: '/shop',
+    SHOP: '/shop',
+    EXPLORE: '/explore',
     CHECKOUT: '/shop/checkout',
     ONBOARDING: '/account/onboarding'
   },

@@ -14,7 +14,7 @@ const Form = () => {
       const { error } = await createUserProfile({ formData })
       if (error) return toast.error('Algo salió mal')
       router.refresh()
-      router.push(routes.customer.HOME)
+      router.push(routes.customer.SHOP)
     } catch (error) {
       toast.error('Ocurrió un error')
       console.error(error)

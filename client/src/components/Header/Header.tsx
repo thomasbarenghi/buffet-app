@@ -13,7 +13,7 @@ interface Props {
 
 const Brand = () => (
   <NavbarBrand>
-    <Link href={routes.customer.HOME}>
+    <Link href={routes.customer.EXPLORE}>
       <Image src='/icons/logo.svg' width={103} height={30} alt='logo' />
     </Link>
   </NavbarBrand>
