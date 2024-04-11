@@ -72,8 +72,8 @@ export const productValidations: Record<ProductValidations, RegisterOptions> = {
   description: {
     required,
     maxLength: {
-      value: 200,
-      message: 'Máximo 200 carácteres'
+      value: 400,
+      message: 'Máximo 400 carácteres'
     }
   },
   price: {

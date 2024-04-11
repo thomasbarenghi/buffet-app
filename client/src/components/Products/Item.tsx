@@ -17,16 +17,15 @@ const ProductCardVert: React.FC<Props> = ({ product, mode }) => {
   return (
     <>
       <div className='flex w-full cursor-pointer flex-col gap-3' onClick={onOpen}>
-        <div className='relative aspect-square w-full'>
+        <div className='relative aspect-square w-full overflow-hidden rounded-2xl bg-gray-100'>
           <Image
             src={product?.thumbnail ?? '/images/placeholder.png'}
             alt='image'
             width={250}
             height={250}
-            quality={85}
             priority
             placeholder='empty'
-            className='h-full w-full rounded-2xl object-cover'
+            className='h-full w-full object-cover'
           />
         </div>
         <div className='flex flex-col gap-2'>
